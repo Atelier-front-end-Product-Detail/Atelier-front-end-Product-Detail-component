@@ -11,5 +11,9 @@ Description
 Components
 
 
+Git Workflow
+
+
+
 
 - ADD MORE TO THE README AS WE DEVELOP THE PROJECT -
