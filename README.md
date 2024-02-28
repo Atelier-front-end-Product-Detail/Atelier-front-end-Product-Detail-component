@@ -5,10 +5,15 @@ OverView:
 This is a front-end project designed to simulate a e-commerce website. Users will be able to view products, read reviews and comments, add questions, etc. 
 
 Team members
+
 Nhu Le: Questions & Answers
-Michael O'Brien: 
-Eric Yap
+
+Michael O'Brien: Related items
+
+Eric Yap: Product details
+
 Vincent Lieu: Reviews
+
 
 Description
 
