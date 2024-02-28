@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductInfo from './productDetail/ProductInfo'
 
 
 const App = () => {
