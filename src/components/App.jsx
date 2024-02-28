@@ -6,7 +6,8 @@ const App = () => {
 
   return (
     <div>
-      <RelatedItems/>
+      HELLO =D
+      {/* Insert your component here */}
     </div>
   );
 };
