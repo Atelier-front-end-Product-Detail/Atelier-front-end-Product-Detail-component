@@ -12,6 +12,22 @@ Components
 
 
 Git Workflow
+{} = just plug in dont actually put in brackets 
+
+If you are working on a new feature
+1. git checkout main
+2. git fetch origin
+3. git resset --hard origin/main
+4. git checkout -b {branch name} (make sure you are in this branch when doing any new work 'git checkout new-feature'/ to check 'git branch')
+
+If you are done working on your feature
+1.git add .
+2. git commit -m ""
+3. git branch (to make sure your not on main branch)
+4. git push -u origin {branch name}
+5. submit PR 
+
+
 
 
 
