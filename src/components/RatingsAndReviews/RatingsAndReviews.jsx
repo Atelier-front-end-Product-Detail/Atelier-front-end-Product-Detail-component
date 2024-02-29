@@ -4,6 +4,9 @@ const RatingsAndReviews= (props) => {
 
 
   return (
+    <div>
+      VINCENT
+    </div>
 
 
   )
