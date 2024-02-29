@@ -4,23 +4,15 @@ Front End Capstone Project: A front end for our eCommerce application.
 OverView: 
 This is a front-end project designed to simulate a e-commerce website. Users will be able to view products, read reviews and comments, add questions, etc. 
 
-Team members
-
+Team members:
 Nhu Le: Questions & Answers
-
 Michael O'Brien: Related items
-
 Eric Yap: Product details
-
 Vincent Lieu: Reviews
-
 
 Description
 
-Components
-
-
-Git Workflow
+Git Workflow:
 {} = just plug in dont actually put in brackets 
 
 If you are working on a new feature
@@ -72,6 +64,11 @@ Merge your main branch into the branch you are on
 15. Repeat steps 8 & 9. There should no longer be any conflicts
 
 
+RECOURCES: 
+Webpack: Getting Started - https://webpack.js.org/guides/getting-started/
+Webpack: Concepts - https://webpack.js.org/concepts/
+Webpack: Babel Loader - https://webpack.js.org/loaders/babel-loader/
+Package.json: How to create - https://docs.npmjs.com/creating-a-package-json-file
 
 
 
