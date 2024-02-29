@@ -1,18 +1,18 @@
 import React from 'react';
 
-const ReviewView = () => {
+const ReviewsView = () => {
 
   return (
     <div>
-      ReviewView
-      <SortReview/>
-      <ReviewList/>
+      ReviewsView
+      <SortReviews/>
+      <ReviewsList/>
       <AddReview/>
     </div>
   )
 }
 
-const SortReview = () => {
+const SortReviews = () => {
   return (
     <div>
       SortReview
@@ -20,7 +20,7 @@ const SortReview = () => {
   )
 }
 
-const ReviewList = () => {
+const ReviewsList = () => {
   return (
     <div>
       <ReviewTile/>
@@ -45,6 +45,6 @@ const AddReview = () => {
 }
 
 
-export default ReviewView
+export default ReviewsView
 
 
