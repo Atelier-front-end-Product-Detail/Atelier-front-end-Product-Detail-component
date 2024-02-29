@@ -1,6 +1,8 @@
 
 const QuestionsAnswersList = () => {
   return (
-    <div></div>
+    <div className="QuestionAnswersList">
+      
+    </div>
   )
 }
