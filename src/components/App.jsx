@@ -38,7 +38,7 @@ const App = () => {
       headers: {'Authorization': process.env.GIT_API_KEY},
       params: {product_id, page, count, sort}
     }),
-    reviewsMeta: (product_id, page = null, count = null, sort = null) => axios({
+    reviewsMeta: (product_id) => axios({
       method: 'get',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/`,
       headers: {'Authorization': process.env.GIT_API_KEY},
@@ -65,13 +65,13 @@ const App = () => {
 
   // useEffect(() => {
   //   console.log(`api key = ${process.env.GIT_API_KEY}`);
-  //   bridge.listReviews(40355)
+  //   bridge.reviewsMeta(40355)
   //   .then(results => {
-  //     setResults(results);
+  //     setResults(results.data);
   //   });
   // }, []);
 
-  // useEffect(() => console.log(JSON.stringify(results)), [results]);
+  // useEffect(() => console.log((results)), [results]);
   // ------------------------------------------
 
 
@@ -82,7 +82,7 @@ const App = () => {
       HELLO =D
       {/* Insert your component here */}
         <RelatedItems product_id={40344}/>
-        <RatingsAndReviews product_id={40345}/>
+        <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
   );
