@@ -1,6 +1,8 @@
+//import ProductInfo from './productDetail/ProductInfo'
 import React, {useState, useEffect} from 'react';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
+
 
 
 const App = () => {
