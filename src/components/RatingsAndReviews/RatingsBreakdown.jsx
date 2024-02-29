@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const RatingBreakdown =  () => {
+const RatingsBreakdown =  () => {
 
 
   return (
@@ -36,4 +36,4 @@ const CharacteristicBar =  () => {
   )
 }
 
-export default RatingBreakdown;
+export default RatingsBreakdown;
