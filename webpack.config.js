@@ -1,4 +1,6 @@
 const path = require('path');
+require ('dotenv').config();
+const webpack = require('webpack');
 
 module.exports = {
   mode: "development",
@@ -21,4 +23,11 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        GIT_API_KEY: JSON.stringify(process.env.GIT_API_KEY),
+      },
+    }),
+  ],
 };
