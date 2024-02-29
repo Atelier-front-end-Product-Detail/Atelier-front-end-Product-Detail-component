@@ -8,6 +8,7 @@ const App = () => {
     <div>
       HELLO =D
       {/* Insert your component here */}
+        <RelatedItems product_id={40344}/>
     </div>
   );
 };
