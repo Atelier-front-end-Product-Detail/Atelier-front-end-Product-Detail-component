@@ -14,7 +14,7 @@ const App = () => {
       HELLO =D
       {/* Insert your component here */}
         <RelatedItems product_id={40344}/>
-        <RatingsAndReviews> product_id={40345}</RatingsAndReviews>
+        <RatingsAndReviews product_id={40345}/>
 
     </div>
   );
