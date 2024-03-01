@@ -69,12 +69,18 @@ const App = () => {
   //   .then(results => {
   //     setResults(results);
   //   });
-  // }, []);
+  // }, [productId]);
 
   // useEffect(() => console.log(JSON.stringify(results)), [results]);
   // ------------------------------------------
 
+  // SETTING STATE FOR PRODUCTID
 
+  useEffect(() => {
+    bridge.listProducts()
+    .then(results => setProductId(results.data[0].id))
+    .catch(error => console.log(`Error: ${error}`));
+  }, []);
 
 
   return (
