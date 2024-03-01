@@ -110,8 +110,8 @@ const App = () => {
       ) : (
         <p>Loading...</p> // Or a better loading indicator
       )}
-        {/*<RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>*/}
-        <RatingsAndReviews product_id={40345} bridge={bridge}/>
+      <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
+      <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
   );

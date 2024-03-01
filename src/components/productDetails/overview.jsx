@@ -5,15 +5,25 @@ import StyleSelector from './StyleSelector.jsx';
 import AddToCart from './AddToCart.jsx';
 
 const Overview = ({ product, styles, reviewsMeta }) => {
-  // Make sure to pass the relevant style. Here, I'm assuming styles.results[0] is the default style.
+  // Assuming 'styles' is an object with a 'results' property that is an array of style objects
+  const defaultStyle = styles.results[0];
+
   return (
-    <div>
+    <div className="overview">
+      <ImageGallery style={defaultStyle} />
       <ProductInformation
         product={product}
-        style={styles.results[0]}
+        style={defaultStyle}
         reviewsMeta={reviewsMeta}
       />
-      {/* ... other components within Overview */}
+      <StyleSelector
+        styles={styles.results}
+        selectedStyle={defaultStyle}
+      />
+      <AddToCart
+        style={defaultStyle}
+      />
+      {/* wip */}
     </div>
   );
 };
