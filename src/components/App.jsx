@@ -1,4 +1,4 @@
-//import ProductInfo from './productDetail/ProductInfo'
+import Overview from './ProductDetails/Overview.jsx';
 import React, {useState, useEffect} from 'react';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
@@ -10,6 +10,9 @@ import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers.jsx'
 const App = () => {
 
   const [productId, setProductId] = useState(0);
+  const [productInfo, setProductInfo] = useState(null);
+  const [productStyles, setProductStyles] = useState(null);
+  const [reviewsMeta, setReviewsMeta] = useState(null);
 
   const bridge = {
     listProducts: (page = null, count = null) => axios({
@@ -68,11 +71,13 @@ const App = () => {
 
   // FOR TESTING
   // ------------------------------------------
-  const [results, setResults] = useState(null);
-
+  // const [results, setResults] = useState(null);
 
   // useEffect(() => {
   //   console.log(`api key = ${process.env.GIT_API_KEY}`);
+  //   bridge.listReviews(40355)
+  //   .then(results => {
+  //     setResults(results);
   //   bridge.reviewsMeta(40355)
   //   bridge.questionsAnswers(40355)
   //   .then(results => {
@@ -82,7 +87,7 @@ const App = () => {
   //   });
   // }, [productId]);
 
-  // useEffect(() => console.log((results)), [results]);
+  // useEffect(() => console.log(JSON.stringify(results)), [results]);
   // ------------------------------------------
 
   // SETTING STATE FOR PRODUCTID
@@ -93,9 +98,32 @@ const App = () => {
     .catch(error => console.log(`Error: ${error}`));
   }, []);
 
+  useEffect(() => {
+    if (productId) {
+      bridge.productInformation(productId)
+        .then(response => setProductInfo(response.data))
+        .catch(error => console.error("error fetching product information:", error));
+
+      bridge.productStyles(productId)
+        .then(response => setProductStyles(response.data))
+        .catch(error => console.error("error fetching product styles:", error));
+
+      bridge.reviewsMeta(productId)
+        .then(response => setReviewsMeta(response.data))
+        .catch(error => console.error("error fetching reviews metadata:", error));
+    }
+  }, [productId]);
 
   return (
     <div>
+      HELLO =D
+      {/* Insert your component here */}
+      {productInfo && productStyles && reviewsMeta ? (
+      <Overview product={productInfo} styles={productStyles} reviewsMeta={reviewsMeta} />
+      ) : (
+        <p>Loading...</p> // Or a better loading indicator
+      )}
+        {/*<RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>*/}
         <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
         <QuestionsAnswers bridge={bridge}/>
         <RatingsAndReviews product_id={40345} bridge={bridge}/>
