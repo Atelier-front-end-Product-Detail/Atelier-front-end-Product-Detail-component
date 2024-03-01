@@ -1,4 +1,4 @@
-//import ProductInfo from './productDetail/ProductInfo'
+import Overview from './ProductDetails/Overview.jsx';
 import React, {useState, useEffect} from 'react';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
@@ -81,6 +81,7 @@ const App = () => {
     <div>
       HELLO =D
       {/* Insert your component here */}
+        <Overview />
         <RelatedItems product_id={40344}/>
         <RatingsAndReviews product_id={40345}/>
 
