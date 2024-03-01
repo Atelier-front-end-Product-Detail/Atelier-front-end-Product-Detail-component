@@ -61,7 +61,8 @@ const App = () => {
 
   // FOR TESTING
   // ------------------------------------------
-  // const [results, setResults] = useState(null);
+  const [results, setResults] = useState(null);
+
 
   // useEffect(() => {
   //   console.log(`api key = ${process.env.GIT_API_KEY}`);
