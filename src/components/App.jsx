@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [productId, setProductId] = useState(40344);
+  const [productId, setProductId] = useState(0);
 
   const bridge = {
     listProducts: (page = null, count = null) => axios({
