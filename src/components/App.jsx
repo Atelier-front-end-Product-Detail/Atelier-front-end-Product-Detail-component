@@ -38,7 +38,7 @@ const App = () => {
       headers: {'Authorization': process.env.GIT_API_KEY},
       params: {product_id, page, count, sort}
     }),
-    reviewsMeta: (product_id, page = null, count = null, sort = null) => axios({
+    reviewsMeta: (product_id) => axios({
       method: 'get',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/`,
       headers: {'Authorization': process.env.GIT_API_KEY},
@@ -83,7 +83,7 @@ const App = () => {
       {/* Insert your component here */}
         <Overview />
         <RelatedItems product_id={40344}/>
-        <RatingsAndReviews product_id={40345}/>
+        <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
   );
