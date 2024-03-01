@@ -14,7 +14,6 @@ const RelatedItems = ({product_id, bridge, setProductId}) => {
           }
           return false;
       });
-      console.log(`Result: ${JSON.stringify(result)}`);
       return setRelatedItems(result);
     })
     .catch(error => console.log(`Error: ${error}`));

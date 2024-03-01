@@ -2,12 +2,33 @@ import React, {useState, useEffect} from 'react';
 
 const RelatedProductCard = ({product_id, bridge, setProductId}) => {
 
-  // Product States
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
   const [defaultStyle, setDefaultStyle] = useState({});
   const [productPhotos, setProductPhotos] = useState('');
+  const [productPhotoIndex, setProductPhotoIndex] = useState(0);
   const [productReviews, setProductReviews] = useState(0);
+
+  const imageNotFound = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+
+  // HELPER FUNCTIONS
+  const incrementPhotoIndex = (e) => {
+    e.stopPropagation();
+    if (defaultStyle.photos) {
+      const range = defaultStyle.photos.length - 1;
+      if (productPhotoIndex < range) {setProductPhotoIndex(productPhotoIndex + 1)}
+      else {setProductPhotoIndex(0)}
+    }
+  };
+
+  const decrementPhotoIndex = (e) => {
+    e.stopPropagation();
+    if (defaultStyle.photos) {
+      const range = defaultStyle.photos.length - 1;
+      if (productPhotoIndex > 0) {setProductPhotoIndex(productPhotoIndex - 1)}
+      else {setProductPhotoIndex(range)}
+    }
+  };
 
   // SET INITIAL STATES
   useEffect(() => {
@@ -38,19 +59,21 @@ const RelatedProductCard = ({product_id, bridge, setProductId}) => {
   }, [productStyles]);
 
   useEffect(() => {
-    if (defaultStyle.photos && defaultStyle.photos.length > 0) {
-      const thumbnailUrl = defaultStyle.photos[0].thumbnail_url;
+    if (defaultStyle.photos) {
+      const thumbnailUrl = defaultStyle.photos[productPhotoIndex].thumbnail_url;
       if (thumbnailUrl) {
         setProductPhotos(thumbnailUrl);
       }
     } else {
-      setProductPhotos('https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg');
+      setProductPhotos(imageNotFound);
     }
-  }, [defaultStyle]);
+  }, [defaultStyle, productPhotoIndex]);
 
   return (
     <div className='related_product_card' onClick={() => setProductId(product_id)}>
-      <img src={productPhotos} className='product_card_image' alt='product image'></img>
+    <button type='button' onClick={(e) => decrementPhotoIndex(e)}>prev pic</button>
+      <button type='button' onClick={(e) => incrementPhotoIndex(e)}>next pic</button><br/>
+      <img src={productPhotos} className='product_card_image' alt='product image' onError={(e) => e.currentTarget.src = imageNotFound}></img>
       <p className='product_card_category'>{productInfo.category}</p>
       <span className='product_card_name'>{productInfo.name}:   </span>
       <span className='product_card_extra_text'>{productInfo.slogan}</span>
@@ -58,11 +81,11 @@ const RelatedProductCard = ({product_id, bridge, setProductId}) => {
         (<p className='product_card_sale_price'>
           Price: {defaultStyle.sale_price}
         </p>)
-      :
+          :
         (<p className='product_card_price'>
           Price: {productInfo.default_price}
         </p>)
-      }
+          }
       <p className='product_card_reviews'>Reviews: {productReviews}</p>
     </div>
   )
