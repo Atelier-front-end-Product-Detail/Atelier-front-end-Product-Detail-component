@@ -13,3 +13,7 @@
 #related_products {
   display: flex;
 }
+
+.product_card_sale_price {
+  background-color: red;
+}
