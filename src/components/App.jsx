@@ -61,17 +61,17 @@ const App = () => {
 
   // FOR TESTING
   // ------------------------------------------
-  // const [results, setResults] = useState(null);
+  const [results, setResults] = useState(null);
 
-  // useEffect(() => {
-  //   console.log(`api key = ${process.env.GIT_API_KEY}`);
-  //   bridge.listReviews(40355)
-  //   .then(results => {
-  //     setResults(results);
-  //   });
-  // }, [productId]);
+  useEffect(() => {
+    console.log(`api key = ${process.env.GIT_API_KEY}`);
+    bridge.listReviews(40355)
+    .then(results => {
+      setResults(results);
+    });
+  }, [productId]);
 
-  // useEffect(() => console.log(JSON.stringify(results)), [results]);
+  useEffect(() => console.log(JSON.stringify(results)), [results]);
   // ------------------------------------------
 
   // SETTING STATE FOR PRODUCTID
@@ -88,7 +88,7 @@ const App = () => {
       HELLO =D
       {/* Insert your component here */}
         <Overview />
-        <RelatedItems product_id={40344}/>
+        {/* <RelatedItems product_id={40344}/> */}
         <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
