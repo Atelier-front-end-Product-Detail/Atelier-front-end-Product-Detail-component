@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
 import axios from 'axios';
+import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers.jsx'
 
 
 
@@ -57,6 +58,12 @@ const App = () => {
       headers: {'Authorization': process.env.GIT_API_KEY},
       params: {review_id}
     }),
+    questionsAnswers: (product_id, page = null, count = null) => axios({
+      method: 'get',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/`,
+      headers: {'Authorization': process.env.GIT_API_KEY},
+      params: {product_id}
+    })
   };
 
   // FOR TESTING
@@ -67,8 +74,11 @@ const App = () => {
   // useEffect(() => {
   //   console.log(`api key = ${process.env.GIT_API_KEY}`);
   //   bridge.reviewsMeta(40355)
+  //   bridge.questionsAnswers(40355)
   //   .then(results => {
   //     setResults(results.data);
+  //     // setResults(results);
+  //     console.log(results.data)
   //   });
   // }, [productId]);
 
@@ -86,11 +96,9 @@ const App = () => {
 
   return (
     <div>
-      HELLO =D
-      {/* Insert your component here */}
         <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
+        <QuestionsAnswers bridge={bridge}/>
         <RatingsAndReviews product_id={40345} bridge={bridge}/>
-
     </div>
   );
 };
