@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [productId, setProductId] = useState(0);
+  const [productId, setProductId] = useState(40344);
 
   const bridge = {
     listProducts: (page = null, count = null) => axios({
@@ -64,26 +64,30 @@ const App = () => {
   // const [results, setResults] = useState(null);
 
   // useEffect(() => {
-  //   console.log(`api key = ${process.env.GIT_API_KEY}`);
-  //   bridge.listReviews(40355)
+  //   bridge.productInformation(productId)
   //   .then(results => {
   //     setResults(results);
   //   });
-  // }, []);
+  // }, [productId]);
 
   // useEffect(() => console.log(JSON.stringify(results)), [results]);
   // ------------------------------------------
 
+  // SETTING STATE FOR PRODUCTID
 
+  useEffect(() => {
+    bridge.listProducts()
+    .then(results => setProductId(results.data[0].id))
+    .catch(error => console.log(`Error: ${error}`));
+  }, []);
 
 
   return (
     <div>
       HELLO =D
       {/* Insert your component here */}
-        <RelatedItems product_id={40344}/>
+        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
         <RatingsAndReviews product_id={40345}/>
-
     </div>
   );
 };
