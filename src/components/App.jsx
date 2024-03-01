@@ -88,7 +88,7 @@ const App = () => {
       HELLO =D
       {/* Insert your component here */}
         <Overview />
-        {/* <RelatedItems product_id={40344}/> */}
+        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
         <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
