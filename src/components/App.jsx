@@ -1,4 +1,4 @@
-import Overview from './ProductDetails/Overview.jsx';
+import Overview from './productDetails/Overview.jsx';
 import React, {useState, useEffect} from 'react';
 import RelatedItems from './relatedItems/RelatedItems.jsx';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
