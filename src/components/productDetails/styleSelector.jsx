@@ -18,7 +18,7 @@ const StyleSelector = ({ styles }) => {
         {styles.map((style, index) => (
           <div key={style.name} className={`style-thumbnail ${selectedStyle === style ? 'selected' : ''}`}
                onClick={() => handleStyleClick(style)}>
-            <img src={style.thumbnail_url} alt={style.name} />
+            <img src={style.photos[0].thumbnail_url} alt={style.name} />
             {selectedStyle === style && <div className="checkmark">✔</div>}
           </div>
         ))}
