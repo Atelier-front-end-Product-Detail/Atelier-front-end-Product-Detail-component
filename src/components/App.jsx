@@ -39,7 +39,7 @@ const App = () => {
       headers: {'Authorization': process.env.GIT_API_KEY},
       params: {product_id, page, count, sort}
     }),
-    reviewsMeta: (product_id, page = null, count = null, sort = null) => axios({
+    reviewsMeta: (product_id) => axios({
       method: 'get',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/`,
       headers: {'Authorization': process.env.GIT_API_KEY},
@@ -68,28 +68,37 @@ const App = () => {
 
   // FOR TESTING
   // ------------------------------------------
-  // const [results, setResults] = useState(null);
+  const [results, setResults] = useState(null);
+
 
   // useEffect(() => {
   //   console.log(`api key = ${process.env.GIT_API_KEY}`);
+  //   bridge.reviewsMeta(40355)
   //   bridge.questionsAnswers(40355)
   //   .then(results => {
+  //     setResults(results.data);
   //     // setResults(results);
   //     console.log(results.data)
   //   });
-  // }, []);
+  // }, [productId]);
 
-  // useEffect(() => console.log(JSON.stringify(results)), [results]);
+  // useEffect(() => console.log((results)), [results]);
   // ------------------------------------------
 
+  // SETTING STATE FOR PRODUCTID
 
+  useEffect(() => {
+    bridge.listProducts()
+    .then(results => setProductId(results.data[0].id))
+    .catch(error => console.log(`Error: ${error}`));
+  }, []);
 
 
   return (
     <div>
-        <RelatedItems product_id={40344}/>
+        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
         <QuestionsAnswers bridge={bridge}/>
-        <RatingsAndReviews product_id={40345}/>
+        <RatingsAndReviews product_id={40345} bridge={bridge}/>
     </div>
   );
 };
