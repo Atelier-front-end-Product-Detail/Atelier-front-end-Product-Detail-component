@@ -70,19 +70,25 @@ const App = () => {
   //   .then(results => {
   //     setResults(results.data);
   //   });
-  // }, []);
+  // }, [productId]);
 
   // useEffect(() => console.log((results)), [results]);
   // ------------------------------------------
 
+  // SETTING STATE FOR PRODUCTID
 
+  useEffect(() => {
+    bridge.listProducts()
+    .then(results => setProductId(results.data[0].id))
+    .catch(error => console.log(`Error: ${error}`));
+  }, []);
 
 
   return (
     <div>
       HELLO =D
       {/* Insert your component here */}
-        <RelatedItems product_id={40344}/>
+        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
         <RatingsAndReviews product_id={40345} bridge={bridge}/>
 
     </div>
