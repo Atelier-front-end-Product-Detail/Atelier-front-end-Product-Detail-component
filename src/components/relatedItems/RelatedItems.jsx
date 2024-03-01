@@ -20,7 +20,6 @@ const RelatedItems = ({product_id, bridge, setProductId}) => {
     .catch(error => console.log(`Error: ${error}`));
   }, [product_id]);
 
-  useEffect(() => console.log(`Related Items: ${relatedItems}`),[relatedItems])
   return (
     <div>
       <RelatedProducts relatedItems={relatedItems} bridge ={bridge} setProductId={setProductId}/>
