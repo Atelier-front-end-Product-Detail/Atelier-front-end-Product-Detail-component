@@ -1,124 +1,104 @@
 import React from 'react';
+// import '../../../dist/RatingsBreakdown.css'
 
 
 const RatingsBreakdown =  (props) => {
 
-  console.log("METADATA: ", props.reviewsMeta)
+  // console.log("METADATA: ", props.reviewsMeta)
   let metaData = props.reviewsMeta
 
   //use Object.values to create an array of values. Call .reduce on array with accum set to 0.
   let totalReviews
   let averageRating
-  let sum = 0
-  let fiveStarCount
-  let fourStarCount
-  let threeStarCount
-  let twoStarCount
-  let oneStarCount
   let percentRecommend
 
-
-
   if (metaData.ratings){
-    //
+    //calculate total reviews
     totalReviews = Object.values(metaData.ratings).reduce((acc, eachRating)=>{return(acc + Number(eachRating))}, 0);
 
+    //calculate averae rating
+    let sum = 0
     for (var key in metaData.ratings) {
       sum += key*metaData.ratings[key]
       averageRating = (sum/totalReviews).toFixed(1)
     }
 
-    fiveStarCount = metaData.ratings['5']
-    fourStarCount = metaData.ratings['4']
-    threeStarCount = metaData.ratings['3']
-    twoStarCount = metaData.ratings['2']
-    oneStarCount = metaData.ratings['1']
-
+    //calculate percent recommend
     percentRecommend = ((metaData.recommended.true/totalReviews).toFixed(2))*100
   }
 
-
-  console.log("totalReviews: ", totalReviews)
-  console.log("averageRating: ", averageRating)
-  console.log("fiveStarCount: ", fiveStarCount)
-  console.log("fourStarCount: ", fourStarCount)
-  console.log("threeStarCount: ", threeStarCount)
-  console.log("twoStarCount: ", twoStarCount)
-  console.log("oneStarCount: ", oneStarCount)
-  console.log("percentRecommend: ", percentRecommend)
-
-
+  // console.log("totalReviews: ", totalReviews)
+  // console.log("averageRating: ", averageRating)
+  // console.log("percentRecommend: ", percentRecommend)
+  // console.log(metaData.characteristics)
 
   return (
-    <div style={{border: "2px solid black", width: "30vw"}}>
+    <div className="RatingsBreakdownContainer">
       {!isNaN(averageRating) ?
-        <div>{averageRating}</div>
+        <>
+        <div className="RR-AverageRating">{averageRating}</div>
+        <div>{totalReviews} reviews</div>
+        </>
         :
         null
       }
+
       <div>
-        <RatingBar/>
-        <RatingBar/>
-        <RatingBar/>
-        <RatingBar/>
-        <RatingBar/>
+        {/* map over metaData.ratings and return RatingBar component with data passed in. Reverse order. */}
+        {metaData.ratings && Object.entries(metaData.ratings).map(([rating, count])=>{
+          return <RatingBar key={rating} rating={rating} count={count} totalReviews={totalReviews}/>
+        }).reverse()
+        }
       </div>
-      {`${percentRecommend}% of people recommend`}
-      <CharacteristicBar/>
+
+      <div>{`${percentRecommend}% of people recommend this product`}</div>
+
+
+
+      {metaData.characteristics && Object.entries(metaData.characteristics).map(([description, object])=>{
+          return <CharacteristicBar key={description} description={description} rating={object.value}/>
+        })
+      }
+
     </div>
   )
 }
 
-const RatingBar =  () => {
+const RatingBar =  (props) => {
 
   return (
-    <div
-      style={{
-        border: "2px solid red",
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column'
-      }}
-    >
+    <div className="RatingsBarContainer">
+      <div>{`${props.rating} star`} </div>
 
-      <div>RatingBar </div>
-
-      <div
-        style={{
-          width: '90%',
-          display: 'flex',
-          alignItems: 'center',
-          height: '5px',
-          backgroundColor: '#D3D3D3',
-          borderRadius: '8px',
-          margin: '5px'
-        }}
-      >
-
+      <div className="RatingsBar">
         <div
+          className="RatingsBarFill"
           style={{
-            width: '25%',
-            height: '100%',
-            backgroundColor: '#009900'
+            width: `${100*props.count/props.totalReviews}%`
           }}
-        >
-        </div>
-
+        ></div>
       </div>
 
-
-
+      <div className="RatingsCount">{props.count}</div>
     </div>
   )
 }
 
 
 
-const CharacteristicBar =  () => {
+const CharacteristicBar =  (props) => {
 
   return (
-    <div>
-      CharacteristicBar
+    <div className="CharacteristicBarContainer">
+      {props.description}
+      <div className="RatingsBar">
+        <div> </div>
+      </div>
+
+
+
+
+
     </div>
 
   )
