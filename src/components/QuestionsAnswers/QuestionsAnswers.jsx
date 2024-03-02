@@ -7,10 +7,10 @@ const QuestionsAnswers = ({bridge}) => {
   const [data, setData] = useState([])
   const [filtered, setFiltered] = useState([])
   useEffect(() => {
-    bridge.questions(40343)
+    bridge.questions(40344)
     .then((results) => {
       setData(results.data.results)
-      console.log(results.data.results)
+
     })
     .catch((err) => {
       throw err;

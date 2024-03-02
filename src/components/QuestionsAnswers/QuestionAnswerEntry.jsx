@@ -45,17 +45,32 @@ const QuestionAnswerEntry = ({bridge, question}) => {
 
   // // }
   return (
-    <div>
-    <h3>Q: {question.question_body}</h3>
-    <p>Helpful? YES</p>
-    <p>Add Answer</p>
+    <div className="questions-answers-container">
+      <div className="question-container">
+        <div className="question-title-container">
+          <p className="question-title">Q: {question.question_body}</p>
+        </div>
+        <div className="question-helpful-container">
+          <p className="helpful-question">Helpful? YES ({question.question_helpfulness}) </p>
+          <p className="helpful-question-add-answer"> Add Answer</p>
+        </div>
+      </div>
     <div>
       {answersMap(answersData).map((answer) => {
+        console.log(answer)
         return (
-          <div>
-            <p>A: {answer.body}</p>
-            <p>by {answer.answerer_name}, {answer.question_date}</p>
-            <p>Helpful? ({answer.helpfulness})</p>
+          <div className="answer-container">
+            <div className="answer-a-container">
+              <p className="answer-A">A: </p>
+              <p>{answer.body}</p>
+            </div>
+            <div className="answer-helpful-container">
+              <p className="helpful-answer-info">by {answer.answerer_name}, {answer.date}</p>
+              <p className="helpful-answer">Helpful? ({answer.helpfulness})</p>
+              <p>Report</p>
+            </div>
+            <div>
+            </div>
           </div>
         )
       })}

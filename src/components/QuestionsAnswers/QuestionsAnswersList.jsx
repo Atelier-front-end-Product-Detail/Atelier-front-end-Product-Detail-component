@@ -23,7 +23,7 @@ const QuestionsAnswersList = ({data, bridge}) => {
 
 
   return (
-    <div className="QuestionAnswersList">
+    <div className="questions-answers-list">
       {questionsMap(questionsData).map((question) => {
         return (
           <QuestionAnswerEntry key={question.question_id} bridge={bridge} question={question} />
