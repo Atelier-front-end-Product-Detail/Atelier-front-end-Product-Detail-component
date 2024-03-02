@@ -121,12 +121,11 @@ const App = () => {
       {productInfo && productStyles && reviewsMeta ? (
       <Overview product={productInfo} styles={productStyles} reviewsMeta={reviewsMeta} />
       ) : (
-        <p>Loading...</p> // Or a better loading indicator
+        <p>Loading...</p>
       )}
-        {/*<RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>*/}
-        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
-        <QuestionsAnswers bridge={bridge}/>
-        <RatingsAndReviews product_id={40345} bridge={bridge}/>
+      <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
+      <QuestionsAnswers bridge={bridge}/>
+      <RatingsAndReviews product_id={40345} bridge={bridge}/>
     </div>
   );
 };

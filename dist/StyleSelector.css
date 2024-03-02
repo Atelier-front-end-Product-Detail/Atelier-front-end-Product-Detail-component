@@ -1,0 +1,58 @@
+.style-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.style-title {
+  margin-bottom: 10px;
+  font-size: 16px;
+
+}
+
+.styles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.style-thumbnail {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  /*within bounds */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.style-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* using this to cover the circle, maybe fill color dynamically below*/
+}
+
+.style-thumbnail.selected {
+  border-color: #000;
+}
+
+.checkmark {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: white;
+  color: #000;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ccc;
+}
