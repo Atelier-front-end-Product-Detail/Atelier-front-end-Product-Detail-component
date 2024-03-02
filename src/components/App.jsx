@@ -58,11 +58,17 @@ const App = () => {
       headers: {'Authorization': process.env.GIT_API_KEY},
       params: {review_id}
     }),
-    questionsAnswers: (product_id, page = null, count = null) => axios({
+    questions: (product_id, page = null, count = 100) => axios({
       method: 'get',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/`,
       headers: {'Authorization': process.env.GIT_API_KEY},
-      params: {product_id}
+      params: {product_id, count}
+    }),
+    answers: (question_id, page = null, count = 20) => axios({
+      method:'get',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/answers/`,
+      headers: {'Authorization': process.env.GIT_API_KEY},
+      params: {question_id, count}
     })
   };
 
@@ -96,9 +102,9 @@ const App = () => {
 
   return (
     <div>
-        <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
+        {/* <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/> */}
         <QuestionsAnswers bridge={bridge}/>
-        <RatingsAndReviews product_id={40345} bridge={bridge}/>
+        {/* <RatingsAndReviews product_id={40345} bridge={bridge}/> */}
     </div>
   );
 };

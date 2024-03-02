@@ -1,30 +1,34 @@
 import QuestionAnswerEntry from './QuestionAnswerEntry.jsx'
 import React, {useState, useEffect} from 'react';
 
-const QuestionsAnswersList = ({bridge}) => {
-  const [questionsAnswersData, setQuestionsAnswersData] = useState([])
+const QuestionsAnswersList = ({data, bridge}) => {
+  const [questionsData, setQuestionData] = useState([])
+
   useEffect(() => {
-    bridge.questionsAnswers(40344)
-    .then((results) => {
-      setQuestionsAnswersData(results.data)
-      // console.log(results.data)
-    })
-  }, [])
+    setQuestionData(data)
+  })
 
   const questionsMap = (object) => {
+    let questionsArr = []
+
     for(let key in object) {
-      if(key === 'results') {
-        for(let nestedKey in object[key]) {
-          return(
-            <QuestionAnswerEntry body={object[key][nestedKey]}/>
-          )
-        }
-      }
+      questionsArr.push(object[key])
     }
+
+    questionsArr.sort((a, b) => {
+      return b.question_helpfulness - a.question_helpfulness
+    })
+    return questionsArr
   }
+
+
   return (
     <div className="QuestionAnswersList">
-      {questionsMap(questionsAnswersData)}
+      {questionsMap(questionsData).map((question) => {
+        return (
+          <QuestionAnswerEntry key={question.question_id} bridge={bridge} question={question} />
+        )
+      })}
     </div>
   )
 }
