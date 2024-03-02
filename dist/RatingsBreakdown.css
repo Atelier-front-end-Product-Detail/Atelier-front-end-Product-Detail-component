@@ -1,0 +1,49 @@
+
+/* -RatingsBreakDown- */
+
+.RatingsBreakdownContainer {
+  border: 2px solid black;
+  width: 40vw;
+  white-space: nowrap;
+}
+
+.RR-AverageRating {
+  font-size: 50px;
+  margin: 10px;
+}
+
+/* -RatingBar */
+
+.RatingsBarContainer{
+  border: 2px solid black;
+  display: flex;
+  border-radius: 8px;
+}
+
+.RatingsBar {
+  width: 90%;
+  height: 5px;
+  background-color: #D3D3D3;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.RatingsBarFill {
+  height: 100%;
+  background-color: #009900;
+  border-radius: 8px;
+}
+
+.RatingsCount {
+  width: 30px;
+  border: 2px solid red;
+}
+
+
+/* -CharacteristicBar */
+.CharacteristicBarContainer {
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+
