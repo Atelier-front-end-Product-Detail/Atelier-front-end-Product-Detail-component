@@ -1,13 +1,11 @@
-import Overview from './productDetails/Overview.jsx';
-import React, {useState, useEffect} from 'react';
-import RelatedItems from './relatedItems/RelatedItems.jsx';
-import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx'
-import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers.jsx'
-import bridge from './bridge.js';
+import React, { useState, useEffect } from 'react';
+import Overview from './productDetails/Overview';
+import RelatedItems from './relatedItems/RelatedItems';
+import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
+import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
+import bridge from './bridge';
 
-
-const App = () => {
-
+function App() {
   const [productId, setProductId] = useState(0);
   const [productInfo, setProductInfo] = useState(null);
   const [productStyles, setProductStyles] = useState(null);
@@ -38,23 +36,23 @@ const App = () => {
 
   useEffect(() => {
     bridge.listProducts()
-    .then(results => setProductId(results.data[0].id))
-    .catch(error => console.log(`Error: ${error}`));
+      .then((results) => setProductId(results.data[0].id))
+      .catch((error) => console.log(`Error: ${error}`));
   }, []);
 
   useEffect(() => {
     if (productId) {
       bridge.productInformation(productId)
-        .then(response => setProductInfo(response.data))
-        .catch(error => console.error("error fetching product information:", error));
+        .then((response) => setProductInfo(response.data))
+        .catch((error) => console.error('error fetching product information:', error));
 
       bridge.productStyles(productId)
-        .then(response => setProductStyles(response.data))
-        .catch(error => console.error("error fetching product styles:", error));
+        .then((response) => setProductStyles(response.data))
+        .catch((error) => console.error('error fetching product styles:', error));
 
       bridge.reviewsMeta(productId)
-        .then(response => setReviewsMeta(response.data))
-        .catch(error => console.error("error fetching reviews metadata:", error));
+        .then((response) => setReviewsMeta(response.data))
+        .catch((error) => console.error('error fetching reviews metadata:', error));
     }
   }, [productId]);
 
@@ -63,15 +61,15 @@ const App = () => {
       HELLO =D
       {/* Insert your component here */}
       {productInfo && productStyles && reviewsMeta ? (
-      <Overview product={productInfo} styles={productStyles} reviewsMeta={reviewsMeta} />
+        <Overview product={productInfo} styles={productStyles} reviewsMeta={reviewsMeta} />
       ) : (
         <p>Loading...</p>
       )}
-      <RelatedItems product_id={productId} bridge={bridge} setProductId={setProductId}/>
-      <QuestionsAnswers bridge={bridge}/>
-      <RatingsAndReviews product_id={40345} bridge={bridge}/>
+      <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
+      <QuestionsAnswers bridge={bridge} />
+      <RatingsAndReviews product_id={40345} bridge={bridge} />
     </div>
   );
-};
+}
 
 export default App;
