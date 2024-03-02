@@ -33,8 +33,9 @@ const ProductInformation = ({ product, style, reviewsMeta }) => {
       {totalReviews > 0 && (
         <div className="star-rating">
           {renderStarRating(averageRating)}
-          <a href="#ratings-and-reviews">Read {totalReviews} reviews</a>
+          <a href="#ratings-and-reviews">Read all {totalReviews} reviews</a>
         </div>
+
       )}
 
       {/* product category / title */}
