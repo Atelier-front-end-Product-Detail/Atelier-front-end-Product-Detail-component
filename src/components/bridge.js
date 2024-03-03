@@ -33,8 +33,8 @@ const bridge = {
   reviewsMeta: (productId) => axios({
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta/',
-    headers: {Authorization: process.env.GIT_API_KEY },
-    params: { productId },
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { product_id: productId },
   }),
   // addReview still needs work!!!
   // addReview: (productId, rating = 0, summary = '', body = '', recommend = false,
@@ -50,23 +50,18 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { reviewId },
   }),
-  questionsAnswers: (productId) => axios({
-  questions: (product_id, page = null, count = 50) => axios({
+  questions: (productId) => axios({
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/',
     headers: { Authorization: process.env.GIT_API_KEY },
-    params: { productId },
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {product_id, count}
+    params: { product_id: productId },
   }),
-  answers: (question_id, page = null, count = 100) => axios({
+  answers: (productId, count = 100) => axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/answers`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {question_id, count}
-  })
-
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${productId}/answers`,
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { product_id: productId, count },
+  }),
 };
 
 export default bridge;
