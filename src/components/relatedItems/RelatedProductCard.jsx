@@ -55,7 +55,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   };
 
   const handleImageError = (e) => {
-    e.currentTarget.src = imageNotFound; // Assign the fallback image source
+    e.currentTarget.src = imageNotFound;
   };
 
   // SET INITIAL STATES
@@ -79,7 +79,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
       .then((results) => setProductReviews(results));
   }, [productId]);
 
-  // SET DERIVITAVE STATES
+  // SET DERIVATIVE STATES
   useEffect(() => {
     let newDefaultStyle = productStyles.filter((style) => style['default?'] === true)[0] || {};
     if (JSON.stringify(newDefaultStyle) === '{}' && productStyles.length) { [newDefaultStyle] = productStyles; }
@@ -98,11 +98,11 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   }, [defaultStyle, productPhotoIndex]);
 
   return (
-    <div role="button" tabIndex="0" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
+    <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
       <button type="button" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
       <button type="button" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
-      <img src={productPhotos} className="product_card_image" alt="" onError={handleImageError} />
+      <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
       <p className="product_card_category">{productInfo.category}</p>
       <span className="product_card_name">
         {productInfo.name}
