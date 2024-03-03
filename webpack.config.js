@@ -21,6 +21,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/, // Targets CSS files
+        use: ['style-loader', 'css-loader'], // Uses style-loader and css-loader to process CSS files
+      },
     ],
   },
   plugins: [
