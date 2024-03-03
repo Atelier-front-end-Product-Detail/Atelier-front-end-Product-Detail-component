@@ -57,7 +57,6 @@ const QuestionAnswerEntry = ({bridge, question}) => {
       </div>
     <div>
       {answersMap(answersData).map((answer) => {
-        console.log(answer)
         return (
           <div className="answer-container">
             <div className="answer-a-container">

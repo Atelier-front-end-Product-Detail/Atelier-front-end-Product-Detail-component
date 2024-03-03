@@ -18,7 +18,7 @@ const QuestionsAnswers = ({bridge}) => {
   },[])
 
   const handleSearch = (searchValue) => {
-    console.log(searchValue)
+    // console.log(searchValue)
     const filtered = data.filter((entry) => {
       entry.question_body.toString().toLowerCase().includes(searchValue.toLowerCase())
     })
