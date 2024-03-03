@@ -1,29 +1,37 @@
-import React, {useState, useEffect} from 'react';
-import RelatedProducts from './RelatedProducts.jsx';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import RelatedProducts from './RelatedProducts';
 
-const RelatedItems = ({product_id, bridge, setProductId}) => {
-  const [relatedItems, setRelatedItems] = useState([])
+function RelatedItems({ productId, bridge, setProductId }) {
+  const [relatedItems, setRelatedItems] = useState([]);
   useEffect(() => {
-    bridge.relatedProducts(product_id)
-    .then(results => {
-      const resultsSet = new Set();
-      let result = results.data.filter(item => {
+    bridge.relatedProducts(productId)
+      .then((results) => {
+        const resultsSet = new Set();
+        const result = results.data.filter((item) => {
           if (!resultsSet.has(item)) {
             resultsSet.add(item);
-              return true;
+            return true;
           }
           return false;
+        });
+        return setRelatedItems(result);
       });
-      return setRelatedItems(result);
-    })
-    .catch(error => console.log(`Error: ${error}`));
-  }, [product_id]);
+  }, [productId]);
 
   return (
     <div>
-      <RelatedProducts relatedItems={relatedItems} bridge ={bridge} setProductId={setProductId}/>
+      <RelatedProducts relatedItems={relatedItems} bridge={bridge} setProductId={setProductId} />
     </div>
-  )
+  );
 }
+
+RelatedItems.propTypes = {
+  productId: PropTypes.number.isRequired,
+  bridge: PropTypes.shape({
+    relatedProducts: PropTypes.func.isRequired,
+  }).isRequired,
+  setProductId: PropTypes.func.isRequired,
+};
 
 export default RelatedItems;

@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-const RelatedProductCard = ({product_id, bridge, setProductId}) => {
-
+function RelatedProductCard({ productId, bridge, setProductId }) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
   const [defaultStyle, setDefaultStyle] = useState({});
@@ -16,8 +16,11 @@ const RelatedProductCard = ({product_id, bridge, setProductId}) => {
     e.stopPropagation();
     if (defaultStyle.photos) {
       const range = defaultStyle.photos.length - 1;
-      if (productPhotoIndex < range) {setProductPhotoIndex(productPhotoIndex + 1)}
-      else {setProductPhotoIndex(0)}
+      if (productPhotoIndex < range) {
+        setProductPhotoIndex(productPhotoIndex + 1);
+      } else {
+        setProductPhotoIndex(0);
+      }
     }
   };
 
@@ -25,36 +28,61 @@ const RelatedProductCard = ({product_id, bridge, setProductId}) => {
     e.stopPropagation();
     if (defaultStyle.photos) {
       const range = defaultStyle.photos.length - 1;
-      if (productPhotoIndex > 0) {setProductPhotoIndex(productPhotoIndex - 1)}
-      else {setProductPhotoIndex(range)}
+      if (productPhotoIndex > 0) {
+        setProductPhotoIndex(productPhotoIndex - 1);
+      } else {
+        setProductPhotoIndex(range);
+      }
     }
+  };
+
+  const handleKeyPressSetProductId = (e) => {
+    if (e.key === 'Enter') {
+      setProductId(productId);
+    }
+  };
+
+  const handleKeyPressIncrement = (e) => {
+    if (e.key === 'Enter') {
+      incrementPhotoIndex(e);
+    }
+  };
+
+  const handleKeyPressDecrement = (e) => {
+    if (e.key === 'Enter') {
+      decrementPhotoIndex(e);
+    }
+  };
+
+  const handleImageError = (e) => {
+    e.currentTarget.src = imageNotFound; // Assign the fallback image source
   };
 
   // SET INITIAL STATES
   useEffect(() => {
-    bridge.productInformation(product_id)
-    .then(results => setProductInfo(results.data))
-    .catch(error => console.log(`Error: ${error}`));
-    bridge.productStyles(product_id)
-    .then(results => setProductStyles(results.data.results))
-    .catch(error => console.log(`Error: ${error}`));
-    bridge.reviewsMeta(product_id)
-    .then(results => {
-      let result = 0;
-      for (let key in results.data.ratings) {
-        result += (key * parseInt(results.data.ratings[key]));
-      }
-      result /= Object.values(results.data.ratings).reduce((acc, curVal) => acc + parseInt(curVal), 0);
-      return result;
-    })
-    .then(results => setProductReviews(results))
-    .catch(error => console.log(`Error: ${error}`));
-  }, [product_id]);
+    bridge.productInformation(productId)
+      .then((results) => setProductInfo(results.data));
+    bridge.productStyles(productId)
+      .then((results) => setProductStyles(results.data.results));
+    bridge.reviewsMeta(productId)
+      .then((results) => {
+        let result = 0;
+        const keys = Object.keys(results.data.ratings);
+        for (let i = 0; i < keys.length; i += 1) {
+          result += (parseInt(keys[i], 10) * parseInt(results.data.ratings[keys[i]], 10));
+        }
+        const ratingValues = Object.values(results.data.ratings).map((val) => parseInt(val, 10));
+        const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 10);
+        result /= sumOfRatings;
+        return result;
+      })
+      .then((results) => setProductReviews(results));
+  }, [productId]);
 
   // SET DERIVITAVE STATES
   useEffect(() => {
-    let newDefaultStyle = productStyles.filter(style => style['default?'] === true)[0] || {};
-    if (JSON.stringify(newDefaultStyle) === '{}' && productStyles.length) {newDefaultStyle = productStyles[0]} ;
+    let newDefaultStyle = productStyles.filter((style) => style['default?'] === true)[0] || {};
+    if (JSON.stringify(newDefaultStyle) === '{}' && productStyles.length) { [newDefaultStyle] = productStyles; }
     setDefaultStyle(newDefaultStyle);
   }, [productStyles]);
 
@@ -70,25 +98,47 @@ const RelatedProductCard = ({product_id, bridge, setProductId}) => {
   }, [defaultStyle, productPhotoIndex]);
 
   return (
-    <div className='related_product_card' onClick={() => setProductId(product_id)}>
-    <button type='button' onClick={(e) => decrementPhotoIndex(e)}>prev pic</button>
-      <button type='button' onClick={(e) => incrementPhotoIndex(e)}>next pic</button><br/>
-      <img src={productPhotos} className='product_card_image' alt='product image' onError={(e) => e.currentTarget.src = imageNotFound}></img>
-      <p className='product_card_category'>{productInfo.category}</p>
-      <span className='product_card_name'>{productInfo.name}:   </span>
-      <span className='product_card_extra_text'>{productInfo.slogan}</span>
-      {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ?
-        (<p className='product_card_sale_price'>
-          Price: {defaultStyle.sale_price}
-        </p>)
-          :
-        (<p className='product_card_price'>
-          Price: {productInfo.default_price}
-        </p>)
-          }
-      <p className='product_card_reviews'>Reviews: {productReviews}</p>
+    <div role="button" tabIndex="0" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
+      <button type="button" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
+      <button type="button" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
+      <br />
+      <img src={productPhotos} className="product_card_image" alt="" onError={handleImageError} />
+      <p className="product_card_category">{productInfo.category}</p>
+      <span className="product_card_name">
+        {productInfo.name}
+        {'  '}
+      </span>
+      <span className="product_card_extra_text">{productInfo.slogan}</span>
+      {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
+        <p className="product_card_sale_price">
+          Price:
+          {' '}
+          {defaultStyle.sale_price}
+        </p>
+      ) : (
+        <p className="product_card_price">
+          Price:
+          {' '}
+          {productInfo.default_price}
+        </p>
+      )}
+      <p className="product_card_reviews">
+        Reviews:
+        {' '}
+        {productReviews}
+      </p>
     </div>
-  )
+  );
+}
+
+RelatedProductCard.propTypes = {
+  productId: PropTypes.number.isRequired,
+  bridge: PropTypes.shape({
+    productInformation: PropTypes.func.isRequired,
+    productStyles: PropTypes.func.isRequired,
+    reviewsMeta: PropTypes.func.isRequired,
+  }).isRequired,
+  setProductId: PropTypes.func.isRequired,
 };
 
 export default RelatedProductCard;
