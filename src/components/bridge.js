@@ -47,12 +47,19 @@ const bridge = {
     headers: {'Authorization': process.env.GIT_API_KEY},
     params: {review_id}
   }),
-  questionsAnswers: (product_id, page = null, count = null) => axios({
+  questions: (product_id, page = null, count = 50) => axios({
     method: 'get',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/`,
     headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {product_id}
+    params: {product_id, count}
+  }),
+  answers: (question_id, page = null, count = 100) => axios({
+    method: 'get',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/answers`,
+    headers: {'Authorization': process.env.GIT_API_KEY},
+    params: {question_id, count}
   })
+
 };
 
 export default bridge;
