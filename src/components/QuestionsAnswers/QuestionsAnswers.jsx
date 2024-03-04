@@ -14,7 +14,7 @@ const QuestionsAnswers = ({bridge}) => {
     bridge.questions(40344)
     .then((results) => {
       setData(results.data.results)
-      console.log(results.data)
+      // console.log(results.data)
     })
     .catch((err) => {
       throw err;

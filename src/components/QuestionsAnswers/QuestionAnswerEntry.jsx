@@ -137,7 +137,7 @@ const addAnswerForm = () => {
     <div>
       {answersMap(answersData).map((answer) => {
         return (
-          <div className="answer-container">
+          <div key={answer.answer_id} className="answer-container">
             <div className="answer-a-container">
               <p className="answer-A">A: </p>
               <p className="answer-body">{answer.body}</p>
