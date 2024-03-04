@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Overview from './productDetails/Overview';
-import RelatedItems from './relatedItems/RelatedItems';
-import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
-import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
-import bridge from './bridge.js';
+import Overview from './productDetails/Overview.jsx';
+import RelatedItems from './relatedItems/RelatedItems.jsx';
+import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx';
+import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers.jsx';
+import bridge from './bridge';
 
 function App() {
   const [productId, setProductId] = useState(0);
