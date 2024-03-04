@@ -38,8 +38,10 @@ const RatingsAndReviews= (props) => {
   return (
     <div>
       <h3>Ratings & Reviews </h3>
+      <div style={{display:"flex"}}>
       <RatingsBreakdown reviewsMeta={reviewsMeta}/>
       <ReviewsView bridge={props.bridge}/>
+      </div>
     </div>
 
 
