@@ -27,7 +27,10 @@ const bridge = {
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
     headers: { Authorization: process.env.GIT_API_KEY },
     params: {
-      productId, page, count, sort,
+      productId,
+      page,
+      count,
+      sort,
     },
   }),
   reviewsMeta: (productId) => axios({
@@ -50,18 +53,37 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { reviewId },
   }),
-  questions: (productId) => axios({
+  questions: (productid, count = 50) => axios({
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/',
     headers: { Authorization: process.env.GIT_API_KEY },
-    params: { product_id: productId },
+    params: { product_id: productid, count },
   }),
-  answers: (productId, count = 100) => axios({
+  answers: (questionid, count = 100) => axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${productId}/answers`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/answers`,
     headers: { Authorization: process.env.GIT_API_KEY },
-    params: { product_id: productId, count },
+    params: { question_id: questionid, count },
   }),
+  putQuestionHelpful: (questionid) => axios({
+    method: 'put',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/helpful`,
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { question_id: questionid },
+  }),
+  postQuestion: (data) => axios({
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
+    headers: { Authorization: process.env.GIT_API_KEY },
+    responseType: 'json',
+    params: {
+      body: data.body,
+      name: data.name,
+      email: data.email,
+      product_id: data.productid,
+    },
+  }),
+
 };
 
 export default bridge;
