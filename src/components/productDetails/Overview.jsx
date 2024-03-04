@@ -1,49 +1,59 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import ImageGallery from './ImageGallery';
 import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
+import bridge from '../bridge';
 
-function Overview({ product, styles, reviewsMeta }) {
-  const defaultStyle = styles.results[0];
+function Overview() {
+  const [productId, setProductId] = useState(0);
+  const [productInfo, setProductInfo] = useState(null);
+  const [productStyles, setProductStyles] = useState(null);
+  const [reviewsMeta, setReviewsMeta] = useState(null);
+
+  useEffect(() => {
+    bridge.listProducts()
+      .then((results) => setProductId(results.data[0].id))
+      .catch((error) => console.log(`Error: ${error}`));
+  }, []);
+
+  useEffect(() => {
+    if (productId) {
+      bridge.productInformation(productId)
+        .then((response) => setProductInfo(response.data))
+        .catch((error) => console.error('error fetching product information:', error));
+
+      bridge.productStyles(productId)
+        .then((response) => setProductStyles(response.data))
+        .catch((error) => console.error('error fetching product styles:', error));
+
+      bridge.reviewsMeta(productId)
+        .then((response) => setReviewsMeta(response.data))
+        .catch((error) => console.error('error fetching reviews metadata:', error));
+    }
+  }, [productId]);
+
+  if (!productInfo || !productStyles || !reviewsMeta) {
+    return <p>Loading...</p>;
+  }
+
+  const defaultStyle = productStyles.results[0];
 
   return (
     <div className="overview">
       <ImageGallery style={defaultStyle} />
       <ProductInformation
-        product={product}
+        product={productInfo}
         style={defaultStyle}
         reviewsMeta={reviewsMeta}
       />
       <StyleSelector
-        styles={styles.results}
+        styles={productStyles.results}
         selectedStyle={defaultStyle}
       />
       <AddToCart style={defaultStyle} />
-      {/* wip */}
     </div>
   );
 }
-
-Overview.propTypes = {
-  product: PropTypes.shape({
-    // id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-  styles: PropTypes.shape({
-    results: PropTypes.arrayOf(
-      PropTypes.shape({
-        // id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        // stuff
-      }).isRequired,
-    ).isRequired,
-  }).isRequired,
-  reviewsMeta: PropTypes.shape({
-    rating: PropTypes.number,
-    count: PropTypes.number,
-  }).isRequired,
-};
 
 export default Overview;
