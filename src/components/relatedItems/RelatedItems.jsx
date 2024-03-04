@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import RelatedProducts from './RelatedProducts.jsx';
+import RelatedProducts from './RelatedProducts';
+import './styles.css';
 
 function RelatedItems({ productId, bridge, setProductId }) {
   const [relatedItems, setRelatedItems] = useState([]);
@@ -20,7 +21,7 @@ function RelatedItems({ productId, bridge, setProductId }) {
   }, [productId]);
 
   return (
-    <div>
+    <div className="related_items">
       <RelatedProducts relatedItems={relatedItems} bridge={bridge} setProductId={setProductId} />
     </div>
   );
