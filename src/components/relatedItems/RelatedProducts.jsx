@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import RelatedProductCard from './RelatedProductCard';
+import RelatedProductCard from './RelatedProductCard.jsx';
 
 function RelatedProducts({ relatedItems, bridge, setProductId }) {
   const scrollContainerRef = useRef(null);
