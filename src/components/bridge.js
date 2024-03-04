@@ -48,22 +48,23 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { reviewId },
   }),
-  questions: (product_id, count = 50) => axios({
+  questions: (productid, count = 50) => axios({
     method: 'get',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/`,
     headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {product_id, count}
+    params: {product_id: productid, count}
   }),
-  answers: (question_id, count = 100) => axios({
+  answers: (questionid, count = 100) => axios({
     method: 'get',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/answers`,
     headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {question_id, count}
+    params: {question_id: questionid, count}
   }),
-  putQuestionHelpful: (question_id) => axios({
+  putQuestionHelpful: (questionid) => axios({
     method: 'put',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/helpful`,
-    headers: {'Authorization': process.env.GIT_API_KEY},params: {question_id}
+    headers: {'Authorization': process.env.GIT_API_KEY},
+    params: {question_id: questionid}
   }),
   postQuestion: (data) => axios({
     method: 'post',
@@ -74,7 +75,7 @@ const bridge = {
       body: data.body,
       name: data.name,
       email: data.email,
-      product_id: data.product_id}
+      product_id: data.productid}
   })
 
 };

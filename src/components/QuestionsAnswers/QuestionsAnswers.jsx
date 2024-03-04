@@ -1,6 +1,6 @@
-import SearchQuestionsAnswers from './SearchQuestionsAnswers.jsx'
-import QuestionsAnswersList from './QuestionsAnswersList.jsx'
-import QuestionModal from './QuestionModal.jsx'
+import SearchQuestionsAnswers from './SearchQuestionsAnswers'
+import QuestionsAnswersList from './QuestionsAnswersList'
+import QuestionModal from './QuestionModal'
 import React, {useState, useEffect} from 'react';
 
 
