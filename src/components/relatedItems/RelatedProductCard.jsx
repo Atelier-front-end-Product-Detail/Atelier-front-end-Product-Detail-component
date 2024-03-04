@@ -10,6 +10,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   const [productReviews, setProductReviews] = useState(0);
 
   const imageNotFound = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+  console.log(`imageNotFound: ${process.env.IMAGE_NOT_FOUND}`);
 
   // HELPER FUNCTIONS
   const incrementPhotoIndex = (e) => {
