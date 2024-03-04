@@ -11,6 +11,7 @@ describe('RelatedProductCard', () => {
   let mockSetProductId;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     mockBridge = {
       productInformation: jest.fn().mockResolvedValue({ data: { name: 'Test Product', category: 'Test Category', default_price: '100' } }),
       productStyles: jest.fn().mockResolvedValue({ data: { results: [{ 'default?': true, photos: [{ thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/1/13/1_number_black_and_white.svg' }, { thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/6/6c/2_number_black_and_white.svg' }] }] } }),
@@ -77,17 +78,55 @@ describe('RelatedProductCard', () => {
     await waitFor(() => {
       fireEvent.click(getByText('next pic'));
     });
+    expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/6/6c/2_number_black_and_white.svg');
+
+    await waitFor(() => {
+      fireEvent.keyPress(getByText('next pic'), { key: 'Enter', code: 'Enter', charCode: 13 });
+    });
+    expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/1/13/1_number_black_and_white.svg');
+
+    await waitFor(() => {
+      fireEvent.click(getByText('prev pic'));
+    });
+    expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/6/6c/2_number_black_and_white.svg');
+
+    await waitFor(() => {
+      fireEvent.keyPress(getByText('prev pic'), { key: 'Enter', code: 'Enter', charCode: 13 });
+    });
+    expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/1/13/1_number_black_and_white.svg');
+  });
+
+  it('updates photo based on productPhotoIndex and handles missing photos', async () => {
+    const { getByRole, rerender } = render(
+      <RelatedProductCard productId={0} bridge={mockBridge} setProductId={mockSetProductId} />,
+    );
+
+    await waitFor(() => expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/1/13/1_number_black_and_white.svg'));
+
+    mockBridge.productStyles = jest.fn().mockResolvedValue({ data: { results: [{ 'default?': true, photos: [{ thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/6/6c/2_number_black_and_white.svg' }] }] } });
+    rerender(
+      <RelatedProductCard productId={1} bridge={mockBridge} setProductId={mockSetProductId} />,
+    );
+
+    await waitFor(() => {
+      expect(mockBridge.productStyles).toHaveBeenCalledTimes(1);
+    });
 
     await waitFor(() => {
       expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/6/6c/2_number_black_and_white.svg');
     });
 
+    mockBridge.productStyles = jest.fn().mockResolvedValue({ data: { results: [{ 'default?': true, photos: [] }] } });
+    rerender(
+      <RelatedProductCard productId={2} bridge={mockBridge} setProductId={mockSetProductId} />,
+    );
+
     await waitFor(() => {
-      fireEvent.click(getByText('prev pic'));
+      expect(mockBridge.productStyles).toHaveBeenCalledTimes(1);
     });
 
     await waitFor(() => {
-      expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/1/13/1_number_black_and_white.svg');
+      expect(getByRole('img', { name: 'product_card_image' })).toHaveAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg');
     });
   });
 
@@ -105,6 +144,11 @@ describe('RelatedProductCard', () => {
     await waitFor(() => {
       fireEvent.click(getByRole('button', { name: 'related_product_card' }));
       expect(mockSetProductId).toHaveBeenCalledWith(0);
+    });
+
+    await waitFor(() => {
+      fireEvent.keyPress(getByRole('button', { name: 'related_product_card' }), { key: 'Enter', code: 'Enter', charCode: 13 });
+      expect(mockSetProductId).toHaveBeenCalledTimes(2);
     });
   });
 });

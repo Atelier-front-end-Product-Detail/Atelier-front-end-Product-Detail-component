@@ -21,7 +21,7 @@ function RelatedItems({ productId, bridge, setProductId }) {
   }, [productId]);
 
   return (
-    <div>
+    <div className="related_items">
       <RelatedProducts relatedItems={relatedItems} bridge={bridge} setProductId={setProductId} />
     </div>
   );

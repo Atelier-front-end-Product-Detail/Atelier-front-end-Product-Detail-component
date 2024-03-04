@@ -87,7 +87,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   }, [productStyles]);
 
   useEffect(() => {
-    if (defaultStyle.photos) {
+    if (defaultStyle.photos && defaultStyle.photos.length) {
       const thumbnailUrl = defaultStyle.photos[productPhotoIndex].thumbnail_url;
       if (thumbnailUrl) {
         setProductPhotos(thumbnailUrl);
@@ -99,8 +99,8 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
 
   return (
     <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
-      <button type="button" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
-      <button type="button" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
+      <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
+      <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
       <p className="product_card_category">{productInfo.category}</p>
