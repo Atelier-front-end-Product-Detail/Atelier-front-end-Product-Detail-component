@@ -1,12 +1,12 @@
 const path = require('path');
-require ('dotenv').config();
+require('dotenv').config();
 const webpack = require('webpack');
 
 module.exports = {
-  mode: "development",
-  entry: path.join(__dirname, "src/index.js"),
+  mode: 'development',
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
-    path: path.join(__dirname, "dist/"),
+    path: path.join(__dirname, 'dist/'),
     filename: 'main.js',
   },
   module: {
@@ -20,6 +20,10 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
+      },
+      {
+        test: /\.css$/, // Targets CSS files
+        use: ['style-loader', 'css-loader'], // Uses style-loader and css-loader to process CSS files
       },
     ],
   },
