@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProductCard from './RelatedProductCard';
+// import ComparisonModal from './ComparisonModal';
 
 function RelatedProducts({ relatedItems, bridge, setProductId }) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+  const [relatedItemsInfo, setRelatedItemsInfo] = useState([]);
 
   const relatedProductCardWidthPlusGap = 328;
 
@@ -31,7 +33,6 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      // Only adjust if showRightArrow is true
       if (showRightArrow) {
         const additionalScroll = relatedProductCardWidthPlusGap - (
           currentScroll % relatedProductCardWidthPlusGap
@@ -51,26 +52,23 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
   };
 
   useEffect(() => {
+    setRelatedItemsInfo(new Set());
     const checkScrollButtons = () => {
       const container = scrollContainerRef.current;
       if (!container) return;
 
-      // Check if we should show the left arrow
       const isScrolledToLeft = container.scrollLeft > 0;
       setShowLeftArrow(isScrolledToLeft);
 
-      // Check if we should show the right arrow
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
       const isScrolledToRight = container.scrollLeft < maxScrollLeft;
       setShowRightArrow(isScrolledToRight);
     };
 
-    // Initial check and setup event listener for subsequent scrolls
     checkScrollButtons();
     const container = scrollContainerRef.current;
     container.addEventListener('scroll', checkScrollButtons);
 
-    // Cleanup function to remove event listener
     return () => {
       container.removeEventListener('scroll', checkScrollButtons);
     };
@@ -115,8 +113,11 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
             bridge={bridge}
             key={productId}
             setProductId={setProductId}
+            relatedItemsInfo={relatedItemsInfo}
+            setRelatedItemsInfo={setRelatedItemsInfo}
           />
         ))}
+        {/* <ComparisonModal relatedItemsInfo={relatedItemsInfo} /> */}
       </div>
     </div>
   );

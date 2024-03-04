@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function RelatedProductCard({ productId, bridge, setProductId }) {
+function RelatedProductCard({
+  productId,
+  bridge,
+  setProductId,
+  relatedItemsInfo,
+  setRelatedItemsInfo,
+}) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
   const [defaultStyle, setDefaultStyle] = useState({});
@@ -61,7 +67,17 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   // SET INITIAL STATES
   useEffect(() => {
     bridge.productInformation(productId)
-      .then((results) => setProductInfo(results.data));
+      .then((results) => {
+        setProductInfo(results.data);
+        return results;
+      })
+      .then((results) => {
+        let newRelatedItemsInfo = [...relatedItemsInfo];
+        newRelatedItemsInfo.push(results.data);
+        const relatedItemsInfoSet = new Set(newRelatedItemsInfo);
+        newRelatedItemsInfo = Array.from(relatedItemsInfoSet);
+        setRelatedItemsInfo(newRelatedItemsInfo);
+      });
     bridge.productStyles(productId)
       .then((results) => setProductStyles(results.data.results));
     bridge.reviewsMeta(productId)
@@ -131,6 +147,16 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   );
 }
 
+const setPropType = (props, propName, componentName) => {
+  const prop = props[propName];
+  if (!(prop instanceof Set)) {
+    return new Error(
+      `Invalid prop ${propName} supplied to ${componentName}. Validation failed.`,
+    );
+  }
+  return prop;
+};
+
 RelatedProductCard.propTypes = {
   productId: PropTypes.number.isRequired,
   bridge: PropTypes.shape({
@@ -139,6 +165,8 @@ RelatedProductCard.propTypes = {
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
   setProductId: PropTypes.func.isRequired,
+  relatedItemsInfo: setPropType.isRequired,
+  setRelatedItemsInfo: PropTypes.func.isRequired,
 };
 
 export default RelatedProductCard;
