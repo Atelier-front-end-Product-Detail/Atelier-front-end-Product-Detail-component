@@ -1,11 +1,11 @@
 import React from 'react';
-import ImageGallery from './ImageGallery.jsx';
-import ProductInformation from './ProductInformation.jsx';
-import StyleSelector from './StyleSelector.jsx';
-import AddToCart from './AddToCart.jsx';
+import PropTypes from 'prop-types';
+import ImageGallery from './ImageGallery';
+import ProductInformation from './ProductInformation';
+import StyleSelector from './StyleSelector';
+import AddToCart from './AddToCart';
 
-const Overview = ({ product, styles, reviewsMeta }) => {
-  // Assuming 'styles' is an object with a 'results' property that is an array of style objects
+function Overview({ product, styles, reviewsMeta }) {
   const defaultStyle = styles.results[0];
 
   return (
@@ -20,12 +20,30 @@ const Overview = ({ product, styles, reviewsMeta }) => {
         styles={styles.results}
         selectedStyle={defaultStyle}
       />
-      <AddToCart
-        style={defaultStyle}
-      />
+      <AddToCart style={defaultStyle} />
       {/* wip */}
     </div>
   );
+}
+
+Overview.propTypes = {
+  product: PropTypes.shape({
+    // id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  styles: PropTypes.shape({
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        // id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        // stuff
+      }).isRequired,
+    ).isRequired,
+  }).isRequired,
+  reviewsMeta: PropTypes.shape({
+    rating: PropTypes.number,
+    count: PropTypes.number,
+  }).isRequired,
 };
 
 export default Overview;
