@@ -7,10 +7,6 @@ import bridge from './bridge.js';
 
 function App() {
   const [productId, setProductId] = useState(0);
-  const [productInfo, setProductInfo] = useState(null);
-  const [productStyles, setProductStyles] = useState(null);
-  const [reviewsMeta, setReviewsMeta] = useState(null);
-
   // FOR TESTING
   // ------------------------------------------
   // const [results, setResults] = useState(null);
@@ -33,38 +29,16 @@ function App() {
   // ------------------------------------------
 
   // SETTING STATE FOR PRODUCTID
-
   useEffect(() => {
     bridge.listProducts()
-      .then((results) => setProductId(results.data[0].id))
-      .catch((error) => console.log(`Error: ${error}`));
+      .then((results) => setProductId(results.data[0].id));
   }, []);
-
-  useEffect(() => {
-    if (productId) {
-      bridge.productInformation(productId)
-        .then((response) => setProductInfo(response.data))
-        .catch((error) => console.error('error fetching product information:', error));
-
-      bridge.productStyles(productId)
-        .then((response) => setProductStyles(response.data))
-        .catch((error) => console.error('error fetching product styles:', error));
-
-      bridge.reviewsMeta(productId)
-        .then((response) => setReviewsMeta(response.data))
-        .catch((error) => console.error('error fetching reviews metadata:', error));
-    }
-  }, [productId]);
 
   return (
     <div>
       HELLO =D
-      {/* Insert your component here */}
-      {productInfo && productStyles && reviewsMeta ? (
-        <Overview product={productInfo} styles={productStyles} reviewsMeta={reviewsMeta} />
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Overview bridge={bridge} />
+      {/* removed states and hooks */}
       <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
       <QuestionsAnswers bridge={bridge} />
       <RatingsAndReviews productId={40345} bridge={bridge} />
