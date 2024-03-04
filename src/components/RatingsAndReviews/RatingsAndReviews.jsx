@@ -1,22 +1,20 @@
-import React from 'react';
-import RatingsBreakdown from './RatingsBreakdown.jsx'
-import ReviewsView from './ReviewsView.jsx'
-import {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import RatingsBreakdown from './RatingsBreakdown';
+import ReviewsView from './ReviewsView';
 
-
-const RatingsAndReviews= (props) => {
-    // console.log(props.product_id)
-
+function RatingsAndReviews({ bridge, productId }) {
+  // console.log(props.product_id)
 
   const [reviewsMeta, setReviewsMeta] = useState({});
   // const [reviews, setReviews] = useState({});
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
-    props.bridge.reviewsMeta(props.product_id)
-    .then(results => {
-      setReviewsMeta(results.data);
-    });
+    bridge.reviewsMeta(productId)
+      .then((results) => {
+        setReviewsMeta(results.data);
+      });
   }, []);
 
   // useEffect(() => {
@@ -27,26 +25,28 @@ const RatingsAndReviews= (props) => {
   //   });
   // }, []);
 
-
-
-  // console.log("reviewsMeta: ",reviewsMeta)
+  // console.log('reviewsMeta: ', reviewsMeta);
 
   // useEffect(() => console.log("reviewsMeta: ",reviewsMeta), [reviewsMeta]);
   // useEffect(() => console.log((reviews)), [reviews]);
 
-
   return (
     <div>
       <h3>Ratings & Reviews </h3>
-      <div style={{display:"flex"}}>
-      <RatingsBreakdown reviewsMeta={reviewsMeta}/>
-      <ReviewsView bridge={props.bridge}/>
+      <div style={{ display: 'flex' }}>
+        <RatingsBreakdown reviewsMeta={reviewsMeta} />
+        <ReviewsView bridge={bridge} />
       </div>
     </div>
 
-
-  )
-
+  );
 }
 
+RatingsAndReviews.propTypes = {
+  productId: PropTypes.number.isRequired,
+  bridge: PropTypes.shape({
+    reviewsMeta: PropTypes.func.isRequired,
+  }).isRequired,
+  // setProductId: PropTypes.func.isRequired,
+};
 export default RatingsAndReviews;
