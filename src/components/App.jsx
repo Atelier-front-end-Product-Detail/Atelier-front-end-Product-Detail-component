@@ -3,7 +3,7 @@ import Overview from './productDetails/Overview';
 import RelatedItems from './relatedItems/RelatedItems';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
 import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
-import bridge from './bridge';
+import bridge from './bridge.js';
 
 function App() {
   const [productId, setProductId] = useState(0);

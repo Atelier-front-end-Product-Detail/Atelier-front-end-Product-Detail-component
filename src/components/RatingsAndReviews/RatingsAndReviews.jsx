@@ -9,7 +9,7 @@ const RatingsAndReviews= (props) => {
 
 
   const [reviewsMeta, setReviewsMeta] = useState({});
-  const [reviews, setReviews] = useState({});
+  // const [reviews, setReviews] = useState({});
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
@@ -30,6 +30,7 @@ const RatingsAndReviews= (props) => {
 
 
   // console.log("reviewsMeta: ",reviewsMeta)
+
   // useEffect(() => console.log("reviewsMeta: ",reviewsMeta), [reviewsMeta]);
   // useEffect(() => console.log((reviews)), [reviews]);
 
@@ -38,7 +39,7 @@ const RatingsAndReviews= (props) => {
     <div>
       <h3>Ratings & Reviews </h3>
       <RatingsBreakdown reviewsMeta={reviewsMeta}/>
-      {/* <ReviewsView/> */}
+      <ReviewsView bridge={props.bridge}/>
     </div>
 
 
