@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ProductInformation = ({ product, style, reviewsMeta }) => {
-  // function for star calculation/renderiung
+function ProductInformation({ product, style, reviewsMeta }) {
   const renderStarRating = (rating) => {
     const roundedRating = Math.round(rating * 4) / 4;
     const fullStars = Math.floor(roundedRating);
@@ -24,25 +24,28 @@ const ProductInformation = ({ product, style, reviewsMeta }) => {
   const { category, name, description } = product;
   const { original_price, sale_price } = style;
   const { ratings } = reviewsMeta;
-  const totalReviews = Object.values(ratings).reduce((sum, num) => sum + parseInt(num), 0);
-  const averageRating = Object.entries(ratings).reduce((acc, [key, value]) => acc + (key * value), 0) / totalReviews;
+
+  const totalReviews = Object.values(ratings).reduce((sum, num) => sum + parseInt(num, 10), 0);
+  const averageRating = totalReviews > 0
+    ? Object.entries(ratings).reduce((acc, [key, value]) => acc + (key * value), 0) / totalReviews
+    : 0;
 
   return (
     <div className="product-information">
-      {/* star rating / # of reviews */}
       {totalReviews > 0 && (
         <div className="star-rating">
           {renderStarRating(averageRating)}
-          <a href="#ratings-and-reviews">Read all {totalReviews} reviews</a>
+          <a href="#ratings-and-reviews">
+            Read all
+            {totalReviews}
+            reviews
+          </a>
         </div>
-
       )}
 
-      {/* product category / title */}
       <h2>{name}</h2>
       <h3>{category}</h3>
 
-      {/* price */}
       <div className="price">
         {sale_price ? (
           <>
@@ -54,15 +57,28 @@ const ProductInformation = ({ product, style, reviewsMeta }) => {
         )}
       </div>
 
-      {/* product overview */}
       {description && <p className="product-overview">{description}</p>}
 
-      {/* Social Media Share Buttons */}
       <div className="social-media-share">
-
+        {/* Social media share buttons implementation */}
       </div>
     </div>
   );
+}
+
+ProductInformation.propTypes = {
+  product: PropTypes.shape({
+    category: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+  style: PropTypes.shape({
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+  }).isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: PropTypes.objectOf(PropTypes.string),
+  }).isRequired,
 };
 
 export default ProductInformation;
