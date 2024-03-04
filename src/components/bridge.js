@@ -56,13 +56,13 @@ const bridge = {
   }),
   answers: (questionid, count = 100) => axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/answers`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/answers`,
     headers: {'Authorization': process.env.GIT_API_KEY},
     params: {question_id: questionid, count}
   }),
   putQuestionHelpful: (questionid) => axios({
     method: 'put',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question_id}/helpful`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/helpful`,
     headers: {'Authorization': process.env.GIT_API_KEY},
     params: {question_id: questionid}
   }),
