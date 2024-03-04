@@ -1,13 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProductCard from './RelatedProductCard';
 
 function RelatedProducts({ relatedItems, bridge, setProductId }) {
   const scrollContainerRef = useRef(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const relatedProductCardWidthPlusGap = 328;
 
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -328, behavior: 'smooth' });
+    const container = scrollContainerRef.current;
+    if (container) {
+      const currentScroll = container.scrollLeft;
+      const remainder = currentScroll % relatedProductCardWidthPlusGap;
+      const scrollTarget = currentScroll - remainder - (
+        remainder === 0 ? relatedProductCardWidthPlusGap : 0
+      );
+      container.scrollTo({ left: scrollTarget, behavior: 'smooth' });
     }
   };
 
@@ -18,8 +28,19 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 328, behavior: 'smooth' });
+    const container = scrollContainerRef.current;
+    if (container) {
+      const currentScroll = container.scrollLeft;
+      // Only adjust if showRightArrow is true
+      if (showRightArrow) {
+        const additionalScroll = relatedProductCardWidthPlusGap - (
+          currentScroll % relatedProductCardWidthPlusGap
+        );
+        const scrollTarget = currentScroll + additionalScroll;
+        container.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: relatedProductCardWidthPlusGap, behavior: 'smooth' });
+      }
     }
   };
 
@@ -29,8 +50,35 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
     }
   };
 
+  useEffect(() => {
+    const checkScrollButtons = () => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      // Check if we should show the left arrow
+      const isScrolledToLeft = container.scrollLeft > 0;
+      setShowLeftArrow(isScrolledToLeft);
+
+      // Check if we should show the right arrow
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      const isScrolledToRight = container.scrollLeft < maxScrollLeft;
+      setShowRightArrow(isScrolledToRight);
+    };
+
+    // Initial check and setup event listener for subsequent scrolls
+    checkScrollButtons();
+    const container = scrollContainerRef.current;
+    container.addEventListener('scroll', checkScrollButtons);
+
+    // Cleanup function to remove event listener
+    return () => {
+      container.removeEventListener('scroll', checkScrollButtons);
+    };
+  }, [relatedItems]);
+
   return (
     <div className="related_products_outer_div">
+      {showLeftArrow && (
       <button
         type="button"
         className="related_products_left_arrow_button"
@@ -44,6 +92,8 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
           alt="Scroll left"
         />
       </button>
+      )}
+      {showRightArrow && (
       <button
         type="button"
         className="related_products_right_arrow_button"
@@ -57,6 +107,7 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
           className="related_products_right_arrow"
         />
       </button>
+      )}
       <div id="related_products" ref={scrollContainerRef}>
         {relatedItems.map((productId) => (
           <RelatedProductCard
