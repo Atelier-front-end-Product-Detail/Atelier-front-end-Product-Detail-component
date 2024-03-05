@@ -102,14 +102,14 @@ function ReviewTile({ review }) {
       <div>
         {review.body}
         <br />
-        {review.photos.length > 0
+        {/* {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
               <img
                 key={eachPhoto.id}
                 src={`${eachPhoto.url}${eachPhoto.id}`}
                 alt={`Review ${eachPhoto.id}`}
               />
-            ))}
+            ))} */}
       </div>
 
       <div>
