@@ -10,6 +10,7 @@ function Overview() {
   const [productId, setProductId] = useState(0);
   const [productInfo, setProductInfo] = useState(null);
   const [productStyles, setProductStyles] = useState(null);
+  const [selectedStyle, setSelectedStyle] = useState(null);
   const [reviewsMeta, setReviewsMeta] = useState(null);
 
   useEffect(() => {
@@ -25,7 +26,10 @@ function Overview() {
         .catch((error) => console.error('error fetching product information:', error));
 
       bridge.productStyles(productId)
-        .then((response) => setProductStyles(response.data))
+        .then((response) => {
+          setProductStyles(response.data);
+          setSelectedStyle(response.data.results[0]);
+        })
         .catch((error) => console.error('error fetching product styles:', error));
 
       bridge.reviewsMeta(productId)
@@ -34,25 +38,28 @@ function Overview() {
     }
   }, [productId]);
 
-  if (!productInfo || !productStyles || !reviewsMeta) {
+  if (!productInfo || !productStyles || !reviewsMeta || !selectedStyle) {
     return <p>Loading...</p>;
   }
 
-  const defaultStyle = productStyles.results[0];
+  const handleStyleSelect = (style) => {
+    setSelectedStyle(style);
+  };
 
   return (
     <div className="overview">
-      <ImageGallery style={defaultStyle} />
+      <ImageGallery style={selectedStyle} />
       <ProductInformation
         product={productInfo}
-        style={defaultStyle}
+        style={selectedStyle}
         reviewsMeta={reviewsMeta}
       />
       <StyleSelector
         styles={productStyles.results}
-        selectedStyle={defaultStyle}
+        selectedStyle={selectedStyle}
+        onStyleSelect={handleStyleSelect}
       />
-      <AddToCart style={defaultStyle} />
+      <AddToCart style={selectedStyle} />
     </div>
   );
 }
