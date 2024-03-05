@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import './RatingsAndReviews.css';
+
 import RatingsBreakdown from './RatingsBreakdown';
 import ReviewsView from './ReviewsView';
+
+import PropTypes from 'prop-types';
 
 function RatingsAndReviews({ bridge, productId }) {
   // console.log(props.product_id)
@@ -36,8 +39,8 @@ function RatingsAndReviews({ bridge, productId }) {
   // useEffect(() => console.log((reviews)), [reviews]);
 
   return (
-    <div>
-      <h3>Ratings & Reviews </h3>
+    <div className="rrContainer">
+      <h3 className="rrHeader">Ratings & Reviews </h3>
       <div style={{ display: 'flex' }}>
         <RatingsBreakdown reviewsMeta={reviewsMeta} />
         <ReviewsView bridge={bridge} />

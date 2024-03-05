@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import '../../../dist/RatingsBreakdown.css'
+import './RatingsBreakdown.css';
 
 function RatingsBreakdown({ reviewsMeta }) {
   // console.log('METADATA: ', reviewsMeta);
