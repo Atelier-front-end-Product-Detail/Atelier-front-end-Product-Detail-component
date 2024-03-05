@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Overview from './productDetails/Overview.jsx';
-import RelatedItems from './relatedItems/RelatedItems.jsx';
-import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews.jsx';
-import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers.jsx';
+import Overview from './productDetails/Overview';
+import RelatedItems from './relatedItems/RelatedItems';
+import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
+import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
 import bridge from './bridge';
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
       {/* removed states and hooks */}
       <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
       <QuestionsAnswers bridge={bridge} />
-      <RatingsAndReviews product_id={40345} bridge={bridge} />
+      <RatingsAndReviews productId={40345} bridge={bridge} />
     </div>
   );
 }
