@@ -27,7 +27,7 @@ const bridge = {
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/',
     headers: { Authorization: process.env.GIT_API_KEY },
     params: {
-      productId,
+      product_id: productId,
       page,
       count,
       sort,
