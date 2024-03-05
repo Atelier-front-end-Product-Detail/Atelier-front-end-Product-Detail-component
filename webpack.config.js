@@ -1,12 +1,12 @@
 const path = require('path');
-require ('dotenv').config();
+require('dotenv').config();
 const webpack = require('webpack');
 
 module.exports = {
-  mode: "development",
-  entry: path.join(__dirname, "src/index.js"),
+  mode: 'development',
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
-    path: path.join(__dirname, "dist/"),
+    path: path.join(__dirname, 'dist/'),
     filename: 'main.js',
   },
   module: {
@@ -21,11 +21,16 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/, // Targets CSS files
+        use: ['style-loader', 'css-loader'], // Uses style-loader and css-loader to process CSS files
+      },
     ],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        IMAGE_NOT_FOUND: JSON.stringify(process.env.IMAGE_NOT_FOUND),
         GIT_API_KEY: JSON.stringify(process.env.GIT_API_KEY),
       },
     }),

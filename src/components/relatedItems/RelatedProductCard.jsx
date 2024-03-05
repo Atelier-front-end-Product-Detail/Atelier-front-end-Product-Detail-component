@@ -9,7 +9,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   const [productPhotoIndex, setProductPhotoIndex] = useState(0);
   const [productReviews, setProductReviews] = useState(0);
 
-  const imageNotFound = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+  const imageNotFound = process.env.IMAGE_NOT_FOUND;
 
   // HELPER FUNCTIONS
   const incrementPhotoIndex = (e) => {
@@ -55,7 +55,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   };
 
   const handleImageError = (e) => {
-    e.currentTarget.src = imageNotFound; // Assign the fallback image source
+    e.currentTarget.src = imageNotFound;
   };
 
   // SET INITIAL STATES
@@ -79,7 +79,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
       .then((results) => setProductReviews(results));
   }, [productId]);
 
-  // SET DERIVITAVE STATES
+  // SET DERIVATIVE STATES
   useEffect(() => {
     let newDefaultStyle = productStyles.filter((style) => style['default?'] === true)[0] || {};
     if (JSON.stringify(newDefaultStyle) === '{}' && productStyles.length) { [newDefaultStyle] = productStyles; }
@@ -87,7 +87,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   }, [productStyles]);
 
   useEffect(() => {
-    if (defaultStyle.photos) {
+    if (defaultStyle.photos && defaultStyle.photos.length) {
       const thumbnailUrl = defaultStyle.photos[productPhotoIndex].thumbnail_url;
       if (thumbnailUrl) {
         setProductPhotos(thumbnailUrl);
@@ -98,11 +98,11 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   }, [defaultStyle, productPhotoIndex]);
 
   return (
-    <div role="button" tabIndex="0" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
-      <button type="button" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
-      <button type="button" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
+    <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
+      <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
+      <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
-      <img src={productPhotos} className="product_card_image" alt="" onError={handleImageError} />
+      <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
       <p className="product_card_category">{productInfo.category}</p>
       <span className="product_card_name">
         {productInfo.name}
