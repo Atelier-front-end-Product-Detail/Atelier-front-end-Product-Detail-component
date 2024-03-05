@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './RatingsBreakdown.css';
 
-
 function RatingsBreakdown({ reviewsMeta }) {
   // console.log('METADATA: ', reviewsMeta);
 
