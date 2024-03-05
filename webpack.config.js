@@ -30,8 +30,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        IMAGE_NOT_FOUND: JSON.stringify(process.env.IMAGE_NOT_FOUND),
         GIT_API_KEY: JSON.stringify(process.env.GIT_API_KEY),
+        IMAGE_NOT_FOUND: JSON.stringify('https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'),
       },
     }),
   ],

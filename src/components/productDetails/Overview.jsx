@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ImageGallery from './ImageGallery';
 import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
+import './StyleSelector.css';
 import AddToCart from './AddToCart';
 import bridge from '../bridge';
 
