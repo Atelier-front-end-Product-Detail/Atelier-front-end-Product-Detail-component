@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './RatingsBreakdown.css';
 
-function RatingsBreakdown({ reviewsMeta }) {
+function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
   // console.log('METADATA: ', reviewsMeta);
 
   // use Object.values to create an array of values. Call .reduce on array with accum set to 0.
@@ -32,7 +32,7 @@ function RatingsBreakdown({ reviewsMeta }) {
   // console.log("totalReviews: ", totalReviews)
   // console.log("averageRating: ", averageRating)
   // console.log("percentRecommend: ", percentRecommend)
-  // console.log(reviewsMeta.characteristics)
+  console.log(reviewsMeta.ratings);
 
   return (
     <div className="RatingsBreakdownContainer">
@@ -55,9 +55,14 @@ function RatingsBreakdown({ reviewsMeta }) {
           && Object.entries(reviewsMeta.ratings)
             .reverse()
             .map(([rating, count]) => (
-              <RatingBar key={rating} rating={rating} count={count} totalReviews={totalReviews} />
+              <RatingBar
+                key={rating}
+                rating={rating}
+                count={count}
+                totalReviews={totalReviews}
+                updateStarFilter={updateStarFilter}
+              />
             ))}
-
       </div>
 
       <div>{`${percentRecommend}% of people recommend this product`}</div>
@@ -72,9 +77,11 @@ function RatingsBreakdown({ reviewsMeta }) {
   );
 }
 
-function RatingBar({ rating, count, totalReviews }) {
+function RatingBar({
+  rating, count, totalReviews, updateStarFilter,
+}) {
   return (
-    <div className="RatingsBarContainer">
+    <div className="RatingsBarContainer" onClick={() => updateStarFilter(rating)}>
       <div>
         {`${rating} star`}
         {' '}

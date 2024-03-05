@@ -3,46 +3,78 @@ import './ReviewsView.css';
 import PropTypes from 'prop-types';
 
 
-function ReviewsView({ bridge }) {
+function ReviewsView({ bridge, starFilters, reviewsMeta }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('newest');
-  const [page, setPage] = useState(2);
+  const [selectedValue, setSelectedValue] = useState('relevant');
+  const [displayNumber, setDisplayNumber] = useState(2);
+  const [currentTotalReviews, setCurrentTotalReviews] = useState();
 
-  // console.log('SORT selected: ', selectedValue);
+
+  // let totalReviews
+  // if (reviewsMeta.ratings) {
+  //   // calculate total reviews
+  //   totalReviews = Object.values(reviewsMeta.ratings)
+  //     .reduce((acc, eachRating) => (acc + Number(eachRating)), 0);
+  // }
+
+  useEffect(() => {
+    if (reviewsMeta.ratings) {
+      // calculate total reviews
+      setCurrentTotalReviews(
+        Object.values(reviewsMeta.ratings).reduce(
+          (acc, eachRating) => acc + Number(eachRating),
+          0
+        )
+      );
+    }
+  }, [reviewsMeta.ratings]);
+
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
-    bridge.listReviews(40345, 1, 2, selectedValue)
+    bridge.listReviews(40345, 1, currentTotalReviews, selectedValue)
       .then((results) => {
         setReviews(results.data.results);
       })
       .catch((err) => {
         console.log('listReviews Error: ', err);
       });
-  }, [selectedValue]);
+  }, [selectedValue, currentTotalReviews]);
 
   // console.log('selectedSORT: ', selectedValue);
-  // console.log('reviews: ', reviews);
+  console.log('reviews: ', reviews);
+  console.log('filteredReviews: ', filteredReviews);
 
-  const onAddReviewsClick = () => {
-    bridge.listReviews(40345, page, 2)
-      .then((results) => {
-        setReviews([...reviews, ...results.data.results]);
-        setPage(page + 1);
-      });
+  const onMoreReviewsClick = () => {
+    // console.log("INSIDE totalReviews: ", currentTotalReviews)
+    // bridge.listReviews(40345, 1, currentTotalReviews, selectedValue)
+    //   .then((results) => {
+    //     console.log("INSIDE results", results.data.results)
+    //     setReviews(results.data.results);
+        setDisplayNumber(currentTotalReviews)
+      // });
   };
+
+
 
   const handleSelectionChange = (event) => {
     setSelectedValue(event.target.value);
+    setDisplayNumber(2)
   };
+
+
+  const anyFilterApplied = Object.values(starFilters).some((filter) => filter);
+
+  let filteredReviews = anyFilterApplied ? reviews.filter((review) => starFilters[review.rating]).slice(0, displayNumber) : reviews.slice(0,displayNumber);
 
   return (
     <div className="reviewsView">
       ReviewsView
       <SortReviews handleSelectionChange={handleSelectionChange} selectedValue={selectedValue} />
-      <ReviewsList reviews={reviews} />
-      <AddReview onAddReviewsClick={onAddReviewsClick} />
+      <ReviewsList filteredReviews={filteredReviews} />
+      <MoreReviews onMoreReviewsClick={onMoreReviewsClick}/>
+      <AddReview />
     </div>
   );
 }
@@ -60,12 +92,12 @@ function SortReviews({ selectedValue, handleSelectionChange }) {
   );
 }
 
-function ReviewsList({ reviews }) {
+function ReviewsList({ filteredReviews }) {
   // console.log('reviews: ', reviews);
 
   return (
     <div className="reviewsList">
-      {reviews.length > 0 && reviews.map((review) => (
+      {filteredReviews.length > 0 && filteredReviews.map((review) => (
         <ReviewTile key={review.review_id} review={review} />
       ))}
 
@@ -135,10 +167,18 @@ function ReviewTile({ review }) {
   );
 }
 
-function AddReview({ onAddReviewsClick }) {
+function MoreReviews({ onMoreReviewsClick }) {
   return (
     <div>
-      <button type="button" onClick={onAddReviewsClick}> AddReview </button>
+      <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+    </div>
+  );
+}
+
+function AddReview( ) {
+  return (
+    <div>
+      <button type="button"> AddReview </button>
     </div>
   );
 }

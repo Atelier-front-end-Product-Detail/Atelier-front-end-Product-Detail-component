@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import './RatingsAndReviews.css';
 
+import PropTypes from 'prop-types';
 import RatingsBreakdown from './RatingsBreakdown';
 import ReviewsView from './ReviewsView';
-
-import PropTypes from 'prop-types';
 
 function RatingsAndReviews({ bridge, productId }) {
   // console.log(props.product_id)
 
   const [reviewsMeta, setReviewsMeta] = useState({});
   // const [reviews, setReviews] = useState({});
-  const [fiveStarFilter, setFiveStarFilter] = useState(false);
-  const [fourStarFilter, setFourStarFilter] = useState(false);
-  const [threeStarFilter, setThreeStarFilter] = useState(false);
-  const [twoStarFilter, setTwoStarFilter] = useState(false);
-  const [oneStarFilter, setOneStarFilter] = useState(false);
+  const [starFilters, setStarFilters] = useState({
+    5: false,
+    4: false,
+    3: false,
+    2: false,
+    1: false,
+  });
+
+  // console.log("FILTERS: ", starFilters);
+
+  const updateStarFilter = (filter) => {
+    setStarFilters((starFilters) => (
+      { ...starFilters, [filter]: !starFilters[filter] }
+    ));
+  };
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
@@ -33,7 +42,7 @@ function RatingsAndReviews({ bridge, productId }) {
   //   });
   // }, []);
 
-  // console.log('reviewsMeta: ', reviewsMeta);
+  console.log('reviewsMeta: ', reviewsMeta);
 
   // useEffect(() => console.log("reviewsMeta: ",reviewsMeta), [reviewsMeta]);
   // useEffect(() => console.log((reviews)), [reviews]);
@@ -42,8 +51,15 @@ function RatingsAndReviews({ bridge, productId }) {
     <div className="rrContainer">
       <h3 className="rrHeader">Ratings & Reviews </h3>
       <div style={{ display: 'flex' }}>
-        <RatingsBreakdown reviewsMeta={reviewsMeta} />
-        <ReviewsView bridge={bridge} />
+        <RatingsBreakdown
+          reviewsMeta={reviewsMeta}
+          updateStarFilter={updateStarFilter}
+        />
+        <ReviewsView
+          bridge={bridge}
+          starFilters={starFilters}
+          reviewsMeta={reviewsMeta}
+        />
       </div>
     </div>
 
