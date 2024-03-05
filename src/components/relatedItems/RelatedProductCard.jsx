@@ -15,6 +15,10 @@ function RelatedProductCard({
   const [productPhotoIndex, setProductPhotoIndex] = useState(0);
   const [productReviews, setProductReviews] = useState(0);
 
+  RelatedProductCard.defaultProps = {
+    relatedItemsInfo: new Set(), // REQUIRED TO CLEAR ESLINT MESSAGE FROM LINE 176
+  };
+
   const imageNotFound = process.env.IMAGE_NOT_FOUND;
 
   // HELPER FUNCTIONS
@@ -72,10 +76,9 @@ function RelatedProductCard({
         return results;
       })
       .then((results) => {
-        let newRelatedItemsInfo = [...relatedItemsInfo];
+        let newRelatedItemsInfo = Array.from(relatedItemsInfo);
         newRelatedItemsInfo.push(results.data);
-        const relatedItemsInfoSet = new Set(newRelatedItemsInfo);
-        newRelatedItemsInfo = Array.from(relatedItemsInfoSet);
+        newRelatedItemsInfo = new Set(newRelatedItemsInfo);
         setRelatedItemsInfo(newRelatedItemsInfo);
       });
     bridge.productStyles(productId)
@@ -147,15 +150,20 @@ function RelatedProductCard({
   );
 }
 
-const setPropType = (props, propName, componentName) => {
+function setPropType(props, propName, componentName) {
   const prop = props[propName];
+
+  if (prop === undefined) {
+    return new Error(`${propName} is required in ${componentName} but was not provided.`);
+  }
+
   if (!(prop instanceof Set)) {
     return new Error(
-      `Invalid prop ${propName} supplied to ${componentName}. Validation failed.`,
+      `Invalid prop ${propName} supplied to ${componentName}. Validation failed. Expected a Set but received ${typeof prop}.`,
     );
   }
-  return prop;
-};
+  return null;
+}
 
 RelatedProductCard.propTypes = {
   productId: PropTypes.number.isRequired,
@@ -165,7 +173,7 @@ RelatedProductCard.propTypes = {
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
   setProductId: PropTypes.func.isRequired,
-  relatedItemsInfo: setPropType.isRequired,
+  relatedItemsInfo: setPropType,
   setRelatedItemsInfo: PropTypes.func.isRequired,
 };
 
