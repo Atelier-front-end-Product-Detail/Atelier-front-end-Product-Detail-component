@@ -7,7 +7,7 @@ const QuestionModal = ({handleShowModal, showQuestionModal, handlePostQuestion})
     body: '',
     name: '',
     email: '',
-    productid: 40344
+    productid: "40346"
   })
 
   const handleChange = (e) => {
@@ -18,7 +18,6 @@ const QuestionModal = ({handleShowModal, showQuestionModal, handlePostQuestion})
       [name]: value
     })))
 
-    console.log(questionData)
   }
   return (
     <>
