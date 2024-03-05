@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProductCard from './RelatedProductCard';
-// import ComparisonModal from './ComparisonModal';
+import ComparisonModal from './ComparisonModal';
 
-function RelatedProducts({ relatedItems, bridge, setProductId }) {
+function RelatedProducts({
+  relatedItems,
+  bridge,
+  setProductId,
+  productId,
+}) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  const [relatedItemsInfo, setRelatedItemsInfo] = useState([]);
 
-  const relatedProductCardWidthPlusGap = 328;
+  const relatedProductCardWidthPlusGap = 270;
 
   const scrollLeft = () => {
     const container = scrollContainerRef.current;
@@ -52,7 +56,6 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
   };
 
   useEffect(() => {
-    setRelatedItemsInfo(new Set());
     const checkScrollButtons = () => {
       const container = scrollContainerRef.current;
       if (!container) return;
@@ -107,23 +110,22 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
       </button>
       )}
       <div id="related_products" ref={scrollContainerRef}>
-        {relatedItems.map((productId) => (
+        {relatedItems.map((itemId) => (
           <RelatedProductCard
-            productId={productId}
+            productId={itemId}
             bridge={bridge}
-            key={productId}
+            key={`rpc ${itemId}`}
             setProductId={setProductId}
-            relatedItemsInfo={relatedItemsInfo}
-            setRelatedItemsInfo={setRelatedItemsInfo}
           />
         ))}
-        {/* <ComparisonModal relatedItemsInfo={relatedItemsInfo} /> */}
       </div>
+      <ComparisonModal bridge={bridge} relatedItems={relatedItems} productId={productId} />
     </div>
   );
 }
 
 RelatedProducts.propTypes = {
+  productId: PropTypes.number.isRequired,
   relatedItems: PropTypes.arrayOf(PropTypes.number).isRequired,
   bridge: PropTypes.shape({}).isRequired,
   setProductId: PropTypes.func.isRequired,

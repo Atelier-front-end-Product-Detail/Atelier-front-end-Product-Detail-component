@@ -4,8 +4,6 @@ import '@testing-library/jest-dom';
 import 'dotenv/config';
 import RelatedProductCard from '../components/relatedItems/RelatedProductCard';
 
-/* global describe, it, expect, jest, beforeEach */
-
 describe('RelatedProductCard', () => {
   let mockBridge;
   let mockSetProductId;

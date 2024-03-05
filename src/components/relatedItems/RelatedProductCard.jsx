@@ -5,8 +5,6 @@ function RelatedProductCard({
   productId,
   bridge,
   setProductId,
-  relatedItemsInfo,
-  setRelatedItemsInfo,
 }) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
@@ -14,10 +12,6 @@ function RelatedProductCard({
   const [productPhotos, setProductPhotos] = useState('');
   const [productPhotoIndex, setProductPhotoIndex] = useState(0);
   const [productReviews, setProductReviews] = useState(0);
-
-  RelatedProductCard.defaultProps = {
-    relatedItemsInfo: new Set(), // REQUIRED TO CLEAR ESLINT MESSAGE FROM LINE 176
-  };
 
   const imageNotFound = process.env.IMAGE_NOT_FOUND;
 
@@ -73,13 +67,6 @@ function RelatedProductCard({
     bridge.productInformation(productId)
       .then((results) => {
         setProductInfo(results.data);
-        return results;
-      })
-      .then((results) => {
-        let newRelatedItemsInfo = Array.from(relatedItemsInfo);
-        newRelatedItemsInfo.push(results.data);
-        newRelatedItemsInfo = new Set(newRelatedItemsInfo);
-        setRelatedItemsInfo(newRelatedItemsInfo);
       });
     bridge.productStyles(productId)
       .then((results) => setProductStyles(results.data.results));
@@ -122,12 +109,12 @@ function RelatedProductCard({
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
-      <p className="product_card_category">{productInfo.category}</p>
       <span className="product_card_name">
         {productInfo.name}
         {'  '}
       </span>
       <span className="product_card_extra_text">{productInfo.slogan}</span>
+      <p className="product_card_category">{productInfo.category}</p>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
         <p className="product_card_sale_price">
           Price:
@@ -144,25 +131,10 @@ function RelatedProductCard({
       <p className="product_card_reviews">
         Reviews:
         {' '}
-        {productReviews}
+        {Math.floor(productReviews / (1 / 4)) * (1 / 4)}
       </p>
     </div>
   );
-}
-
-function setPropType(props, propName, componentName) {
-  const prop = props[propName];
-
-  if (prop === undefined) {
-    return new Error(`${propName} is required in ${componentName} but was not provided.`);
-  }
-
-  if (!(prop instanceof Set)) {
-    return new Error(
-      `Invalid prop ${propName} supplied to ${componentName}. Validation failed. Expected a Set but received ${typeof prop}.`,
-    );
-  }
-  return null;
 }
 
 RelatedProductCard.propTypes = {
@@ -173,8 +145,6 @@ RelatedProductCard.propTypes = {
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
   setProductId: PropTypes.func.isRequired,
-  relatedItemsInfo: setPropType,
-  setRelatedItemsInfo: PropTypes.func.isRequired,
 };
 
 export default RelatedProductCard;
