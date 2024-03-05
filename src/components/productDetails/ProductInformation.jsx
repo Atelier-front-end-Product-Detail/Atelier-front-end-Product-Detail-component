@@ -53,7 +53,8 @@ function ProductInformation({ product, style, reviewsMeta }) {
               $
               {salePrice}
             </span>
-            <span className="original-price">
+            {' '}
+            <span className="original-price" style={{ textDecoration: 'line-through' }}>
               $
               {originalPrice}
             </span>
