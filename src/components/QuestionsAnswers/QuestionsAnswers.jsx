@@ -1,8 +1,9 @@
 import SearchQuestionsAnswers from './SearchQuestionsAnswers'
 import QuestionsAnswersList from './QuestionsAnswersList'
 import QuestionModal from './QuestionModal'
+import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
-
+import axios from 'axios'
 
 const QuestionsAnswers = ({bridge}) => {
   const [dataNum, setDataNum] = useState(2)
@@ -11,15 +12,16 @@ const QuestionsAnswers = ({bridge}) => {
   const [isFiltered, setIsFiltered] = useState(false)
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   useEffect(() => {
-    bridge.questions(40344)
+    bridge.questions(40346)
     .then((results) => {
       setData(results.data.results)
-      // console.log(results.data)
     })
     .catch((err) => {
       throw err;
     })
   },[])
+
+
 
   const handleShowModal = (boolean) => {
     setShowQuestionModal(boolean)
@@ -29,18 +31,18 @@ const QuestionsAnswers = ({bridge}) => {
     if(data.length > 4 && dataNum < data.length) {
       return (
         <>
-           <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum}/>
+           <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
         <button type="button" onClick={() => {
               setDataNum(dataNum +2)
             }}>More Questions</button>
-        <button type="button" onClick={() => {handleShowModal(true)}}>Add a question</button>
+        <button type="button" onClick={() => {handleShowModal(true)}} id="question-button">Add a question</button>
         </>
       )
     } else {
       return (
         <>
-        <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum}/>
-        <button type="button" onClick={() => {handleShowModal(true)}}>Add a question</button>
+        <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
+        <button type="button" onClick={() => {handleShowModal(true)}} id="question-button">Add a question</button>
         </>
       )
     }
@@ -62,17 +64,15 @@ const QuestionsAnswers = ({bridge}) => {
   }
 
   const handlePostQuestion = (data) => {
-    console.log(data)
     bridge.postQuestion(data)
     .then(() => {
-      console.log("Success posting question")
+      console.log("Success posting question", data)
     })
     .catch((err) => {
-      throw err;
-      console.log(err)
+      console.log("Unsuccesful post", err)
     })
 
-    bridge.questions(40344)
+    bridge.questions(40345)
     .then((results) => {
       setData(results.data.results)
     })
@@ -81,12 +81,45 @@ const QuestionsAnswers = ({bridge}) => {
     })
   }
 
+  const handleQuestionHelpful = (question_id) => {
+    bridge.putQuestionHelpful(question_id)
+    .then(() => {
+      bridge.questions(40346)
+      .then((results) => {
+        setData(results.data.results)
+      })
+      .catch((err) => {
+        throw err;
+      })
+      })
+    .catch((err) => {
+      throw err;
+    })
+
+  }
+
+  const handleQuestionReport = (question_id) => {
+    bridge.reportQuestion(question_id)
+    .then(() => {
+      bridge.questions(40346)
+      .then((results) => {
+        setData(results.data.results)
+      })
+      .catch((err) => {
+        throw err;
+      })
+    })
+    .catch((err) => {
+      throw err
+    })
+  }
+
 return (
   <div className="questions-answers-overview">
-    <h1>Questions & Answers</h1>
+    <h1 data-testid='title'>Questions & Answers</h1>
     <SearchQuestionsAnswers handleSearch={handleSearch}/>
     <QuestionModal handlePostQuestion={handlePostQuestion} handleShowModal={handleShowModal} showQuestionModal={showQuestionModal} />
-    {isFiltered ? <QuestionsAnswersList bridge={bridge} data={filtered}/> :
+    {isFiltered ? <QuestionsAnswersList bridge={bridge} data={filtered} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/> :
       <>
       {showQuestionsButton()}
       </>
@@ -94,5 +127,6 @@ return (
   </div>
 )
 }
+
 
 export default QuestionsAnswers
