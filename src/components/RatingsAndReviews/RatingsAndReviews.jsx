@@ -42,7 +42,7 @@ function RatingsAndReviews({ bridge, productId }) {
   //   });
   // }, []);
 
-  console.log('reviewsMeta: ', reviewsMeta);
+  // console.log('reviewsMeta: ', reviewsMeta);
 
   // useEffect(() => console.log("reviewsMeta: ",reviewsMeta), [reviewsMeta]);
   // useEffect(() => console.log((reviews)), [reviews]);

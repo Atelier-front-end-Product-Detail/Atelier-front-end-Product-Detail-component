@@ -32,7 +32,7 @@ function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
   // console.log("totalReviews: ", totalReviews)
   // console.log("averageRating: ", averageRating)
   // console.log("percentRecommend: ", percentRecommend)
-  console.log(reviewsMeta.ratings);
+  // console.log(reviewsMeta.ratings);
 
   return (
     <div className="RatingsBreakdownContainer">

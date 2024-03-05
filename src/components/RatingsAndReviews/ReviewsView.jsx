@@ -43,8 +43,8 @@ function ReviewsView({ bridge, starFilters, reviewsMeta }) {
   }, [selectedValue, currentTotalReviews]);
 
   // console.log('selectedSORT: ', selectedValue);
-  console.log('reviews: ', reviews);
-  console.log('filteredReviews: ', filteredReviews);
+  // console.log('reviews: ', reviews);
+  // console.log('filteredReviews: ', filteredReviews);
 
   const onMoreReviewsClick = () => {
     // console.log("INSIDE totalReviews: ", currentTotalReviews)
@@ -201,7 +201,7 @@ SortReviews.propTypes = {
 };
 
 AddReview.propTypes = {
-  onAddReviewsClick: PropTypes.func.isRequired,
+  // onAddReviewsClick: PropTypes.func.isRequired,
   // bridge: PropTypes.shape({
   //   reviewsMeta: PropTypes.func.isRequired,
   //   listReviews: PropTypes.func.isRequired,
@@ -209,7 +209,7 @@ AddReview.propTypes = {
 };
 
 ReviewsList.propTypes = {
-  reviews: PropTypes.arrayOf(
+  filteredReviews: PropTypes.arrayOf(
     PropTypes.shape({
       review_id: PropTypes.number.isRequired,
       rating: PropTypes.number.isRequired,
