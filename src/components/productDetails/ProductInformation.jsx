@@ -22,7 +22,7 @@ function ProductInformation({ product, style, reviewsMeta }) {
   }
 
   const { category, name, description } = product;
-  const { original_price, sale_price } = style;
+  const { original_price: originalPrice, sale_price: salePrice } = style;
   const { ratings } = reviewsMeta;
 
   const totalReviews = Object.values(ratings).reduce((sum, num) => sum + parseInt(num, 10), 0);
@@ -47,13 +47,22 @@ function ProductInformation({ product, style, reviewsMeta }) {
       <h3>{category}</h3>
 
       <div className="price">
-        {sale_price ? (
+        {salePrice ? (
           <>
-            <span className="sale-price">${sale_price}</span>
-            <span className="original-price">${original_price}</span>
+            <span className="sale-price">
+              $
+              {salePrice}
+            </span>
+            <span className="original-price">
+              $
+              {originalPrice}
+            </span>
           </>
         ) : (
-          <span>${original_price}</span>
+          <span>
+            $
+            {originalPrice}
+          </span>
         )}
       </div>
 
