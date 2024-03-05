@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './ReviewsView.css';
 import PropTypes from 'prop-types';
+
 
 function ReviewsView({ bridge }) {
   const [reviews, setReviews] = useState([]);
@@ -36,7 +38,7 @@ function ReviewsView({ bridge }) {
   };
 
   return (
-    <div>
+    <div className="reviewsView">
       ReviewsView
       <SortReviews handleSelectionChange={handleSelectionChange} selectedValue={selectedValue} />
       <ReviewsList reviews={reviews} />
@@ -62,7 +64,7 @@ function ReviewsList({ reviews }) {
   // console.log('reviews: ', reviews);
 
   return (
-    <div>
+    <div className="reviewsList">
       {reviews.length > 0 && reviews.map((review) => (
         <ReviewTile key={review.review_id} review={review} />
       ))}
@@ -72,22 +74,32 @@ function ReviewsList({ reviews }) {
 }
 
 function ReviewTile({ review }) {
-  return (
-    <div style={{ border: '2px solid black' }}>
-      {review.review_id}
 
-      <div>
-        STAR:
-        {review.rating}
-        USERNAME:
-        {review.reviewer_name}
-        DATE:
-        {review.date}
+  const reviewDate = new Date(review.date);
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+
+  const readableDate = reviewDate.toLocaleString('en-US', options);
+
+  return (
+    <div className="reviewTile">
+      {/* {review.review_id} */}
+
+      <div className="userNameBar">
+
+        <div>STAR: {review.rating}</div>
+
+        <div>
+          username
+          {review.reviewer_name + ', '}
+          {readableDate}
+        </div>
+
+
       </div>
 
       <h4>{review.summary}</h4>
 
-      {/* <div>
+      <div>
         {review.body}
         <br />
         {review.photos.length > 0
@@ -98,7 +110,7 @@ function ReviewTile({ review }) {
                 alt={`Review ${eachPhoto.id}`}
               />
             ))}
-      </div> */}
+      </div>
 
       <div>
         {review.recommend && 'I recommend this product'}

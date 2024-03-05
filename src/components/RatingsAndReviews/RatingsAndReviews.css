@@ -1,0 +1,14 @@
+.rrContainer {
+  border: 2px solid red;
+  min-width: 600px; /* Set the minimum width in pixels */
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  max-height: 100vh;
+}
+
+.rrHeader {
+  margin: 0;
+}
