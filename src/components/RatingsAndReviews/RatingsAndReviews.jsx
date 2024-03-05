@@ -8,6 +8,11 @@ function RatingsAndReviews({ bridge, productId }) {
 
   const [reviewsMeta, setReviewsMeta] = useState({});
   // const [reviews, setReviews] = useState({});
+  const [fiveStarFilter, setFiveStarFilter] = useState(false);
+  const [fourStarFilter, setFourStarFilter] = useState(false);
+  const [threeStarFilter, setThreeStarFilter] = useState(false);
+  const [twoStarFilter, setTwoStarFilter] = useState(false);
+  const [oneStarFilter, setOneStarFilter] = useState(false);
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);

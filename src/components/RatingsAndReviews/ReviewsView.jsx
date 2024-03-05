@@ -4,24 +4,24 @@ import PropTypes from 'prop-types';
 function ReviewsView({ bridge }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('Relevant');
+  const [selectedValue, setSelectedValue] = useState('newest');
   const [page, setPage] = useState(2);
 
   // console.log('SORT selected: ', selectedValue);
 
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
-    bridge.listReviews(40345, 1, 2)
+    bridge.listReviews(40345, 1, 2, selectedValue)
       .then((results) => {
-        console.log('TEST', results);
         setReviews(results.data.results);
       })
       .catch((err) => {
         console.log('listReviews Error: ', err);
       });
-  }, []);
+  }, [selectedValue]);
 
-  console.log('reviews: ', reviews);
+  // console.log('selectedSORT: ', selectedValue);
+  // console.log('reviews: ', reviews);
 
   const onAddReviewsClick = () => {
     bridge.listReviews(40345, page, 2)
@@ -50,9 +50,9 @@ function SortReviews({ selectedValue, handleSelectionChange }) {
     <div>
       <label htmlFor="dropdown">Sort by:</label>
       <select id="dropdown" name="dropdown" value={selectedValue} onChange={handleSelectionChange}>
-        <option value="Relevant">Relevant</option>
-        <option value="Newest">Newest</option>
-        <option value="Helpful">Helpful</option>
+        <option value="relevant">Relevant</option>
+        <option value="newest">Newest</option>
+        <option value="helpful">Helpful</option>
       </select>
     </div>
   );
@@ -73,14 +73,52 @@ function ReviewsList({ reviews }) {
 
 function ReviewTile({ review }) {
   return (
-    <div>
+    <div style={{ border: '2px solid black' }}>
       {review.review_id}
-      STAR:
-      {review.rating}
-      USERNAME:
-      {review.reviewer_name}
-      DATE:
-      {review.date}
+
+      <div>
+        STAR:
+        {review.rating}
+        USERNAME:
+        {review.reviewer_name}
+        DATE:
+        {review.date}
+      </div>
+
+      <h4>{review.summary}</h4>
+
+      {/* <div>
+        {review.body}
+        <br />
+        {review.photos.length > 0
+            && review.photos.map((eachPhoto) => (
+              <img
+                key={eachPhoto.id}
+                src={`${eachPhoto.url}${eachPhoto.id}`}
+                alt={`Review ${eachPhoto.id}`}
+              />
+            ))}
+      </div> */}
+
+      <div>
+        {review.recommend && 'I recommend this product'}
+      </div>
+
+      <div>
+        {review.response && review.response}
+      </div>
+
+      <div>
+        <p>Helpful?</p>
+        <a>
+          Yes (
+          {review.helpfulness}
+          )
+          {' '}
+        </a>
+        <button>Report</button>
+      </div>
+
     </div>
   );
 }

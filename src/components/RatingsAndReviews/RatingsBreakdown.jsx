@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import '../../../dist/RatingsBreakdown.css'
 
 function RatingsBreakdown({ reviewsMeta }) {
-  console.log('METADATA: ', reviewsMeta);
+  // console.log('METADATA: ', reviewsMeta);
 
   // use Object.values to create an array of values. Call .reduce on array with accum set to 0.
   let totalReviews;
