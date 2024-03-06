@@ -20,6 +20,16 @@ function RatingsAndReviews({ bridge, productId }) {
 
   // console.log("FILTERS: ", starFilters);
 
+  const removeAllFilters = () => {
+    setStarFilters({
+      5: false,
+      4: false,
+      3: false,
+      2: false,
+      1: false,
+    });
+  };
+
   const updateStarFilter = (filter) => {
     setStarFilters((starFilters) => (
       { ...starFilters, [filter]: !starFilters[filter] }
@@ -54,11 +64,14 @@ function RatingsAndReviews({ bridge, productId }) {
         <RatingsBreakdown
           reviewsMeta={reviewsMeta}
           updateStarFilter={updateStarFilter}
+          starFilters={starFilters}
+          removeAllFilters={removeAllFilters}
         />
         <ReviewsView
           bridge={bridge}
           starFilters={starFilters}
           reviewsMeta={reviewsMeta}
+          removeAllFilters={removeAllFilters}
         />
       </div>
     </div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './ReviewsView.css';
 import PropTypes from 'prop-types';
+import StarRating from './StarRating';
 
 
-function ReviewsView({ bridge, starFilters, reviewsMeta }) {
+function ReviewsView({ bridge, starFilters, reviewsMeta, removeAllFilters }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
   const [selectedValue, setSelectedValue] = useState('relevant');
@@ -60,7 +61,9 @@ function ReviewsView({ bridge, starFilters, reviewsMeta }) {
 
   const handleSelectionChange = (event) => {
     setSelectedValue(event.target.value);
-    setDisplayNumber(2)
+    setDisplayNumber(2);
+    removeAllFilters();
+
   };
 
 
@@ -70,7 +73,7 @@ function ReviewsView({ bridge, starFilters, reviewsMeta }) {
 
   return (
     <div className="reviewsView">
-      ReviewsView
+
       <SortReviews handleSelectionChange={handleSelectionChange} selectedValue={selectedValue} />
       <ReviewsList filteredReviews={filteredReviews} />
       <MoreReviews onMoreReviewsClick={onMoreReviewsClick}/>
@@ -118,11 +121,15 @@ function ReviewTile({ review }) {
 
       <div className="userNameBar">
 
-        <div>STAR: {review.rating}</div>
+        <div>
+        <StarRating ratingToDisplay={review.rating} />
+        </div>
 
         <div>
-          username
-          {review.reviewer_name + ', '}
+          {review.reviewer_name ? (review.reviewer_name + ', ')
+          : ("Anonymous, ")
+          }
+
           {readableDate}
         </div>
 
@@ -143,25 +150,26 @@ function ReviewTile({ review }) {
               />
             ))} */}
       </div>
-
+      <br/>
       <div>
-        {review.recommend && 'I recommend this product'}
+        {review.recommend && ('\u2713' + ' I recommend this product')}
       </div>
+      <br/>
 
       <div>
         {review.response && review.response}
       </div>
 
-      <div>
-        <p>Helpful?</p>
-        <a>
+      <span>
+        <>Helpful?  </>
+        <a className="helpful">
           Yes (
           {review.helpfulness}
           )
           {' '}
         </a>
-        <button>Report</button>
-      </div>
+        <a className="report">Report</a>
+      </span>
 
     </div>
   );

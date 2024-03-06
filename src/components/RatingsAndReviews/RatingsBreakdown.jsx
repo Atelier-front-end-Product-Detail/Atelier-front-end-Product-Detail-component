@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './RatingsBreakdown.css';
+import StarRating from './StarRating';
 
-function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
+function RatingsBreakdown({ reviewsMeta, updateStarFilter, starFilters, removeAllFilters }) {
   // console.log('METADATA: ', reviewsMeta);
 
   // use Object.values to create an array of values. Call .reduce on array with accum set to 0.
@@ -33,6 +34,15 @@ function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
   // console.log("averageRating: ", averageRating)
   // console.log("percentRecommend: ", percentRecommend)
   // console.log(reviewsMeta.ratings);
+  const appliedFilters = Object.entries(starFilters)
+  .filter(([rating, value]) => value)
+  .map(([rating, value]) => rating);
+
+  const appliedFiltersMessage =
+    appliedFilters.length > 0
+      ? `Star filters applied: ${appliedFilters.join(', ')}`
+      : null;
+
 
   return (
     <div className="RatingsBreakdownContainer">
@@ -49,6 +59,9 @@ function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
         )
         : null}
 
+      <StarRating interactive="true"/>
+      <br/>
+      <StarRating ratingToDisplay="3" />
       <div>
         {/* map over reviewsMeta.ratings and return RatingBar. Reverse order. */}
         {reviewsMeta.ratings
@@ -64,6 +77,11 @@ function RatingsBreakdown({ reviewsMeta, updateStarFilter }) {
               />
             ))}
       </div>
+
+      <div>{appliedFiltersMessage}</div>
+      {appliedFilters.length > 0 &&
+        <button onClick={removeAllFilters}>Remove all filters</button>
+      }
 
       <div>{`${percentRecommend}% of people recommend this product`}</div>
 
