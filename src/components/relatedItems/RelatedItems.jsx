@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProducts from './RelatedProducts';
+import YourOutfit from './YourOutfit';
 import './styles.css';
 
 function RelatedItems({ productId, bridge, setProductId }) {
@@ -28,6 +29,8 @@ function RelatedItems({ productId, bridge, setProductId }) {
         setProductId={setProductId}
         productId={productId}
       />
+      <br />
+      <YourOutfit productId={productId} bridge={bridge} setProductId={setProductId} />
     </div>
   );
 }

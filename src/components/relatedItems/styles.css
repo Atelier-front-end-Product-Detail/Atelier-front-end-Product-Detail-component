@@ -5,8 +5,8 @@
   --related_products_gap: 20px;
   --related_product_card_width: 250px;
   --related_product_card_height: 500px;
-  --related_product_card_image_width: 244px;
-  --related_product_card_image_height: 300px;
+  --product_card_image_width: 244px;
+  --product_card_image_height: 300px;
   --related_product_card_prev_next_img_offest: 20px;
   --related_product_card_prev_next_img_height: 20px;
   --related_products_arrow_height: 50px;
@@ -32,7 +32,7 @@
 .related_product_card {
   display: flex;
   flex-direction: column;
-  padding: calc((var(--related_product_card_width) - var(--related_product_card_image_width)) / 2);
+  padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
   position: relative;
   width: var(--related_product_card_width);
   height: var(--related_product_card_height);
@@ -42,12 +42,21 @@
   box-sizing: content-box;
 }
 
-/* .related_product_card p,
-.related_product_card span {
-  background-color: var(--background_color_2);
-} */
+#add_item_to_outfit {
+  display: flex;
+  flex-direction: column;
+  padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
+  width: var(--related_product_card_width);
+  height: var(--related_product_card_height);
+  z-index: 0;
+  border: 5px outset var(--border_color_1);
+  box-sizing: content-box;
+  justify-content: center;
+  align-content: center;
+}
 
-#related_products {
+#related_products,
+#your_outfit {
   display: inline-flex;
   overflow: auto;
   gap: var(--related_products_gap);
@@ -79,10 +88,10 @@
 }
 
 .product_card_image {
-  width: var(--related_product_card_image_width);
-  min-width: var(--related_product_card_image_width);
-  max-width: var(--related_product_card_width);
-  height: var(--related_product_card_image_height);
+  min-width: var(--product_card_image_width);
+  min-height: var(--product_card_image_height);
+  width: var(--product_card_image_width);
+  height: var(--product_card_image_height);
   z-index: -1;
   position: relative;
   object-fit: cover;
