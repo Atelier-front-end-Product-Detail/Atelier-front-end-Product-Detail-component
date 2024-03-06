@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function RelatedProductCard({ productId, bridge, setProductId }) {
+function RelatedProductCard({
+  productId,
+  bridge,
+  setProductId,
+}) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
   const [defaultStyle, setDefaultStyle] = useState({});
@@ -61,7 +65,9 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
   // SET INITIAL STATES
   useEffect(() => {
     bridge.productInformation(productId)
-      .then((results) => setProductInfo(results.data));
+      .then((results) => {
+        setProductInfo(results.data);
+      });
     bridge.productStyles(productId)
       .then((results) => setProductStyles(results.data.results));
     bridge.reviewsMeta(productId)
@@ -103,12 +109,12 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
-      <p className="product_card_category">{productInfo.category}</p>
       <span className="product_card_name">
         {productInfo.name}
         {'  '}
       </span>
       <span className="product_card_extra_text">{productInfo.slogan}</span>
+      <p className="product_card_category">{productInfo.category}</p>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
         <p className="product_card_sale_price">
           Price:
@@ -125,7 +131,7 @@ function RelatedProductCard({ productId, bridge, setProductId }) {
       <p className="product_card_reviews">
         Reviews:
         {' '}
-        {productReviews}
+        {Math.floor(productReviews / (1 / 4)) * (1 / 4)}
       </p>
     </div>
   );

@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProductCard from './RelatedProductCard';
+import ComparisonModal from './ComparisonModal';
 
-function RelatedProducts({ relatedItems, bridge, setProductId }) {
+function RelatedProducts({
+  relatedItems,
+  bridge,
+  setProductId,
+  productId,
+}) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
-  const relatedProductCardWidthPlusGap = 328;
+  const relatedProductCardWidthPlusGap = 270;
 
   const scrollLeft = () => {
     const container = scrollContainerRef.current;
@@ -31,7 +37,6 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      // Only adjust if showRightArrow is true
       if (showRightArrow) {
         const additionalScroll = relatedProductCardWidthPlusGap - (
           currentScroll % relatedProductCardWidthPlusGap
@@ -55,22 +60,18 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
       const container = scrollContainerRef.current;
       if (!container) return;
 
-      // Check if we should show the left arrow
       const isScrolledToLeft = container.scrollLeft > 0;
       setShowLeftArrow(isScrolledToLeft);
 
-      // Check if we should show the right arrow
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
       const isScrolledToRight = container.scrollLeft < maxScrollLeft;
       setShowRightArrow(isScrolledToRight);
     };
 
-    // Initial check and setup event listener for subsequent scrolls
     checkScrollButtons();
     const container = scrollContainerRef.current;
     container.addEventListener('scroll', checkScrollButtons);
 
-    // Cleanup function to remove event listener
     return () => {
       container.removeEventListener('scroll', checkScrollButtons);
     };
@@ -109,20 +110,22 @@ function RelatedProducts({ relatedItems, bridge, setProductId }) {
       </button>
       )}
       <div id="related_products" ref={scrollContainerRef}>
-        {relatedItems.map((productId) => (
+        {relatedItems.map((itemId) => (
           <RelatedProductCard
-            productId={productId}
+            productId={itemId}
             bridge={bridge}
-            key={productId}
+            key={`rpc ${itemId}`}
             setProductId={setProductId}
           />
         ))}
       </div>
+      <ComparisonModal bridge={bridge} relatedItems={relatedItems} productId={productId} />
     </div>
   );
 }
 
 RelatedProducts.propTypes = {
+  productId: PropTypes.number.isRequired,
   relatedItems: PropTypes.arrayOf(PropTypes.number).isRequired,
   bridge: PropTypes.shape({}).isRequired,
   setProductId: PropTypes.func.isRequired,
