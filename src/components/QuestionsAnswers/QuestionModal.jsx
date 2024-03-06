@@ -22,7 +22,8 @@ const QuestionModal = ({handleShowModal, showQuestionModal, handlePostQuestion})
   return (
     <>
     <div className={handleClassName}>
-    <form className="question-form">
+    <div className="question-form">
+        <div className="x-button"><button onClick={() => {handleShowModal(false)}}>x</button></div>
       <label>Enter your question</label><input type="text" onChange={handleChange} name="body"></input>
       <label>Username</label><input type="text" onChange={handleChange} name="name" ></input>
       <label>Email</label><input type="text" onChange={handleChange} name="email"></input><br></br>
@@ -30,7 +31,7 @@ const QuestionModal = ({handleShowModal, showQuestionModal, handlePostQuestion})
         handlePostQuestion(questionData)
       handleShowModal(false)
     }} type="button">Submit question</button>
-    </form>
+    </div>
     </div>
     </>
   )

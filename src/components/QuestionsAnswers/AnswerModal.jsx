@@ -31,6 +31,7 @@ const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit}) => {
     <>
       <div className={handleClassName}>
         <div className="answer-form">
+        <div className="x-button"><button onClick={() => {setAnswerModal(!showAnswerModal)}}>x</button></div>
           <label>Enter a answer</label>
           <input name="body" type="text" onChange={handleChange}></input>
           <label>Username</label>

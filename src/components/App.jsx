@@ -31,7 +31,7 @@ function App() {
   // SETTING STATE FOR PRODUCTID
   useEffect(() => {
     bridge.listProducts()
-      .then((results) => setProductId(results.data[0].id));
+      .then((results) => setProductId(results.data[0].id))
   }, []);
 
   return (
@@ -40,7 +40,7 @@ function App() {
       <Overview bridge={bridge} />
       {/* removed states and hooks */}
       <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-      <QuestionsAnswers bridge={bridge} />
+      <QuestionsAnswers bridge={bridge} productId={productId}/>
       <RatingsAndReviews productId={40345} bridge={bridge} />
     </div>
   );
