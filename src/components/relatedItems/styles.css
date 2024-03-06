@@ -10,7 +10,6 @@
   --related_product_card_prev_next_img_offest: 20px;
   --related_product_card_prev_next_img_height: 20px;
   --related_products_arrow_height: 50px;
-  --related_products_arrow_font_size: 50px;
 }
 
 .related_items {
@@ -105,12 +104,11 @@
 .related_products_left_arrow_button,
 .related_products_right_arrow_button {
   height: var(--related_products_arrow_height);
-  font-size: var(--related_products_arrow_font_size);
   align-self: center;
   text-align: center;
   z-index: 1;
   position: absolute;
-  top: calc(var(--related_product_card_height) - var(--related_products_arrow_height));
+  top: calc(var(--related_product_card_height) / 2 - var(--related_products_arrow_height) / 2);
 }
 
 .related_products_left_arrow_button {

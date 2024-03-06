@@ -9,7 +9,8 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
     const fetchAllRelatedItemsInfo = async () => {
       let allItems = productId ? [productId, ...relatedItems] : [...relatedItems];
       const allItemsSet = new Set(allItems);
-      allItems = [...allItemsSet];
+      allItemsSet.delete(productId);
+      allItems = [productId, ...allItemsSet];
       const fetchPromises = allItems.map(async (item) => {
         const infoResults = await bridge.productInformation(item);
         const stylesResults = await bridge.productStyles(item);

@@ -34,16 +34,18 @@ function App() {
       .then((results) => setProductId(results.data[0].id))
   }, []);
 
-  return (
-    <div>
-      HELLO =D
-      <Overview bridge={bridge} />
-      {/* removed states and hooks */}
-      <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-      <QuestionsAnswers bridge={bridge} productId={productId}/>
-      <RatingsAndReviews productId={40345} bridge={bridge} />
-    </div>
-  );
+  return !productId
+    ? (
+      <div>...Loading</div>
+    )
+    : (
+      <div>
+        <Overview bridge={bridge} />
+        <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
+        <QuestionsAnswers bridge={bridge} productId={productId}/>
+        <RatingsAndReviews productId={40345} bridge={bridge} />
+      </div>
+    );
 }
 
 export default App;
