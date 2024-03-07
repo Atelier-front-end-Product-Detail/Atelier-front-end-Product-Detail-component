@@ -69,6 +69,7 @@ function RatingsAndReviews({ bridge, productId }) {
         />
         <ReviewsView
           bridge={bridge}
+          productId={productId}
           starFilters={starFilters}
           reviewsMeta={reviewsMeta}
           removeAllFilters={removeAllFilters}

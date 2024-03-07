@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './ReviewsView.css';
 import PropTypes from 'prop-types';
 import StarRating from './StarRating';
+import AddReviewModal from './AddReviewModal';
 
 function ReviewsView({
-  bridge, starFilters, reviewsMeta, removeAllFilters,
+  bridge, productId, starFilters, reviewsMeta, removeAllFilters,
 }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
   const [selectedValue, setSelectedValue] = useState('relevant');
   const [displayNumber, setDisplayNumber] = useState(2);
   const [currentTotalReviews, setCurrentTotalReviews] = useState();
+  const [showAddReviewModal, setShowAddReviewModal] = useState(false)
+
 
   // let totalReviews
   // if (reviewsMeta.ratings) {
@@ -32,7 +35,7 @@ function ReviewsView({
   }, [reviewsMeta.ratings]);
 
   const fetchAllData = () => {
-    bridge.listReviews(40345, 1, currentTotalReviews, selectedValue)
+    bridge.listReviews(productId, 1, currentTotalReviews, selectedValue)
       .then((results) => {
         setReviews(results.data.results);
       })
@@ -66,6 +69,13 @@ function ReviewsView({
     removeAllFilters();
   };
 
+  const handleShowModal = (boolean) => {
+    setShowAddReviewModal(boolean)
+  }
+
+  // const handleAddReview =
+
+
   const anyFilterApplied = Object.values(starFilters).some((filter) => filter);
 
   const filteredReviews = anyFilterApplied ? reviews.filter((review) => starFilters[review.rating]).slice(0, displayNumber) : reviews.slice(0, displayNumber);
@@ -80,7 +90,8 @@ function ReviewsView({
         fetchAllData={fetchAllData}
       />
       <MoreReviews onMoreReviewsClick={onMoreReviewsClick} />
-      <AddReview />
+      <button type="button" onClick={() => {handleShowModal(true)}} >Add a Review</button>
+      {/* <AddReviewModal handleAddReview={handleAddReview} /> */}
     </div>
   );
 }
@@ -126,24 +137,24 @@ function ReviewTile({ review, bridge, fetchAllData }) {
       console.log('ALREADY MARKED HELPFUL');
     } else {
       bridge.markReviewHelpful(review.review_id)
-        .catch((err) => {
-          console.log('Mark Helpful Error: ', err);
-        })
         .then(() => {
           fetchAllData();
           localStorage.setItem(review.review_id, 'true');
+        })
+        .catch((err) => {
+          console.log('Mark Helpful Error: ', err);
         });
     }
   };
 
   const onReportClick = () => {
     bridge.reportReview(review.review_id)
-      .catch((err) => {
-        console.log('Report Review Error: ', err);
-      })
       .then(() => {
         fetchAllData();
         localStorage.setItem(review.review_id, 'true');
+      })
+      .catch((err) => {
+        console.log('Report Review Error: ', err);
       });
   };
 

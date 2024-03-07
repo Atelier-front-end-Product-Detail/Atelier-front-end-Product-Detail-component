@@ -21,6 +21,7 @@ function StarRating({ ratingToDisplay, interactive }) {
           onClick={() => handleStarClick(starIndex)}
         >
           &#9733;
+          {/* {'\u2605'} */}
         </span>
       ))}
     </div>
