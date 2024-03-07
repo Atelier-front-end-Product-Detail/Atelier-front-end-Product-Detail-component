@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import ActionButton from './ActionButton';
 
 function RelatedProductCard({
   productId,
   bridge,
   setProductId,
+  type,
+  action,
 }) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
@@ -105,6 +108,7 @@ function RelatedProductCard({
 
   return (
     <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
+      <ActionButton type={type} action={action} productId={productId} />
       <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
@@ -147,6 +151,8 @@ RelatedProductCard.propTypes = {
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
   setProductId: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
 export default RelatedProductCard;

@@ -7,7 +7,7 @@
   --related_product_card_height: 500px;
   --product_card_image_width: 235px;
   --product_card_image_height: 300px;
-  --related_product_card_prev_next_img_offest: 20px;
+  --related_product_card_prev_next_img_offest: 0;
   --related_product_card_prev_next_img_height: 20px;
   --related_products_arrow_height: 50px;
 }
@@ -50,6 +50,13 @@
   max-height: 220px;
 }
 
+.related_items_action_button {
+  display: flex;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
 #add_item_to_outfit,
 #remove_item_from_outfit {
   display: flex;
@@ -57,10 +64,10 @@
   padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
   width: calc(var(--related_product_card_width) / 2);
   min-width: calc(var(--related_product_card_width) / 2);
-  height: calc(var(--related_product_card_height) / 2);
+  height: var(--related_product_card_height);
   z-index: 0;
   border: 5px outset var(--border_color_1);
-  box-sizing: content-box;
+  box-sizing: border-box;
   justify-content: center;
   align-content: center;
 }
@@ -95,7 +102,7 @@
   background-color: green;
   color: white;
   height: var(--related_product_card_prev_next_img_height);
-  top: var(--related_product_card_prev_next_img_offest);
+  top: calc(var(--product_card_image_height) / 2 - var(--related_product_card_prev_next_img_height) / 2);
   z-index: 1;
 }
 
@@ -135,6 +142,7 @@
 .related_products_right_arrow_button,
 .your_outfit_left_arrow_button,
 .your_outfit_right_arrow_button {
+  display: flex;
   height: var(--related_products_arrow_height);
   align-self: center;
   text-align: center;

@@ -7,13 +7,18 @@ function ComparisonModalRow({ productInfo }) {
   return (
     <div className="comparison_modal_row">
       <div className="comparison_modal_main_column">{productInfo[0]}</div>
-      {productInfo.slice(1).map((item) => <div className="comparison_modal_column">{item}</div>)}
+      {productInfo.slice(1).map((item, index) => <div className="comparison_modal_column" key={`cmr ${index * 2}${item}`}>{item}</div>)}
     </div>
   );
 }
 
 ComparisonModalRow.propTypes = {
-  productInfo: PropTypes.arrayOf(PropTypes.string).isRequired,
+  productInfo: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  ).isRequired,
 };
 
 export default ComparisonModalRow;
