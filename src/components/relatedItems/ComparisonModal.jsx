@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ComparisonModalRow from './ComparisonModalRow';
 
-function ComparisonModal({ bridge, relatedItems, productId }) {
+function ComparisonModal({ bridge, relatedItem, productId }) {
   const [comparisonNames, setComparisonNames] = useState([]);
   const [comparisonCats, setComparisonCats] = useState([]);
   const [comparisonPrices, setComparisonPrices] = useState([]);
@@ -10,10 +10,7 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
 
   useEffect(() => {
     const fetchAllRelatedItemsInfo = async () => {
-      let allItems = productId ? [productId, ...relatedItems] : [...relatedItems];
-      const allItemsSet = new Set(allItems);
-      allItemsSet.delete(productId);
-      allItems = [productId, ...allItemsSet];
+      const allItems = productId ? [productId, relatedItem] : [productId];
       const fetchPromises = allItems.map(async (item) => {
         const infoResults = await bridge.productInformation(item);
         const stylesResults = await bridge.productStyles(item);
@@ -63,7 +60,7 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
     };
 
     fetchAllRelatedItemsInfo();
-  }, [relatedItems]);
+  }, [relatedItem]);
 
   return (
     <div className="comparison_modal_outer_div">
@@ -87,7 +84,7 @@ ComparisonModal.propTypes = {
     productStyles: PropTypes.func.isRequired,
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
-  relatedItems: PropTypes.arrayOf(PropTypes.number).isRequired,
+  relatedItem: PropTypes.number.isRequired,
 };
 
 export default ComparisonModal;
