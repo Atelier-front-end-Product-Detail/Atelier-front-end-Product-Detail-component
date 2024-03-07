@@ -31,7 +31,7 @@ function App() {
   // SETTING STATE FOR PRODUCTID
   useEffect(() => {
     bridge.listProducts()
-      .then((results) => setProductId(results.data[0].id))
+      .then((results) => setProductId(results.data[0].id));
   }, []);
 
   return !productId
