@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-function AddItemToOutfit({ productId, userOutfit, setUserOutfit}) {
+function AddItemToOutfit({ productId, userOutfit, setUserOutfit }) {
   const addToOutfit = () => {
     let newUserOutfit = [...userOutfit];
     newUserOutfit.push(productId);
@@ -45,5 +45,11 @@ function AddItemToOutfit({ productId, userOutfit, setUserOutfit}) {
     </div>
   );
 }
+
+AddItemToOutfit.propTypes = {
+  productId: PropTypes.number.isRequired,
+  userOutfit: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setUserOutfit: PropTypes.func.isRequired,
+};
 
 export default AddItemToOutfit;

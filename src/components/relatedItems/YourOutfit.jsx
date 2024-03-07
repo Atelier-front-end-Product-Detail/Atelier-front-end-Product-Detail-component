@@ -15,7 +15,7 @@ function YourOutfit({ productId, bridge, setProductId }) {
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      const remainder = currentScroll % relatedProductCardWidthPlusGap;
+      const remainder = (currentScroll + 101) % relatedProductCardWidthPlusGap;
       const scrollTarget = currentScroll - remainder - (
         remainder === 0 ? relatedProductCardWidthPlusGap : 0
       );
@@ -35,7 +35,7 @@ function YourOutfit({ productId, bridge, setProductId }) {
       const currentScroll = container.scrollLeft;
       if (showRightArrow) {
         const additionalScroll = relatedProductCardWidthPlusGap - (
-          currentScroll % relatedProductCardWidthPlusGap
+          (currentScroll + 101) % relatedProductCardWidthPlusGap
         );
         const scrollTarget = currentScroll + additionalScroll;
         container.scrollTo({ left: scrollTarget, behavior: 'smooth' });
@@ -121,5 +121,11 @@ function YourOutfit({ productId, bridge, setProductId }) {
     </div>
   );
 }
+
+YourOutfit.propTypes = {
+  productId: PropTypes.number.isRequired,
+  setProductId: PropTypes.func.isRequired,
+  bridge: PropTypes.shape({}).isRequired,
+};
 
 export default YourOutfit;

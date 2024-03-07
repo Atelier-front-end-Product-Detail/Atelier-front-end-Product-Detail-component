@@ -11,6 +11,7 @@ function ComparisonModalColumn({ productInfo, productId }) {
   const ratingValues = Object.values(reviews).map((val) => parseInt(val, 10));
   const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 10);
   result /= sumOfRatings;
+  result = Math.floor(result / (1 / 4)) * (1 / 4);
 
   return (
     <div className={productInfo.id === productId
@@ -29,7 +30,7 @@ function ComparisonModalColumn({ productInfo, productId }) {
       <p className="cmc_reviews">
         Reviews
         {' '}
-        {Math.floor(result / (1 / 4)) * (1 / 4)}
+        {result}
       </p>
     </div>
   );
