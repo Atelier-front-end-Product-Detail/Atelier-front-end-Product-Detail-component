@@ -37,43 +37,46 @@ const QuestionAnswerEntry = ({bridge, question, handleQuestionHelpful, handleQue
   const handleAnswerSubmit = (data) => {
     bridge.postAnswer(question.question_id, data)
     .then(() => {
+      bridge.answers(question.question_id)
+      .then((results) => {
+        setAnswersData(results.data)
+      })
+      .catch((err) => {
+        throw err;
+      })
       console.log("Successful post to question")
     })
     .catch((err) => {
       throw err;
     })
 
-    bridge.answers(question.question_id)
-    .then((results) => {
-      setAnswersData(results.data)
-    })
-    .catch((err) => {
-      throw err;
-    })
   }
 
   const handleAnswerReport = (answer_id) => {
     bridge.reportAnswer(answer_id)
       .then(() => {
+        bridge.answers(question.question_id)
+        .then((results) => {
+          setAnswersData(results.data)
+          console.log(results.data)
+        })
+        .catch((err) => {
+          throw err;
+        })
 
-        console.log("succesful report", answer_id)
     })
     .catch((err) => {
       throw err;
     })
-    bridge.answers(question.question_id)
-      .then((results) => {
-        setAnswersData(results.data)
-        console.log(results.data)
-      })
-      .catch((err) => {
-        throw err;
-      })
   }
 
   const handleAnswerHelpful = (answer_id) => {
-    bridge.putAnswerHelpful(answer_id)
+    if(localStorage.getItem(answer_id)) {
+      console.log('Answer helpful count already updated')
+    } else {
+      bridge.putAnswerHelpful(answer_id)
     .then(() => {
+      localStorage.setItem(answer_id, 'true')
       bridge.answers(question.question_id)
       .then((results) => {
         setAnswersData(results.data)
@@ -85,15 +88,29 @@ const QuestionAnswerEntry = ({bridge, question, handleQuestionHelpful, handleQue
     .catch((err) => {
       throw err;
     })
+    }
   }
 
   const getTime = () => {
     const time = new Date();
     return (time.getHours() + ':' + time.getMinutes() + ':', time.getSeconds()).toString()
   }
-  const handleInteraction = (element, widget, time) => {
-    console.log(getTime())
-  }
+  // const handleInteraction = (data) => {
+  //   bridge.QAInteractionLog(data)
+  //   .then(() => {
+  //     console.log("interaction logged")
+  //   })
+  //   .catch((err) => {
+  //     throw err;
+  //   })
+  //   console.log(data)
+  // }
+
+  // const date = () => {
+  //   const today = new Date();
+
+  //   return (today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()).toString();
+  // }
 
 
   return (
@@ -101,9 +118,7 @@ const QuestionAnswerEntry = ({bridge, question, handleQuestionHelpful, handleQue
       <AnswerModal showAnswerModal={showAnswerModal} setAnswerModal={setAnswerModal} handleAnswerSubmit={handleAnswerSubmit}/>
               <div className="question-container">
               <div className="question-title-container">
-                <p className="question-title" onClick={() => {
-                  handleInteraction()
-                }}>Q: {question.question_body}</p>
+                <p className="question-title">Q: {question.question_body}</p>
               </div>
 
               <div className="question-helpful-container">
@@ -127,14 +142,19 @@ const QuestionAnswerEntry = ({bridge, question, handleQuestionHelpful, handleQue
               <p className="answer-body">{answer.body}</p>
             </div>
             <div className="answer-helpful-container">
-              <p className="helpful-answer-info">by {answer.answerer_name}, {answer.date}</p>
+              <p className="helpful-answer-info">by {answer.answerer_name}, {new Date(answer.date).toLocaleDateString(undefined,{year: 'numeric', month: 'long',day: 'numeric',})}</p>
               <p className="helpful-answer" onClick={() => {
                 handleAnswerHelpful(answer.answer_id)
               }}>Helpful? ({answer.helpfulness})</p>
-              <p onClick={() => {
+              <p className="helpful-answer-report" onClick={() => {
                 handleAnswerReport(answer.answer_id)
               }}>Report</p>
             </div>
+            {answer.photos.map((photo) => {
+                return (
+                  <img key={photo.id} src={photo.url} className="answer-photo"></img>
+                )
+              })}
             <div>
             </div>
           </div>
