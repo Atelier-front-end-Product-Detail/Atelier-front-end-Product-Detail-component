@@ -42,17 +42,28 @@
   box-sizing: content-box;
 }
 
-#add_item_to_outfit {
+#add_item_to_outfit,
+#remove_item_from_outfit {
   display: flex;
   flex-direction: column;
   padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
-  width: var(--related_product_card_width);
-  height: var(--related_product_card_height);
+  width: calc(var(--related_product_card_width) / 2);
+  min-width: calc(var(--related_product_card_width) / 2);
+  height: calc(var(--related_product_card_height) / 2);
   z-index: 0;
   border: 5px outset var(--border_color_1);
   box-sizing: content-box;
   justify-content: center;
   align-content: center;
+}
+
+#add_item_to_outfit {
+  background-color: green;
+  color: whitesmoke;
+}
+
+#remove_item_from_outfit{
+  background-color: red;
 }
 
 #related_products,
@@ -62,11 +73,12 @@
   gap: var(--related_products_gap);
   position: relative;
   max-width: 100%;
-  scrollbar-width: none; /* Disable the scrollbar for Firefox */
+  scrollbar-width: none;
 }
 
-#related_products::-webkit-scrollbar {
-  display: none; /* Disable the scrollbar for Webkit browsers (e.g., Safari, Chrome, Edge)*/
+#related_products::-webkit-scrollbar,
+#your_outfit::-webkit-scrollbar {
+  display: none;
 }
 
 .related_product_prev_pic,
@@ -104,14 +116,17 @@
   background-color: red;
 }
 
-.related_products_outer_div {
+#related_products_outer_div,
+#your_outfit_outer_div {
   position: relative;
   display: inline-block;
   max-width: 100%;
 }
 
 .related_products_left_arrow_button,
-.related_products_right_arrow_button {
+.related_products_right_arrow_button,
+.your_outfit_left_arrow_button,
+.your_outfit_right_arrow_button {
   height: var(--related_products_arrow_height);
   align-self: center;
   text-align: center;
@@ -120,25 +135,31 @@
   top: calc(var(--related_product_card_height) / 2 - var(--related_products_arrow_height) / 2);
 }
 
-.related_products_left_arrow_button {
+.related_products_left_arrow_button,
+.your_outfit_left_arrow_button {
   opacity: 0;
   transition: opacity .5s ease-in-out;
   left: 20px;
 }
 
-.related_products_right_arrow_button {
+.related_products_right_arrow_button,
+.your_outfit_right_arrow_button {
   opacity: 0;
   transition: opacity .2s ease-in-out;
   right: 20px;
 }
 
 .related_products_left_arrow,
-.related_products_right_arrow {
+.related_products_right_arrow,
+.your_outfit_left_arrow,
+.your_outfit_right_arrow {
   height: var(--related_products_arrow_height);
 }
 
-.related_products_outer_div:hover .related_products_left_arrow_button,
-.related_products_outer_div:hover .related_products_right_arrow_button {
+#related_products_outer_div:hover .related_products_left_arrow_button,
+#related_products_outer_div:hover .related_products_right_arrow_button,
+#your_outfit_outer_div:hover .your_outfit_left_arrow_button,
+#your_outfit_outer_div:hover .your_outfit_right_arrow_button {
   opacity: 1;
 }
 

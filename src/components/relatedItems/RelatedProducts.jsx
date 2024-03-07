@@ -78,7 +78,7 @@ function RelatedProducts({
   }, [relatedItems]);
 
   return (
-    <div className="related_products_outer_div">
+    <div id="related_products_outer_div">
       {showLeftArrow && (
       <button
         type="button"
