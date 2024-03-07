@@ -109,11 +109,13 @@ function RelatedProductCard({
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
-      <span className="product_card_name">
-        {productInfo.name}
-        {'  '}
-      </span>
-      <span className="product_card_extra_text">{productInfo.slogan}</span>
+      <p>
+        <span className="product_card_name">
+          {productInfo.name}
+          {'  '}
+        </span>
+        <span className="product_card_extra_text">{productInfo.slogan}</span>
+      </p>
       <p className="product_card_category">{productInfo.category}</p>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
         <p className="product_card_sale_price">
