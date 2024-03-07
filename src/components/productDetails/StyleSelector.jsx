@@ -22,7 +22,11 @@ function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
             tabIndex={0}
           >
             <img src={style.photos[0].thumbnail_url} alt={style.name} />
-            {selectedStyle && selectedStyle.style_id === style.style_id && <div className="checkmark">✔</div>}
+            {selectedStyle && selectedStyle.style_id === style.style_id && (
+              <div className="checkmark-container">
+                <div className="checkmark">✔</div>
+              </div>
+            )}
           </div>
         ))}
       </div>
