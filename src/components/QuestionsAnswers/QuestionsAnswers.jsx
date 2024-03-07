@@ -12,7 +12,6 @@ const QuestionsAnswers = ({bridge, productId}) => {
   const [isFiltered, setIsFiltered] = useState(false)
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   useEffect(() => {
-    console.log(productId)
     bridge.questions(productId)
     .then((results) => {
       setData(results.data.results)

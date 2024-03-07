@@ -37,19 +37,19 @@ const QuestionAnswerEntry = ({bridge, question, handleQuestionHelpful, handleQue
   const handleAnswerSubmit = (data) => {
     bridge.postAnswer(question.question_id, data)
     .then(() => {
+      bridge.answers(question.question_id)
+      .then((results) => {
+        setAnswersData(results.data)
+      })
+      .catch((err) => {
+        throw err;
+      })
       console.log("Successful post to question")
     })
     .catch((err) => {
       throw err;
     })
 
-    bridge.answers(question.question_id)
-    .then((results) => {
-      setAnswersData(results.data)
-    })
-    .catch((err) => {
-      throw err;
-    })
   }
 
   const handleAnswerReport = (answer_id) => {
