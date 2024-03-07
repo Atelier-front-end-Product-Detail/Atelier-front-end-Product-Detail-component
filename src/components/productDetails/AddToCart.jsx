@@ -50,34 +50,40 @@ function AddToCart({ style }) {
     <div className="add-to-cart">
       {message && <div className="message">{message}</div>}
 
-      <select
-        ref={sizeSelectRef}
-        value={selectedSize}
-        onChange={handleSizeChange}
-        disabled={availableSizes.length === 0}
-      >
-        <option value="">Select Size</option>
-        {availableSizes.map(({ size }) => (
-          <option key={size} value={size}>{size}</option>
-        ))}
-      </select>
+      <div className="selectors-container">
+        <select
+          ref={sizeSelectRef}
+          value={selectedSize}
+          onChange={handleSizeChange}
+          disabled={availableSizes.length === 0}
+          className="size-selector"
+        >
+          <option value="">Select Size</option>
+          {availableSizes.map(({ size }) => (
+            <option key={size} value={size}>{size}</option>
+          ))}
+        </select>
 
-      <select
-        value={selectedQuantity}
-        onChange={handleQuantityChange}
-        disabled={!selectedSize || maxQuantity === 0}
-      >
-        <option value="">-</option>
-        {[...Array(maxQuantity).keys()].map((num) => (
-          <option key={num + 1} value={num + 1}>{num + 1}</option>
-        ))}
-      </select>
+        <select
+          value={selectedQuantity}
+          onChange={handleQuantityChange}
+          disabled={!selectedSize || maxQuantity === 0}
+          className="quantity-selector"
+        >
+          <option value="">-</option>
+          {[...Array(maxQuantity).keys()].map((num) => (
+            <option key={num + 1} value={num + 1}>{num + 1}</option>
+          ))}
+        </select>
+      </div>
 
-      {availableSizes.length > 0 ? (
-        <button type="button" onClick={addToCart}>Add to Cart</button>
-      ) : (
-        <button type="button" disabled>Out of Stock</button>
-      )}
+      <div className="add-to-cart-button-container">
+        {availableSizes.length > 0 ? (
+          <button type="button" onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
+        ) : (
+          <button type="button" disabled className="add-to-cart-button">Out of Stock</button>
+        )}
+      </div>
     </div>
   );
 }

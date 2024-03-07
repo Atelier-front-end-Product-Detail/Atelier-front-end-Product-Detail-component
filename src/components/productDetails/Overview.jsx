@@ -3,6 +3,7 @@ import ImageGallery from './ImageGallery';
 import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
 import './StyleSelector.css';
+import './Holistic.css';
 import AddToCart from './AddToCart';
 import bridge from '../bridge';
 
@@ -48,18 +49,39 @@ function Overview() {
 
   return (
     <div className="overview">
-      <ImageGallery style={selectedStyle} />
-      <ProductInformation
-        product={productInfo}
-        style={selectedStyle}
-        reviewsMeta={reviewsMeta}
-      />
-      <StyleSelector
-        styles={productStyles.results}
-        selectedStyle={selectedStyle}
-        onStyleSelect={handleStyleSelect}
-      />
-      <AddToCart style={selectedStyle} />
+      <div className="left-section">
+        <ImageGallery style={selectedStyle} />
+
+        <div className="slogan-description-container">
+          <div className="slogan-description">
+            <div className="slogan">{productInfo.slogan}</div>
+            <div className="description">{productInfo.description}</div>
+          </div>
+          <div className="vertical-divider" />
+          <div className="filler-text">
+            <p>
+              ✓ No pesticides
+              <br />
+              ✓ GMO free
+              <br />
+              ✓ Organic Living Soil
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="right-section">
+        <ProductInformation
+          product={productInfo}
+          style={selectedStyle}
+          reviewsMeta={reviewsMeta}
+        />
+        <StyleSelector
+          styles={productStyles.results}
+          selectedStyle={selectedStyle}
+          onStyleSelect={handleStyleSelect}
+        />
+        <AddToCart style={selectedStyle} />
+      </div>
     </div>
   );
 }
