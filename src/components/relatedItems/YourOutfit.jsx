@@ -122,4 +122,10 @@ function YourOutfit({ productId, bridge, setProductId }) {
   );
 }
 
+YourOutfit.propTypes = {
+  productId: PropTypes.number.isRequired,
+  setProductId: PropTypes.func.isRequired,
+  bridge: PropTypes.shape({}).isRequired,
+};
+
 export default YourOutfit;

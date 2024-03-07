@@ -164,7 +164,7 @@
 }
 
 .comparison_modal {
-  display: flex;
+  display: grid;
   justify-content: center;
 }
 
@@ -178,6 +178,11 @@
 .comparison_modal_column {
   display: flex;
   flex-direction: column;
+}
+
+.comparison_modal_column * {
+  display: flex;
+  height: 1fr;
 }
 
 .comparison_modal_main_column {

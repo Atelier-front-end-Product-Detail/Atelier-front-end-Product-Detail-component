@@ -4,6 +4,7 @@ import ComparisonModalColumn from './ComparisonModalColumn';
 
 function ComparisonModal({ bridge, relatedItems, productId }) {
   const [comparisonInfo, setComparisonInfo] = useState([]);
+  const [gridTemplateColumns, setGridTemplateColumns] = useState({});
 
   useEffect(() => {
     const fetchAllRelatedItemsInfo = async () => {
@@ -45,6 +46,8 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
     };
 
     fetchAllRelatedItemsInfo();
+
+    setGridTemplateColumns({ gridTemplateColumns: `repeat(${relatedItems.length}), 1fr` });
   }, [relatedItems]);
 
   return (
@@ -52,7 +55,7 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
       Comparing:
       {/* {' '}
       {JSON.stringify(comparisonInfo)} */}
-      <div className="comparison_modal">
+      <div className="comparison_modal" style={gridTemplateColumns}>
         {comparisonInfo.map((productInfo) => (
           <ComparisonModalColumn
             productInfo={productInfo}
