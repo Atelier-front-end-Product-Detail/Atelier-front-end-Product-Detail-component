@@ -7,7 +7,6 @@
 .style-title {
   margin-bottom: 10px;
   font-size: 16px;
-
 }
 
 .styles-container {
@@ -23,21 +22,37 @@
   height: 80px;
   border: 2px solid #ccc;
   border-radius: 50%;
-  /*within bounds */
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: visible;
 }
 
 .style-thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* using this to cover the circle, maybe fill color dynamically below*/
+  border-radius: 50%;
 }
 
-.style-thumbnail.selected {
-  border-color: #000;
+.checkmark-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: black;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.checkmark {
+  color: white;
+  font-size: 12px;
+  line-height: 1;
 }
