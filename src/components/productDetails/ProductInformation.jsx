@@ -21,7 +21,11 @@ function ProductInformation({ product, style, reviewsMeta }) {
     return <p>Could not be found?</p>;
   }
 
-  const { category, name, description } = product;
+  const {
+    category,
+    name,
+  } = product;
+
   const { original_price: originalPrice, sale_price: salePrice } = style;
   const { ratings } = reviewsMeta;
 
@@ -43,8 +47,10 @@ function ProductInformation({ product, style, reviewsMeta }) {
         </div>
       )}
 
-      <h2>{name}</h2>
       <h3>{category}</h3>
+      <h2>{name}</h2>
+
+      {/* slogan && <p className="product-slogan">{slogan}</p> */}
 
       <div className="price">
         {salePrice ? (
@@ -67,10 +73,10 @@ function ProductInformation({ product, style, reviewsMeta }) {
         )}
       </div>
 
-      {description && <p className="product-overview">{description}</p>}
+      {/* description && <p className="product-overview">{description}</p> */}
 
       <div className="social-media-share">
-        {/* Social media share buttons implementation */}
+        {/* social media share buttons implementation */}
       </div>
     </div>
   );
@@ -81,6 +87,7 @@ ProductInformation.propTypes = {
     category: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
+    slogan: PropTypes.string,
   }).isRequired,
   style: PropTypes.shape({
     original_price: PropTypes.string,
