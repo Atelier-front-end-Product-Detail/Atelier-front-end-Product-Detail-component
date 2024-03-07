@@ -6,19 +6,34 @@
 }
 
 .reviewsList {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   overflow: scroll;
   width: 99%;
   max-height: 70vh;
 }
 
+
+
+
+/* *ReviewTile */
 .reviewTile {
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
   margin: 10px;
+  padding: 5px;
 }
+
+.helpful {
+  border-right: 1px solid black;
+}
+
 .userNameBar {
   display: flex;
   justify-content: space-between;
 }
+
+.report {
+  margin-left: 5px;
+}
+
 
 
