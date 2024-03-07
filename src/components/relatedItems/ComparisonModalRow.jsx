@@ -6,8 +6,7 @@ function ComparisonModalRow({ productInfo }) {
   // setModalStyle({ minWidth: `calc(100% / ${productInfo.length})` });
   return (
     <div className="comparison_modal_row">
-      <div className="comparison_modal_main_column">{productInfo[0]}</div>
-      {productInfo.slice(1).map((item, index) => <div className="comparison_modal_column" key={`cmr ${index * 2}${item}`}>{item}</div>)}
+      {productInfo.map((item, index) => <div className="comparison_modal_column" key={`cmr ${index * 2}${item}`}>{item}</div>)}
     </div>
   );
 }

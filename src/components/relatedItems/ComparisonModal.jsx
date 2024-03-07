@@ -3,23 +3,17 @@ import PropTypes from 'prop-types';
 import ComparisonModalRow from './ComparisonModalRow';
 
 function ComparisonModal({ bridge, relatedItem, productId }) {
-  const [comparisonNames, setComparisonNames] = useState([]);
-  const [comparisonCats, setComparisonCats] = useState([]);
-  const [comparisonPrices, setComparisonPrices] = useState([]);
-  const [comparisonRatings, setComparisonRatings] = useState([]);
+  const [comparisonInfo, setComparisonInfo] = useState([]);
 
   useEffect(() => {
+    if (!relatedItem || !productId) { return; }
     const fetchAllRelatedItemsInfo = async () => {
-      const allItems = productId ? [productId, relatedItem] : [productId];
+      const allItems = [productId, relatedItem];
       const fetchPromises = allItems.map(async (item) => {
         const infoResults = await bridge.productInformation(item);
-        const stylesResults = await bridge.productStyles(item);
-        const reviewsResults = await bridge.reviewsMeta(item);
 
         const combinedResults = {
           ...infoResults.data,
-          styles: stylesResults.data,
-          reviews: reviewsResults.data,
         };
 
         return combinedResults;
@@ -27,54 +21,47 @@ function ComparisonModal({ bridge, relatedItem, productId }) {
 
       Promise.all(fetchPromises)
         .then((results) => {
-          const result = results.map((item) => {
-            const defaultStyle = item.styles.results.reduce((acc, style) => (
-              style['default?'] ? style : acc
-            ), null);
-            const thisStyle = defaultStyle || item.styles.results[0];
-            return {
-              name: item.name,
-              category: item.category,
-              id: item.id,
-              style: thisStyle,
-              meta: item.reviews,
-            };
-          });
-          setComparisonNames(result.map((item) => item.name));
-          setComparisonCats(result.map((item) => item.category));
-          setComparisonPrices(result.map((item) => item.style.original_price));
-          setComparisonRatings(result.map((item) => {
-            let rating = 0;
-            const reviews = item.meta.ratings;
-            const keys = Object.keys(reviews);
-            for (let i = 0; i < keys.length; i += 1) {
-              rating += (parseInt(keys[i], 10) * parseInt(reviews[keys[i]], 10));
-            }
-            const ratingValues = Object.values(reviews).map((val) => parseInt(val, 10));
-            const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 0);
-            rating /= sumOfRatings;
-            rating = Math.floor(rating / (1 / 4)) * (1 / 4);
-            return rating;
-          }));
+          function constructFeaturesInRows(obj1, obj2) {
+            const allFeatures = Array.from(new Set(
+              [...obj1.features.map((feature) => feature.feature),
+                ...obj2.features.map((feature) => feature.feature)],
+            ));
+            const obj1Features = new Map(
+              obj1.features.map((feature) => [feature.feature, feature.value]),
+            );
+            const obj2Features = new Map(
+              obj2.features.map((feature) => [feature.feature, feature.value]),
+            );
+            const newComparisonInfo = [[obj1.name, 'Feature', obj2.name]];
+            allFeatures.forEach((feature) => {
+              const value1 = obj1Features.get(feature) || '';
+              const value2 = obj2Features.get(feature) || '';
+              newComparisonInfo.push([value1, feature, value2]);
+            });
+
+            setComparisonInfo(newComparisonInfo);
+          }
+          const [obj1, obj2] = results;
+          constructFeaturesInRows(obj1, obj2);
         });
     };
 
     fetchAllRelatedItemsInfo();
   }, [relatedItem]);
 
-  return (
+  return comparisonInfo.length ? (
     <div className="comparison_modal_outer_div">
       Comparing:
       {/* {' '}
       {JSON.stringify(comparisonRatings)} */}
       <div className="comparison_modal">
-        <ComparisonModalRow productInfo={comparisonNames} />
-        <ComparisonModalRow productInfo={comparisonCats} />
-        <ComparisonModalRow productInfo={comparisonPrices} />
-        <ComparisonModalRow productInfo={comparisonRatings} />
+        {comparisonInfo.map((row) => (
+          <ComparisonModalRow productInfo={row} key={row.join(',')} />
+        ))}
       </div>
     </div>
-  );
+  )
+    : null;
 }
 
 ComparisonModal.propTypes = {
