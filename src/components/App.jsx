@@ -4,10 +4,34 @@ import RelatedItems from './relatedItems/RelatedItems';
 import RatingsAndReviews from './RatingsAndReviews/RatingsAndReviews';
 import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
 import bridge from './bridge';
+import helper from './helper';
 
 function App() {
   const [productId, setProductId] = useState(0);
+  const [productInfo, setProductInfo] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!productId) { return; }
+      const results = await helper.getProductInfo(productId);
+      setProductInfo(results);
+    };
+
+    fetchData();
+  }, [productId]);
+
+  // ------------------------------------------
   // FOR TESTING
+  // UNCOMMENT THE FOLLOWING LINE TO VIEW THE SCTRUCTURE OF THE productInfo object
+
+  // useEffect(() => {
+  //   console.log(`productInfo.info : ${JSON.stringify(productInfo.info)}`);
+  //   console.log(`productInfo.styles : ${JSON.stringify(productInfo.styles)}`);
+  //   console.log(`productInfo.relatedProducts : ${JSON.stringify(productInfo.relatedProducts)}`);
+  //   console.log(`productInfo.reviews : ${JSON.stringify(productInfo.reviews)}`);
+  //   console.log(`productInfo.meta : ${JSON.stringify(productInfo.meta)}`);
+  //   console.log(`productInfo.questions : ${JSON.stringify(productInfo.questions)}`);
+  // }, [productInfo]);
   // ------------------------------------------
   // const [results, setResults] = useState(null);
 
@@ -34,16 +58,21 @@ function App() {
       .then((results) => setProductId(results.data[0].id));
   }, []);
 
-  return !productId
+  return !productId || !productInfo.info
     ? (
       <div>...Loading</div>
     )
     : (
       <div>
-        <Overview bridge={bridge} />
-        <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-        <QuestionsAnswers bridge={bridge} productId={productId}/>
-        <RatingsAndReviews productId={40347} bridge={bridge} />
+        {/* <Overview bridge={bridge} /> */}
+        <RelatedItems
+          productId={productId}
+          bridge={bridge}
+          setProductId={setProductId}
+          productInfo={productInfo}
+        />
+        {/* <QuestionsAnswers bridge={bridge} productId={productId}/>
+        <RatingsAndReviews productId={40347} bridge={bridge} /> */}
       </div>
     );
 }

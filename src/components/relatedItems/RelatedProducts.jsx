@@ -3,17 +3,28 @@ import PropTypes from 'prop-types';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import RelatedProductCard from './RelatedProductCard';
 import ComparisonModal from './ComparisonModal';
+import helper from '../helper';
 
 function RelatedProducts({
   relatedItems,
   bridge,
   setProductId,
   productId,
+  productInfo,
 }) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [relatedItem, setRelatedItem] = useState(0);
+  const [relatedProductsInfo, setRelatedProductsInfo] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const info = await helper.getRelatedItemsProductInfo(relatedItems);
+      setRelatedProductsInfo(info);
+    };
+    fetchData();
+  }, [relatedItems]);
 
   const relatedProductCardWidthPlusGap = 270;
 
