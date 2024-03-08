@@ -87,12 +87,13 @@ function RelatedProducts({
 
     checkScrollButtons();
     const container = scrollContainerRef.current;
+    if (!container) return undefined;
     container.addEventListener('scroll', checkScrollButtons);
 
     return () => {
       container.removeEventListener('scroll', checkScrollButtons);
     };
-  }, [relatedItems]);
+  });
 
   return (
     <div id="related_products_outer_div">
@@ -121,14 +122,15 @@ function RelatedProducts({
       </div>
       )}
       <div id="related_products" ref={scrollContainerRef}>
-        {relatedItems.map((itemId) => (
+        {relatedProductsInfo.map((item) => (
           <RelatedProductCard
-            productId={itemId}
+            productId={item.info.id}
             bridge={bridge}
-            key={`rpc ${itemId}`}
+            key={`rpc ${item.info.id}`}
             setProductId={setProductId}
             type="related products"
             action={action}
+            productInformation={item}
           />
         ))}
       </div>
@@ -142,7 +144,7 @@ function RelatedProducts({
         )
         : null }
     </div>
-  );
+  )
 }
 
 RelatedProducts.propTypes = {

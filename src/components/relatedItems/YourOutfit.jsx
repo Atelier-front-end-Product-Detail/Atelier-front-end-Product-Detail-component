@@ -4,7 +4,7 @@ import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import AddItemToOutfit from './AddItemToOutfit';
 import RelatedProductCard from './RelatedProductCard';
 
-function YourOutfit({ productId, bridge, setProductId }) {
+function YourOutfit({ productId, bridge, setProductId, productInfo }) {
   const [userOutfit, setUserOutfit] = useState([]);
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);

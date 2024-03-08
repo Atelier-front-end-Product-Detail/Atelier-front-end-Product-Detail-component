@@ -23,7 +23,6 @@ function App() {
   // ------------------------------------------
   // FOR TESTING
   // UNCOMMENT THE FOLLOWING LINE TO VIEW THE SCTRUCTURE OF THE productInfo object
-
   // useEffect(() => {
   //   console.log(`productInfo.info : ${JSON.stringify(productInfo.info)}`);
   //   console.log(`productInfo.styles : ${JSON.stringify(productInfo.styles)}`);

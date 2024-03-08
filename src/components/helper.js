@@ -23,17 +23,16 @@ const helper = {
   getRelatedItemsProductInfo: async (relatedItems) => {
     const relatedPromises = relatedItems.map(async (item) => {
       const productInfo = await bridge.productInformation(item);
-      // console.log(`related info: ${JSON.stringify(productInfo)}`);
       const productStyles = await bridge.productStyles(item);
-      // console.log(`related styles: ${JSON.stringify(productStyles)}`);
       const productMeta = await bridge.reviewsMeta(item);
-      // console.log(`related meta: ${JSON.stringify(productMeta)}`);
 
       const combinedResult = {
-        info: productInfo,
-        styles: productStyles,
-        meta: productMeta,
+        info: productInfo.data,
+        styles: productStyles.data,
+        meta: productMeta.data,
       };
+
+      // console.log(`Combined Results: ${JSON.stringify(combinedResult.styles)}`);
 
       return combinedResult;
     });

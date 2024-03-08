@@ -10,7 +10,6 @@ function RelatedItems({ productId, bridge, setProductId, productInfo }) {
 
   useEffect(() => {
     const relatedItemsSet = new Set();
-    console.log(`Related Products = ${JSON.stringify(productInfo.relatedProducts)}`);
     const relatedItemsList = [...productInfo.relatedProducts].filter((item) => {
       if (!relatedItemsSet.has(item)) {
         relatedItemsSet.add(item);
@@ -19,18 +18,6 @@ function RelatedItems({ productId, bridge, setProductId, productInfo }) {
       return false;
     });
     setRelatedItems(relatedItemsList);
-    // bridge.relatedProducts(productId)
-    //   .then((results) => {
-    //     const resultsSet = new Set();
-    //     const result = results.data.filter((item) => {
-    //       if (!resultsSet.has(item)) {
-    //         resultsSet.add(item);
-    //         return true;
-    //       }
-    //       return false;
-    //     });
-    //     return setRelatedItems(result);
-    //   });
   }, [productId]);
 
   return (
