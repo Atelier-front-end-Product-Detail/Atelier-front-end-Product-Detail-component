@@ -12,8 +12,9 @@ function ReviewsView({
   const [selectedValue, setSelectedValue] = useState('relevant');
   const [displayNumber, setDisplayNumber] = useState(2);
   const [currentTotalReviews, setCurrentTotalReviews] = useState();
-  const [showAddReviewModal, setShowAddReviewModal] = useState(false)
-
+  const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [modalImage, setModalImage] = useState('');
 
   // let totalReviews
   // if (reviewsMeta.ratings) {
@@ -59,7 +60,7 @@ function ReviewsView({
     //   .then((results) => {
     //     console.log("INSIDE results", results.data.results)
     //     setReviews(results.data.results);
-    setDisplayNumber(currentTotalReviews);
+    setDisplayNumber(displayNumber + 2);
     // });
   };
 
@@ -70,11 +71,25 @@ function ReviewsView({
   };
 
   const handleShowModal = (boolean) => {
-    setShowAddReviewModal(boolean)
-  }
+    setShowAddReviewModal(boolean);
+  };
 
-  // const handleAddReview =
+  const handleShowImageModal = (boolean) => {
+    setShowImageModal(boolean);
+  };
+  // console.log(showImageModal);
+  // console.log(modalImage);
 
+  const handleAddReview = (data) => {
+    bridge.addReview(data)
+      .then((result) => {
+        console.log(result);
+        fetchAllData();
+      })
+      .catch((err) => {
+        console.log('Add review Error: ', err);
+      });
+  };
 
   const anyFilterApplied = Object.values(starFilters).some((filter) => filter);
 
@@ -88,10 +103,22 @@ function ReviewsView({
         filteredReviews={filteredReviews}
         bridge={bridge}
         fetchAllData={fetchAllData}
+        handleShowImageModal={handleShowImageModal}
+        setModalImage={setModalImage}
+        modalImage={modalImage}
+        showImageModal={showImageModal}
       />
-      <MoreReviews onMoreReviewsClick={onMoreReviewsClick} />
-      <button type="button" onClick={() => {handleShowModal(true)}} >Add a Review</button>
-      {/* <AddReviewModal handleAddReview={handleAddReview} /> */}
+      <div className="reviews-view-buttons">
+        <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+        <button type="button" onClick={() => { handleShowModal(true); }}>Add a Review</button>
+      </div>
+      <AddReviewModal
+        handleAddReview={handleAddReview}
+        handleShowModal={handleShowModal}
+        showAddReviewModal={showAddReviewModal}
+        productId={productId}
+        reviewsMeta={reviewsMeta}
+      />
     </div>
   );
 }
@@ -109,7 +136,9 @@ function SortReviews({ selectedValue, handleSelectionChange }) {
   );
 }
 
-function ReviewsList({ filteredReviews, bridge, fetchAllData }) {
+function ReviewsList({
+  filteredReviews, bridge, fetchAllData, handleShowImageModal, setModalImage, modalImage, showImageModal,
+}) {
   // console.log('reviews: ', reviews);
 
   return (
@@ -120,14 +149,22 @@ function ReviewsList({ filteredReviews, bridge, fetchAllData }) {
           review={review}
           bridge={bridge}
           fetchAllData={fetchAllData}
+          handleShowImageModal={handleShowImageModal}
+          setModalImage={setModalImage}
+          modalImage={modalImage}
+          showImageModal={showImageModal}
         />
       ))}
+
+      <ImageModal showImageModal={showImageModal} modalImage={modalImage} handleShowImageModal={handleShowImageModal} />
 
     </div>
   );
 }
 
-function ReviewTile({ review, bridge, fetchAllData }) {
+function ReviewTile({
+  review, bridge, fetchAllData, handleShowImageModal, setModalImage, modalImage, showImageModal,
+}) {
   const reviewDate = new Date(review.date);
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   const readableDate = reviewDate.toLocaleString('en-US', options);
@@ -182,15 +219,24 @@ function ReviewTile({ review, bridge, fetchAllData }) {
       <div>
         {review.body}
         <br />
-        {/* {review.photos.length > 0
+        {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
               <img
+                className="review-image"
                 key={eachPhoto.id}
                 src={`${eachPhoto.url}${eachPhoto.id}`}
                 alt={`Review ${eachPhoto.id}`}
+                onError={(e) => {
+                  e.target.src = process.env.IMAGE_NOT_FOUND;
+                }}
+                onClick={() => {
+                  handleShowImageModal(true);
+                  setModalImage(`${eachPhoto.url}${eachPhoto.id}`);
+                }}
               />
-            ))} */}
+            ))}
       </div>
+
       <br />
       <div>
         {review.recommend && ('\u2713' + ' I recommend this product')}
@@ -216,21 +262,46 @@ function ReviewTile({ review, bridge, fetchAllData }) {
   );
 }
 
-function MoreReviews({ onMoreReviewsClick }) {
+function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
+  const handleClassName = showImageModal ? 'ImageModal-display' : 'ImageModal-display-none';
+
   return (
-    <div>
-      <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+    <div className={handleClassName}>
+      <img
+        className="review-image-modal"
+        src={modalImage}
+        onError={(e) => {
+          e.target.src = process.env.IMAGE_NOT_FOUND;
+        }}
+      />
+      <button
+        onClick={() => {
+          handleShowImageModal(false);
+        }}
+        type="button"
+      >
+        X
+      </button>
+
     </div>
   );
 }
 
-function AddReview() {
-  return (
-    <div>
-      <button type="button"> AddReview </button>
-    </div>
-  );
-}
+// function MoreReviews({ onMoreReviewsClick }) {
+//   return (
+//     <div>
+//       <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+//     </div>
+//   );
+// }
+
+// function AddReview() {
+//   return (
+//     <div>
+//       <button type="button"> AddReview </button>
+//     </div>
+//   );
+// }
 
 ReviewsView.propTypes = {
   // productId: PropTypes.number.isRequired,
@@ -249,13 +320,13 @@ SortReviews.propTypes = {
   // }).isRequired,
 };
 
-AddReview.propTypes = {
-  // onAddReviewsClick: PropTypes.func.isRequired,
-  // bridge: PropTypes.shape({
-  //   reviewsMeta: PropTypes.func.isRequired,
-  //   listReviews: PropTypes.func.isRequired,
-  // }).isRequired,
-};
+// AddReview.propTypes = {
+//   onAddReviewsClick: PropTypes.func.isRequired,
+//   bridge: PropTypes.shape({
+//     reviewsMeta: PropTypes.func.isRequired,
+//     listReviews: PropTypes.func.isRequired,
+//   }).isRequired,
+// };
 
 ReviewsList.propTypes = {
   filteredReviews: PropTypes.arrayOf(
