@@ -1,0 +1,28 @@
+.star-rating-wrapper {
+  color: #c5c5c5;
+  font-size: 25px;
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.full-stars {
+  color: rgb(2, 2, 2);
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+/* insert empty stars first thing */
+.star-rating-wrapper::before {
+  content: '★★★★★';
+  display: block;
+}
+
+.full-stars::before {
+  content: '★★★★★';
+  display: block;
+}

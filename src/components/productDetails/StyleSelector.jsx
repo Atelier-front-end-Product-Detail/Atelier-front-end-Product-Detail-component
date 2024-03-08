@@ -10,7 +10,10 @@ function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
 
   return (
     <div className="style-selector">
-      <div className="style-title">{selectedStyle ? selectedStyle.name : ''}</div>
+      <div className="style-title">
+        <strong>Style &gt;</strong>
+        {selectedStyle ? selectedStyle.name : ''}
+      </div>
       <div className="styles-container">
         {styles.map((style) => (
           <div
