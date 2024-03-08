@@ -63,6 +63,16 @@ function Overview({ productId }) {
             <div className="slogan">{productInfo.slogan}</div>
             <div className="description">{productInfo.description}</div>
           </div>
+          <div className="vertical-divider" />
+          <div className="filler-text">
+            <p>
+              ✓ No pesticides
+              <br />
+              ✓ GMO free
+              <br />
+              ✓ Organic Living Soil
+            </p>
+          </div>
         </div>
       </div>
       <div className="right-section">
