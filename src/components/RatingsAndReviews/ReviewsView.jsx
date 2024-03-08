@@ -5,7 +5,7 @@ import StarRating from './StarRating';
 import AddReviewModal from './AddReviewModal';
 
 function ReviewsView({
-  bridge, productId, starFilters, reviewsMeta, removeAllFilters,
+  bridge, productId, starFilters, reviewsMeta, removeAllFilters,productName
 }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
@@ -118,6 +118,7 @@ function ReviewsView({
         showAddReviewModal={showAddReviewModal}
         productId={productId}
         reviewsMeta={reviewsMeta}
+        productName={productName}
       />
     </div>
   );

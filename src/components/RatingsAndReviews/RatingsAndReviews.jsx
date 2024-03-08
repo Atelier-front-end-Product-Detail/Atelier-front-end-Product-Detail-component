@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import RatingsBreakdown from './RatingsBreakdown';
 import ReviewsView from './ReviewsView';
 
-function RatingsAndReviews({ bridge, productId }) {
+function RatingsAndReviews({ bridge, productId, productName }) {
   // console.log(props.product_id)
 
   const [reviewsMeta, setReviewsMeta] = useState({});
@@ -73,6 +73,7 @@ function RatingsAndReviews({ bridge, productId }) {
           starFilters={starFilters}
           reviewsMeta={reviewsMeta}
           removeAllFilters={removeAllFilters}
+          productName={productName}
         />
       </div>
     </div>

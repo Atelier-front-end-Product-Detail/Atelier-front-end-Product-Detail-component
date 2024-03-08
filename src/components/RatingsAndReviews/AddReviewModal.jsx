@@ -3,9 +3,11 @@ import StarRating from './StarRating';
 import './AddReviewModal.css';
 
 function AddReviewModal({
-  handleShowModal, showAddReviewModal, handleAddReview, productId, reviewsMeta,
+  handleShowModal, showAddReviewModal, handleAddReview, productId, reviewsMeta, productName
 }) {
   const handleClassName = showAddReviewModal ? 'AddReviewModal-display' : 'AddReviewModal-display-none';
+
+  console.log("ADDREVIEW PRODUCT ID: ", productId)
 
   const [reviewData, setReviewData] = useState({
     // SEE G-LEARN API
@@ -49,17 +51,35 @@ function AddReviewModal({
 
   const onSubmitClick = (e) => {
     e.preventDefault();
+
+
     if (!isRatingSelected) {
       console.log('Please select a rating before submitting.');
       return;
     }
+
+    if (reviewData.body.length < 50) {
+      console.log('Review body under 50');
+      return;
+    }
     handleAddReview(reviewData);
     handleShowModal(false);
+    setReviewData({
+      product_id: productId,
+      rating: null,
+      summary: '',
+      body: '',
+      recommend: null,
+      name: '',
+      email: '',
+      photos: [],
+      characteristics: {},
+    })
   };
 
   // console.log('Classname: ', handleClassName);
   // console.log('showAddReviewModal: ', showAddReviewModal);
-  // console.log('reviewData: ', reviewData);
+  console.log('reviewData: ', reviewData);
 
   return (
     <div className={handleClassName}>
@@ -69,14 +89,14 @@ function AddReviewModal({
         onSubmit={onSubmitClick}
       >
         <h4>Write Your Review</h4>
-        <h6>About the "product name"</h6>
+        <h6>About the {productName}</h6>
 
         <label> Overall rating* </label>
         <div>
           <StarRating
             interactive="true"
             onRatingChange={(rating) => {
-              setReviewData({ ...reviewData, rating });
+              setReviewData({ ...reviewData, rating,product_id: productId  });
               setIsRatingSelected(true);
             }}
           />
