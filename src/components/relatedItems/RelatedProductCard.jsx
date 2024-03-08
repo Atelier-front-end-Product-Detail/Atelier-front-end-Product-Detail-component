@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { GoStar } from 'react-icons/go';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import ActionButton from './ActionButton';
 import Stars from './Stars';
 
@@ -111,8 +111,8 @@ function RelatedProductCard({
   return (
     <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
       <ActionButton type={type} action={action} productId={productId} />
-      <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
-      <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
+      <button type="button" className="related_product_prev_pic" aria-label="next picture" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}><FaArrowLeft /></button>
+      <button type="button" className="related_product_next_pic" aria-label="related_product_card" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}><FaArrowRight /></button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
       <div>
@@ -125,14 +125,18 @@ function RelatedProductCard({
       <div className="product_card_category">{productInfo.category}</div>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
         <div className="product_card_sale_price">
-          Price:
-          {' '}
-          {defaultStyle.sale_price}
+          <span className="product_card_default_price_span">
+            Price: $
+            {productInfo.default_price}
+          </span>
+          <span className="product_card_sale_price_span">
+            Price: $
+            {defaultStyle.sale_price}
+          </span>
         </div>
       ) : (
         <div className="product_card_price">
-          Price:
-          {' '}
+          Price: $
           {productInfo.default_price}
         </div>
       )}

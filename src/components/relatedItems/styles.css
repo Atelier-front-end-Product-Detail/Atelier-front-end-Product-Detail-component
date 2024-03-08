@@ -8,7 +8,7 @@
   --product_card_image_width: 235px;
   --product_card_image_height: 300px;
   --related_product_card_prev_next_img_offest: 0;
-  --related_product_card_prev_next_img_height: 20px;
+  --related_product_card_prev_next_img_height: 35px;
   --related_products_arrow_height: 50px;
 }
 
@@ -48,6 +48,11 @@
 
 .related_product_card > p:first-child {
   max-height: 220px;
+}
+
+.related_product_card:hover > .related_product_prev_pic,
+.related_product_card:hover > .related_product_next_pic {
+  opacity: 1;
 }
 
 .related_items_action_button_heart,
@@ -116,6 +121,8 @@
   height: var(--related_product_card_prev_next_img_height);
   top: calc(var(--product_card_image_height) / 2 - var(--related_product_card_prev_next_img_height) / 2);
   z-index: 1;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
 }
 
 .related_product_prev_pic {
@@ -139,8 +146,13 @@
   top: -15px;
 }
 
-.product_card_sale_price {
-  background-color: red;
+.product_card_default_price_span {
+  text-decoration: line-through;
+}
+
+.product_card_sale_price_span {
+  color: red;
+  background-color: greeny;
 }
 
 .product_card_reviews {
@@ -166,6 +178,16 @@
   z-index: 2;
   position: absolute;
   top: calc(var(--related_product_card_height) / 2 - var(--related_products_arrow_height) / 2);
+  opacity: 0;
+}
+
+.related_products_left_arrow_button *,
+.related_products_right_arrow_button *,
+.your_outfit_left_arrow_button *,
+.your_outfit_right_arrow_button * {
+  height: 100%;
+  width: auto;
+  color: green;
 }
 
 .related_products_left_arrow_button,
