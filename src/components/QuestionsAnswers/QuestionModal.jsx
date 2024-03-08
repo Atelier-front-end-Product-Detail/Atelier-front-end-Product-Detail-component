@@ -24,10 +24,14 @@ const QuestionModal = ({handleShowModal, showQuestionModal, handlePostQuestion})
     <div className={handleClassName}>
     <form className="question-form" onSubmit={(e) => {e.preventDefault()}}>
         <div className="x-button"><button onClick={() => {handleShowModal(false)}}>x</button></div>
-      <label>Enter your question</label><input maxLength="1000" type="text" onChange={handleChange} name="body" required value={questionData.body}></input>
+      <label>Enter your question</label><textarea maxLength="1000" type="text" onChange={handleChange} name="body" required value={questionData.body}></textarea>
       <label>Username</label><input maxLength="60" type="text" onChange={handleChange} name="name" placeholder="Example: jackson11!" required value={questionData.name}></input>
       <label>Email</label><input type="email" maxLength="60" onChange={handleChange} name="email" placeholder="Why did you like the product or not?" required value={questionData.email}></input><p>For authentication reasons, you will not be emailed</p><br></br>
       <button onClick={() => {
+
+        if(questionData.name === "") {
+          alert('You must enter the following: ')
+        }
         handlePostQuestion(questionData);
       handleShowModal(false);
       setQuestionData({

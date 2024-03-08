@@ -1,7 +1,7 @@
 import QuestionAnswerEntry from './QuestionAnswerEntry.jsx'
 import React, {useState, useEffect} from 'react';
 
-const QuestionsAnswersList = ({data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport}) => {
+const QuestionsAnswersList = ({data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport, productName}) => {
   const [questionsData, setQuestionData] = useState([])
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const QuestionsAnswersList = ({data, bridge, dataNum, handleQuestionHelpful, han
     <div className="questions-answers-list">
       {questionsMap(questionsData).slice(0, dataNum).map((question) => {
         return (
-          <QuestionAnswerEntry key={question.question_id} bridge={bridge} question={question} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
+          <QuestionAnswerEntry productName={productName} key={question.question_id} bridge={bridge} question={question} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
         )
       })}
     </div>
