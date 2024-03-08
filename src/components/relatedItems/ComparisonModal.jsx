@@ -32,7 +32,7 @@ function ComparisonModal({ bridge, relatedItem, productId }) {
             const obj2Features = new Map(
               obj2.features.map((feature) => [feature.feature, feature.value]),
             );
-            const newComparisonInfo = [[obj1.name, 'Feature', obj2.name]];
+            const newComparisonInfo = [[obj1.name, 'to', obj2.name]];
             allFeatures.forEach((feature) => {
               const value1 = obj1Features.get(feature) || '';
               const value2 = obj2Features.get(feature) || '';
