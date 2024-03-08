@@ -54,8 +54,16 @@ it('QuestionsAnswers component exists', async() => {
     ))
 
   expect(screen.getByTestId('title').textContent).toEqual('Questions & Answers')
+  expect(screen.findByText('Is this jacket durable?')).toBeInTheDocument()
 
 })
 
 
+// it('QuestionsAnswers component should render list of questions and answers', async() => {
+//   const {findByText, getByTestId} = render(
+//     <QuestionsAnswersList bridge={mockbridge} />
+//   )
+
+//   expect(screen.findByText)
+// })
 })

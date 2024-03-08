@@ -39,15 +39,18 @@ function App() {
       });
   }, []);
 
-  return (
-    <div>
-      HELLO =D
-      <Overview productId={productId} bridge={bridge} />
-      <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-      <QuestionsAnswers bridge={bridge} />
-      <RatingsAndReviews productId={40345} bridge={bridge} />
-    </div>
-  );
+  return !productId
+    ? (
+      <div>...Loading</div>
+    )
+    : (
+      <div>
+        <Overview bridge={bridge} />
+        <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
+        <QuestionsAnswers bridge={bridge} productId={productId} productName={productName} />
+        <RatingsAndReviews productId={productId} bridge={bridge} />
+      </div>
+    );
 }
 
 export default App;

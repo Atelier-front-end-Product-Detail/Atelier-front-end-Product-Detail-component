@@ -54,17 +54,31 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { product_id: productId },
   }),
-  // addReview still needs work!!!
-  // addReview: (productId, rating = 0, summary = '', body = '', recommend = false,
-  // name = '', email = '', photos = '', characteristics = {}) => axios({
-  //   method: 'post',
-  //   url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews`,
-  //   headers: {Authorization: process.env.GIT_API_KEY},
-  //   params: {productId, rating, summary, body, recommend, name, email, photos, characteristics}
-  // }),
+  addReview: (data) => axios({
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+    headers: { Authorization: process.env.GIT_API_KEY },
+    data: {
+      product_id: data.product_id,
+      rating: data.rating,
+      summary: data.summary,
+      body: data.body,
+      recommend: data.recommend,
+      name: data.name,
+      email: data.email,
+      photos: data.photos,
+      characteristics: data.characteristics,
+    },
+  }),
   markReviewHelpful: (reviewId) => axios({
     method: 'put',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${reviewId}/helpful`,
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { reviewId },
+  }),
+  reportReview: (reviewId) => axios({
+    method: 'put',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${reviewId}/report`,
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { reviewId },
   }),
@@ -72,7 +86,9 @@ const bridge = {
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/',
     headers: { Authorization: process.env.GIT_API_KEY },
+
     params: { product_id: productid, count }
+
   }),
   answers: (questionid, count = 1000) => axios({
     method: 'get',
@@ -89,52 +105,53 @@ const bridge = {
   putAnswerHelpful: (answerid) => axios({
     method: 'put',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerid}/helpful`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {answer_id: answerid}
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { answer_id: answerid },
   }),
   postQuestion: (data) => axios({
     method: 'post',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions',
-    headers: {'Authorization': process.env.GIT_API_KEY},
+    headers: { Authorization: process.env.GIT_API_KEY },
     data: {
       body: data.body,
       name: data.name,
       email: data.email,
-      product_id: Number(data.productid)}
+      product_id: Number(data.productid),
+    },
   }),
   postAnswer: (questionid, data) => axios({
     method: 'post',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/answers`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
+    headers: { Authorization: process.env.GIT_API_KEY },
     data: {
       body: data.body,
       name: data.name,
       email: data.email,
-      photos: data.photos
-    }
+      photos: data.photos,
+    },
   }),
   reportQuestion: (questionid) => axios({
     method: 'put',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/report`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {question_id: questionid}
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { question_id: questionid },
   }),
   reportAnswer: (answerid) => axios({
     method: 'put',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answerid}/report`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
-    params: {answer_id: answerid}
+    headers: { Authorization: process.env.GIT_API_KEY },
+    params: { answer_id: answerid },
   }),
   QAInteractionLog: (data) => axios({
     method: 'post',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/interactions`,
-    headers: {'Authorization': process.env.GIT_API_KEY},
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/interactions',
+    headers: { Authorization: process.env.GIT_API_KEY },
     data: {
       element: data.element,
       widget: data.widget,
-      time: data.time
-    }
-  })
+      time: data.time,
+    },
+  }),
 
 };
 
