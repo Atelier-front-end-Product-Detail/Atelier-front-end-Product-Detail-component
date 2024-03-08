@@ -51,7 +51,13 @@ function RatingsBreakdown({
       {!isNaN(averageRating)
         ? (
           <>
+            <div className="average-star-render">
             <div className="RR-AverageRating">{averageRating}</div>
+            <RenderStarRating rating={averageRating} />
+            </div>
+
+
+
             <div className="number-of-reviews">
               {totalReviews}
               {' '}
@@ -82,9 +88,9 @@ function RatingsBreakdown({
             ))}
       </div>
 
-
-      <div className="remove-filter">{appliedFiltersMessage}
-      {appliedFilters.length > 0
+      <div className="remove-filter">
+        {appliedFiltersMessage}
+        {appliedFilters.length > 0
         && <button onClick={removeAllFilters}>Remove all filters</button>}
       </div>
 
@@ -200,6 +206,16 @@ function CharacteristicBar({ characteristic, rating }) {
 
     </div>
 
+  );
+}
+
+function RenderStarRating ({ rating }) {
+  const widthPercentage = `${(rating / 5) * 100}%`;
+
+  return (
+    <div className="star-rating-wrapper">
+      <div className="full-stars" style={{ width: widthPercentage }} />
+    </div>
   );
 }
 

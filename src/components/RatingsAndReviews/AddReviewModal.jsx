@@ -7,7 +7,7 @@ function AddReviewModal({
 }) {
   const handleClassName = showAddReviewModal ? 'AddReviewModal-display' : 'AddReviewModal-display-none';
 
-  console.log("ADDREVIEW PRODUCT ID: ", productId)
+  // console.log("ADDREVIEW PRODUCT ID: ", productId)
 
   const [reviewData, setReviewData] = useState({
     // SEE G-LEARN API
@@ -79,7 +79,7 @@ function AddReviewModal({
 
   // console.log('Classname: ', handleClassName);
   // console.log('showAddReviewModal: ', showAddReviewModal);
-  console.log('reviewData: ', reviewData);
+  // console.log('reviewData: ', reviewData);
 
   return (
     <div className={handleClassName}>

@@ -58,7 +58,7 @@ function RatingsAndReviews({ bridge, productId, productName }) {
   // useEffect(() => console.log((reviews)), [reviews]);
 
   return (
-    <div className="rrContainer">
+    <div className="rrContainer" id="ratings-reviews">
       <h3 className="rrHeader">Ratings & Reviews </h3>
       <div style={{ display: 'flex' }}>
         <RatingsBreakdown
