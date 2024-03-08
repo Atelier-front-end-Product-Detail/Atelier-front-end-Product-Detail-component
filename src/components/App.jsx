@@ -46,7 +46,7 @@ function App() {
         <Overview bridge={bridge} />
         <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
         <QuestionsAnswers bridge={bridge} productId={productId} productName={productName}/>
-        <RatingsAndReviews productId={40347} bridge={bridge} />
+        <RatingsAndReviews productId={productId} bridge={bridge} />
       </div>
     );
 }

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { GoStar } from 'react-icons/go';
+import ActionButton from './ActionButton';
+import Stars from './Stars';
 
 function RelatedProductCard({
   productId,
   bridge,
   setProductId,
+  type,
+  action,
 }) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([{}]);
@@ -105,34 +110,37 @@ function RelatedProductCard({
 
   return (
     <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
+      <ActionButton type={type} action={action} productId={productId} />
       <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
-      <span className="product_card_name">
-        {productInfo.name}
-        {'  '}
-      </span>
-      <span className="product_card_extra_text">{productInfo.slogan}</span>
-      <p className="product_card_category">{productInfo.category}</p>
+      <div>
+        <span className="product_card_name">
+          {productInfo.name}
+          {'  '}
+        </span>
+        <span className="product_card_extra_text">{productInfo.slogan}</span>
+      </div>
+      <div className="product_card_category">{productInfo.category}</div>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
-        <p className="product_card_sale_price">
+        <div className="product_card_sale_price">
           Price:
           {' '}
           {defaultStyle.sale_price}
-        </p>
+        </div>
       ) : (
-        <p className="product_card_price">
+        <div className="product_card_price">
           Price:
           {' '}
           {productInfo.default_price}
-        </p>
+        </div>
       )}
-      <p className="product_card_reviews">
+      <div className="product_card_reviews">
         Reviews:
         {' '}
-        {Math.floor(productReviews / (1 / 4)) * (1 / 4)}
-      </p>
+        <Stars rating={Math.floor(productReviews / (1 / 4)) * (1 / 4)} />
+      </div>
     </div>
   );
 }
@@ -145,6 +153,8 @@ RelatedProductCard.propTypes = {
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
   setProductId: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
 
 export default RelatedProductCard;

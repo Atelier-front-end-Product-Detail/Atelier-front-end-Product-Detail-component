@@ -10,7 +10,10 @@ function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
 
   return (
     <div className="style-selector">
-      <div className="style-title">{selectedStyle ? selectedStyle.name : ''}</div>
+      <div className="style-title">
+        <strong>Style &gt;</strong>
+        {selectedStyle ? selectedStyle.name : ''}
+      </div>
       <div className="styles-container">
         {styles.map((style) => (
           <div
@@ -22,7 +25,11 @@ function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
             tabIndex={0}
           >
             <img src={style.photos[0].thumbnail_url} alt={style.name} />
-            {selectedStyle && selectedStyle.style_id === style.style_id && <div className="checkmark">✔</div>}
+            {selectedStyle && selectedStyle.style_id === style.style_id && (
+              <div className="checkmark-container">
+                <div className="checkmark">✔</div>
+              </div>
+            )}
           </div>
         ))}
       </div>

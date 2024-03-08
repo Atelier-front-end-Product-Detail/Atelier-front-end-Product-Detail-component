@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ComparisonModalColumn from './ComparisonModalColumn';
+import ComparisonModalRow from './ComparisonModalRow';
 
-function ComparisonModal({ bridge, relatedItems, productId }) {
+function ComparisonModal({ bridge, relatedItem, productId }) {
   const [comparisonInfo, setComparisonInfo] = useState([]);
 
   useEffect(() => {
+    if (!relatedItem || !productId) { return; }
     const fetchAllRelatedItemsInfo = async () => {
-      let allItems = productId ? [productId, ...relatedItems] : [...relatedItems];
-      const allItemsSet = new Set(allItems);
-      allItemsSet.delete(productId);
-      allItems = [productId, ...allItemsSet];
+      const allItems = [productId, relatedItem];
       const fetchPromises = allItems.map(async (item) => {
         const infoResults = await bridge.productInformation(item);
-        const stylesResults = await bridge.productStyles(item);
-        const reviewsResults = await bridge.reviewsMeta(item);
 
         const combinedResults = {
           ...infoResults.data,
-          styles: stylesResults.data,
-          reviews: reviewsResults.data,
         };
 
         return combinedResults;
@@ -27,42 +21,47 @@ function ComparisonModal({ bridge, relatedItems, productId }) {
 
       Promise.all(fetchPromises)
         .then((results) => {
-          const result = results.map((item) => {
-            const defaultStyle = item.styles.results.reduce((acc, style) => (
-              style['default?'] ? style : acc
-            ), null);
-            const thisStyle = defaultStyle || item.styles.results[0];
-            return {
-              name: item.name,
-              category: item.category,
-              id: item.id,
-              style: thisStyle,
-              meta: item.reviews,
-            };
-          });
-          setComparisonInfo(result);
+          function constructFeaturesInRows(obj1, obj2) {
+            const allFeatures = Array.from(new Set(
+              [...obj1.features.map((feature) => feature.feature),
+                ...obj2.features.map((feature) => feature.feature)],
+            ));
+            const obj1Features = new Map(
+              obj1.features.map((feature) => [feature.feature, feature.value]),
+            );
+            const obj2Features = new Map(
+              obj2.features.map((feature) => [feature.feature, feature.value]),
+            );
+            const newComparisonInfo = [[obj1.name, 'to', obj2.name]];
+            allFeatures.forEach((feature) => {
+              const value1 = obj1Features.get(feature) || '';
+              const value2 = obj2Features.get(feature) || '';
+              newComparisonInfo.push([value1, feature, value2]);
+            });
+
+            setComparisonInfo(newComparisonInfo);
+          }
+          const [obj1, obj2] = results;
+          constructFeaturesInRows(obj1, obj2);
         });
     };
 
     fetchAllRelatedItemsInfo();
-  }, [relatedItems]);
+  }, [relatedItem]);
 
-  return (
+  return comparisonInfo.length ? (
     <div className="comparison_modal_outer_div">
       Comparing:
       {/* {' '}
-      {JSON.stringify(comparisonInfo)} */}
+      {JSON.stringify(comparisonRatings)} */}
       <div className="comparison_modal">
-        {comparisonInfo.map((productInfo) => (
-          <ComparisonModalColumn
-            productInfo={productInfo}
-            key={`cmc ${productInfo.id}`}
-            productId={productId}
-          />
+        {comparisonInfo.map((row) => (
+          <ComparisonModalRow productInfo={row} key={row.join(',')} />
         ))}
       </div>
     </div>
-  );
+  )
+    : null;
 }
 
 ComparisonModal.propTypes = {
@@ -72,7 +71,7 @@ ComparisonModal.propTypes = {
     productStyles: PropTypes.func.isRequired,
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
-  relatedItems: PropTypes.arrayOf(PropTypes.number).isRequired,
+  relatedItem: PropTypes.number.isRequired,
 };
 
 export default ComparisonModal;

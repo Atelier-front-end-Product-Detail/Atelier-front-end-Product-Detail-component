@@ -39,14 +39,22 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { product_id: productId },
   }),
-  // addReview still needs work!!!
-  // addReview: (productId, rating = 0, summary = '', body = '', recommend = false,
-  // name = '', email = '', photos = '', characteristics = {}) => axios({
-  //   method: 'post',
-  //   url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews`,
-  //   headers: {Authorization: process.env.GIT_API_KEY},
-  //   params: {productId, rating, summary, body, recommend, name, email, photos, characteristics}
-  // }),
+  addReview: (data) => axios({
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews',
+    headers: { Authorization: process.env.GIT_API_KEY },
+    data: {
+      product_id: data.product_id,
+      rating: data.rating,
+      summary: data.summary,
+      body: data.body,
+      recommend: data.recommend,
+      name: data.name,
+      email: data.email,
+      photos: data.photos,
+      characteristics: data.characteristics,
+    },
+  }),
   markReviewHelpful: (reviewId) => axios({
     method: 'put',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${reviewId}/helpful`,

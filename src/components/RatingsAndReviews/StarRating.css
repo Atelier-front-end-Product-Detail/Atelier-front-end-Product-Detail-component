@@ -1,5 +1,6 @@
 .starRating {
   display: inline-block;
+  overflow: hidden;
 }
 
 .star {

@@ -1,43 +1,53 @@
-.style-selector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.style-title {
-  margin-bottom: 10px;
-  font-size: 16px;
-
-}
-
 .styles-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
   gap: 10px;
   justify-content: center;
+  max-width: 100%;
+  margin-top: 20px;
 }
 
 .style-thumbnail {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: calc(15vw - 100px);
+  height: calc(15vw - 100px);
+  max-width: 100px;
+  max-height: 100px;
+  min-width: 80px;
+  min-height: 80px;
   border: 2px solid #ccc;
   border-radius: 50%;
-  /*within bounds */
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: visible;
 }
 
 .style-thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* using this to cover the circle, maybe fill color dynamically below*/
+  border-radius: 50%;
 }
 
-.style-thumbnail.selected {
-  border-color: #000;
+.checkmark-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: black;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.checkmark {
+  color: white;
+  font-size: 14px;
 }
