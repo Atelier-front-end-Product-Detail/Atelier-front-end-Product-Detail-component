@@ -47,7 +47,7 @@ function App() {
           setProductId={setProductId}
         />
         <QuestionsAnswers bridge={bridge} productId={productId} />
-        <RatingsAndReviews productId={40347} bridge={bridge} />
+        <RatingsAndReviews productId={productId} bridge={bridge} />
       </div>
     );
 }

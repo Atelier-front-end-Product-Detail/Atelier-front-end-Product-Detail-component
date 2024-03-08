@@ -2,20 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function ProductInformation({ product, style, reviewsMeta }) {
-  const renderStarRating = (rating) => {
-    const roundedRating = Math.round(rating * 4) / 4;
-    const fullStars = Math.floor(roundedRating);
-    const quarterStar = roundedRating % 1;
-    const emptyStars = 5 - fullStars - (quarterStar ? 1 : 0);
+  function renderStarRating(rating) {
+    const widthPercentage = `${(rating / 5) * 100}%`;
 
     return (
-      <>
-        {'★'.repeat(fullStars)}
-        {quarterStar ? '¾' : ''}
-        {'☆'.repeat(emptyStars)}
-      </>
+      <div className="star-rating-wrapper">
+        <div className="full-stars" style={{ width: widthPercentage }} />
+      </div>
     );
-  };
+  }
 
   if (!product || !style || !reviewsMeta) {
     return <p>Could not be found?</p>;
@@ -34,11 +29,13 @@ function ProductInformation({ product, style, reviewsMeta }) {
     ? Object.entries(ratings).reduce((acc, [key, value]) => acc + (key * value), 0) / totalReviews
     : 0;
 
+  const roundedAverageRating = Math.round(averageRating * 4) / 4;
+
   return (
     <div className="product-information">
       {totalReviews > 0 && (
         <div className="star-rating">
-          {renderStarRating(averageRating)}
+          {renderStarRating(roundedAverageRating)}
           <a href="#ratings-and-reviews">
             Read all
             {totalReviews}
@@ -49,8 +46,6 @@ function ProductInformation({ product, style, reviewsMeta }) {
 
       <h3>{category}</h3>
       <h2>{name}</h2>
-
-      {/* slogan && <p className="product-slogan">{slogan}</p> */}
 
       <div className="price">
         {salePrice ? (
@@ -73,10 +68,8 @@ function ProductInformation({ product, style, reviewsMeta }) {
         )}
       </div>
 
-      {/* description && <p className="product-overview">{description}</p> */}
-
       <div className="social-media-share">
-        {/* social media share buttons implementation */}
+        {/* social media share buttons */}
       </div>
     </div>
   );

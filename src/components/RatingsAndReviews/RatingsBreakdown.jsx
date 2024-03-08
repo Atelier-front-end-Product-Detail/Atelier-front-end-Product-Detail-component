@@ -52,7 +52,7 @@ function RatingsBreakdown({
         ? (
           <>
             <div className="RR-AverageRating">{averageRating}</div>
-            <div>
+            <div className="number-of-reviews">
               {totalReviews}
               {' '}
               reviews
@@ -61,10 +61,12 @@ function RatingsBreakdown({
         )
         : null}
 
+      <div className="percent-recommend">{`${percentRecommend}% of people recommend this product`}</div>
+
       {/* <StarRating interactive="true" />
       <br />
       <StarRating ratingToDisplay="3" /> */}
-      <div>
+      <div className="RatingsBarsBox">
         {/* map over reviewsMeta.ratings and return RatingBar. Reverse order. */}
         {reviewsMeta.ratings
           && Object.entries(reviewsMeta.ratings)
@@ -80,11 +82,11 @@ function RatingsBreakdown({
             ))}
       </div>
 
-      <div>{appliedFiltersMessage}</div>
+
+      <div className="remove-filter">{appliedFiltersMessage}
       {appliedFilters.length > 0
         && <button onClick={removeAllFilters}>Remove all filters</button>}
-
-      <div>{`${percentRecommend}% of people recommend this product`}</div>
+      </div>
 
       {reviewsMeta.characteristics
         && Object.entries(reviewsMeta.characteristics)
