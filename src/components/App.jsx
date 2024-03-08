@@ -7,6 +7,7 @@ import bridge from './bridge';
 
 function App() {
   const [productId, setProductId] = useState(0);
+  const [productName, setProductName] = useState(null)
   // FOR TESTING
   // ------------------------------------------
   // const [results, setResults] = useState(null);
@@ -31,7 +32,9 @@ function App() {
   // SETTING STATE FOR PRODUCTID
   useEffect(() => {
     bridge.listProducts()
-      .then((results) => setProductId(results.data[0].id));
+      .then((results) => {setProductId(results.data[0].id);
+      setProductName(results.data[productId].name)}
+      );
   }, []);
 
   return !productId
@@ -42,7 +45,7 @@ function App() {
       <div>
         <Overview bridge={bridge} />
         <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-        <QuestionsAnswers bridge={bridge} productId={productId}/>
+        <QuestionsAnswers bridge={bridge} productId={productId} productName={productName}/>
         <RatingsAndReviews productId={40347} bridge={bridge} />
       </div>
     );
