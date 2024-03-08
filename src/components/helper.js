@@ -19,8 +19,6 @@ const helper = {
         // bridge.listReviews(productId),
         // bridge.questions(productId),
       ]);
-
-      // Once all promises have resolved, proceed to assign their results
       productInformation.info = { ...productInfo.data };
       productInformation.styles = productStyles.data;
       productInformation.relatedProducts = productRelatedProducts.data;
@@ -33,7 +31,6 @@ const helper = {
 
   getItemsProductInfo: async (ArrayOfRelatedItems) => {
     const relatedPromises = ArrayOfRelatedItems.map(async (item) => {
-      // Start all promises concurrently for each item
       const [productInfo, productStyles, productMeta] = await Promise.all([
         bridge.productInformation(item),
         bridge.productStyles(item),
@@ -46,7 +43,6 @@ const helper = {
       };
       return combinedResult;
     });
-    // Wait for all item promises to resolve and return the results
     return Promise.all(relatedPromises);
   },
 };
