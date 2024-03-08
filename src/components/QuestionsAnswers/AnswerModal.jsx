@@ -96,7 +96,6 @@ const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit, produ
             } else {
               handleAnswerSubmit(answerData);
             setAnswerModal(!showAnswerModal)
-            console.log(answerData)
             // setAnswerData({
             //   body: '',
             //   name: '',
