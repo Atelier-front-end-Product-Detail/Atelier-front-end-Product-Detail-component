@@ -4,7 +4,7 @@ import RelatedProducts from './RelatedProducts';
 import YourOutfit from './YourOutfit';
 import './styles.css';
 
-function RelatedItems({ productId, bridge, setProductId, productInfo }) {
+function RelatedItems({ productId, setProductId, productInfo }) {
   const [relatedItems, setRelatedItems] = useState([]);
   const parentRef = useRef(null);
 
@@ -24,17 +24,13 @@ function RelatedItems({ productId, bridge, setProductId, productInfo }) {
     <div className="related_items" ref={parentRef}>
       <RelatedProducts
         relatedItems={relatedItems}
-        bridge={bridge}
         setProductId={setProductId}
-        productId={productId}
         productInfo={productInfo}
       />
       <br />
       <YourOutfit
         productId={productId}
-        bridge={bridge}
         setProductId={setProductId}
-        productInfo={productInfo}
       />
     </div>
   );
@@ -42,10 +38,10 @@ function RelatedItems({ productId, bridge, setProductId, productInfo }) {
 
 RelatedItems.propTypes = {
   productId: PropTypes.number.isRequired,
-  bridge: PropTypes.shape({
-    relatedProducts: PropTypes.func.isRequired,
-  }).isRequired,
   setProductId: PropTypes.func.isRequired,
+  productInfo: PropTypes.shape({
+    relatedProducts: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
 };
 
 export default RelatedItems;

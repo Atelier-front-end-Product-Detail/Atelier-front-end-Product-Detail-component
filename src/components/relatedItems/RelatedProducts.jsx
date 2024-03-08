@@ -7,20 +7,18 @@ import helper from '../helper';
 
 function RelatedProducts({
   relatedItems,
-  bridge,
   setProductId,
-  productId,
   productInfo,
 }) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [relatedItem, setRelatedItem] = useState(0);
+  const [relatedItem, setRelatedItem] = useState({});
   const [relatedProductsInfo, setRelatedProductsInfo] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const info = await helper.getRelatedItemsProductInfo(relatedItems);
+      const info = await helper.getItemsProductInfo(relatedItems);
       setRelatedProductsInfo(info);
     };
     fetchData();
@@ -29,7 +27,7 @@ function RelatedProducts({
   const relatedProductCardWidthPlusGap = 270;
 
   const action = (id) => {
-    setRelatedItem(relatedItem === id ? 0 : id);
+    setRelatedItem(relatedItem === id ? {} : id);
   };
 
   const scrollLeft = () => {
@@ -125,7 +123,6 @@ function RelatedProducts({
         {relatedProductsInfo.map((item) => (
           <RelatedProductCard
             productId={item.info.id}
-            bridge={bridge}
             key={`rpc ${item.info.id}`}
             setProductId={setProductId}
             type="related products"
@@ -134,24 +131,22 @@ function RelatedProducts({
           />
         ))}
       </div>
-      {relatedItem
+      {(relatedItem && relatedItem !== {})
         ? (
           <ComparisonModal
-            bridge={bridge}
             relatedItem={relatedItem}
-            productId={productId}
+            productInfo={productInfo}
           />
         )
         : null }
     </div>
-  )
+  );
 }
 
 RelatedProducts.propTypes = {
-  productId: PropTypes.number.isRequired,
   relatedItems: PropTypes.arrayOf(PropTypes.number).isRequired,
-  bridge: PropTypes.shape({}).isRequired,
   setProductId: PropTypes.func.isRequired,
+  productInfo: PropTypes.shape({}).isRequired,
 };
 
 export default RelatedProducts;

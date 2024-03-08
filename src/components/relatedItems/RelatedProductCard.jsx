@@ -6,7 +6,6 @@ import Stars from './Stars';
 
 function RelatedProductCard({
   productId,
-  bridge,
   setProductId,
   type,
   action,
@@ -76,7 +75,7 @@ function RelatedProductCard({
     setProductStyles(productInformation.styles.results);
 
     const { ratings } = productInformation.meta;
-    if (!ratings) return; // Additional check for ratings existence
+    if (!ratings) return;
 
     let ratingsResult = 0;
     const keys = Object.keys(ratings);
@@ -84,18 +83,17 @@ function RelatedProductCard({
       ratingsResult += (parseInt(keys[i], 10) * parseInt(ratings[keys[i]], 10));
     }
     const ratingValues = Object.values(ratings).map((val) => parseInt(val, 10));
-    const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 0); // Changed from 10 to 0
+    const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 0);
     ratingsResult /= sumOfRatings;
     setProductReviews(ratingsResult);
   }, [productInformation]);
 
-  // SET DERIVATIVE STATES
   useEffect(() => {
     if (!productStyles || !productStyles.length) return;
     const filteredStyles = productStyles.filter((style) => style['default?'] === true);
     const newDefaultStyle = filteredStyles.length > 0 ? filteredStyles[0] : productStyles[0];
     setDefaultStyle(newDefaultStyle);
-  }, [productStyles]); // Ensure productStyles is a dependency
+  }, [productStyles]);
 
   useEffect(() => {
     if (defaultStyle && defaultStyle.photos && defaultStyle.photos.length) {
@@ -116,7 +114,7 @@ function RelatedProductCard({
     )
     : (
       <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
-        <ActionButton type={type} action={action} productId={productId} />
+        <ActionButton type={type} action={action} productInformation={productInformation} />
         <button type="button" className="related_product_prev_pic" aria-label="next picture" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}><FaArrowLeft /></button>
         <button type="button" className="related_product_next_pic" aria-label="related_product_card" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}><FaArrowRight /></button>
         <br />
@@ -157,14 +155,18 @@ function RelatedProductCard({
 
 RelatedProductCard.propTypes = {
   productId: PropTypes.number.isRequired,
-  bridge: PropTypes.shape({
-    productInformation: PropTypes.func.isRequired,
-    productStyles: PropTypes.func.isRequired,
-    reviewsMeta: PropTypes.func.isRequired,
-  }).isRequired,
   setProductId: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  productInformation: PropTypes.shape({
+    info: PropTypes.shape({}),
+    styles: PropTypes.shape({
+      results: PropTypes.arrayOf().isRequired,
+    }).isRequired,
+    meta: PropTypes.shape({
+      ratings: PropTypes.shape({}).isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default RelatedProductCard;

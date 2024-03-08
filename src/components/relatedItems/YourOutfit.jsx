@@ -3,12 +3,25 @@ import PropTypes from 'prop-types';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import AddItemToOutfit from './AddItemToOutfit';
 import RelatedProductCard from './RelatedProductCard';
+import helper from '../helper';
 
-function YourOutfit({ productId, bridge, setProductId, productInfo }) {
+function YourOutfit({
+  productId,
+  setProductId,
+}) {
   const [userOutfit, setUserOutfit] = useState([]);
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [outfitProductsInfo, setOutfitProductsInfo] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const info = await helper.getItemsProductInfo(userOutfit);
+      setOutfitProductsInfo(info);
+    };
+    fetchData();
+  }, [userOutfit]);
 
   const relatedProductCardWidthPlusGap = 270;
 
@@ -122,7 +135,16 @@ function YourOutfit({ productId, bridge, setProductId, productInfo }) {
           userOutfit={userOutfit}
           setUserOutfit={setUserOutfit}
         />
-        {userOutfit.map((item) => <RelatedProductCard productId={item} bridge={bridge} setProductId={setProductId} key={`yo ${item}`} type="your outfit" action={action} />)}
+        {outfitProductsInfo.map((item) => (
+          <RelatedProductCard
+            productId={item.info.id}
+            setProductId={setProductId}
+            key={`yo ${item.info.id}`}
+            type="your outfit"
+            action={action}
+            productInformation={item}
+          />
+        ))}
       </div>
     </div>
   );

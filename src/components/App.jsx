@@ -66,7 +66,6 @@ function App() {
         {/* <Overview bridge={bridge} /> */}
         <RelatedItems
           productId={productId}
-          bridge={bridge}
           setProductId={setProductId}
           productInfo={productInfo}
         />

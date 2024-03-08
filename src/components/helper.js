@@ -20,7 +20,7 @@ const helper = {
     return productInformation;
   },
 
-  getRelatedItemsProductInfo: async (relatedItems) => {
+  getItemsProductInfo: async (relatedItems) => {
     const relatedPromises = relatedItems.map(async (item) => {
       const productInfo = await bridge.productInformation(item);
       const productStyles = await bridge.productStyles(item);
@@ -31,8 +31,6 @@ const helper = {
         styles: productStyles.data,
         meta: productMeta.data,
       };
-
-      // console.log(`Combined Results: ${JSON.stringify(combinedResult.styles)}`);
 
       return combinedResult;
     });
