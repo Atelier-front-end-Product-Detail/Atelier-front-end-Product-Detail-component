@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 
-const QuestionsAnswers = ({bridge}) => {
+const QuestionsAnswers = ({bridge, productId}) => {
   const [dataNum, setDataNum] = useState(2)
   const [data, setData] = useState([])
   const [filtered, setFiltered] = useState([])
   const [isFiltered, setIsFiltered] = useState(false)
   const [showQuestionModal, setShowQuestionModal] = useState(false)
   useEffect(() => {
-    bridge.questions(40346)
+    bridge.questions(productId)
     .then((results) => {
       setData(results.data.results)
     })
@@ -67,41 +67,45 @@ const QuestionsAnswers = ({bridge}) => {
     bridge.postQuestion(data)
     .then(() => {
       console.log("Success posting question", data)
-    })
-    .catch((err) => {
-      console.log("Unsuccesful post", err)
-    })
-
-    bridge.questions(40345)
-    .then((results) => {
-      setData(results.data.results)
-    })
-    .catch((err) => {
-      throw err;
-    })
-  }
-
-  const handleQuestionHelpful = (question_id) => {
-    bridge.putQuestionHelpful(question_id)
-    .then(() => {
-      bridge.questions(40346)
+      bridge.questions(productId)
       .then((results) => {
         setData(results.data.results)
       })
       .catch((err) => {
         throw err;
       })
-      })
-    .catch((err) => {
-      throw err;
     })
+    .catch((err) => {
+      console.log("Unsuccesful post", err)
+    })
+  }
+
+  const handleQuestionHelpful = (question_id) => {
+    if(localStorage.getItem(question_id)) {
+      console.log("Helpful count already updated")
+    } else {
+      bridge.putQuestionHelpful(question_id)
+      .then(() => {
+        localStorage.setItem(question_id, "true")
+        bridge.questions(productId)
+        .then((results) => {
+          setData(results.data.results)
+        })
+        .catch((err) => {
+          throw err;
+        })
+        })
+      .catch((err) => {
+        throw err;
+      })
+    }
 
   }
 
   const handleQuestionReport = (question_id) => {
     bridge.reportQuestion(question_id)
     .then(() => {
-      bridge.questions(40346)
+      bridge.questions(productId)
       .then((results) => {
         setData(results.data.results)
       })
