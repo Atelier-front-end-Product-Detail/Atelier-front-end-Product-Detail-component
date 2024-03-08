@@ -77,8 +77,8 @@ function ReviewsView({
   const handleShowImageModal = (boolean) => {
     setShowImageModal(boolean);
   };
-  console.log(showImageModal);
-  console.log(modalImage);
+  // console.log(showImageModal);
+  // console.log(modalImage);
 
   const handleAddReview = (data) => {
     bridge.addReview(data)
