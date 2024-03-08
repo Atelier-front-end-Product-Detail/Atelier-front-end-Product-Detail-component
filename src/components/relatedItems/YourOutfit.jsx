@@ -8,6 +8,7 @@ import helper from '../helper';
 function YourOutfit({
   productId,
   setProductId,
+  productInfo,
 }) {
   const [userOutfit, setUserOutfit] = useState([]);
   const scrollContainerRef = useRef(null);
@@ -21,13 +22,29 @@ function YourOutfit({
       setOutfitProductsInfo(info);
     };
     fetchData();
-  }, [userOutfit]);
+  }, []);
 
   const relatedProductCardWidthPlusGap = 270;
 
+  const addToOutfit = () => {
+    if (outfitProductsInfo.some((product) => product.info.id === productId)) return;
+    setOutfitProductsInfo([...outfitProductsInfo, productInfo]);
+    if (userOutfit.some((product) => product === productId)) return;
+    setUserOutfit([...userOutfit, productId]);
+    localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+  };
+
   const action = (id) => {
+    const newOutfitProductsInfo = [...outfitProductsInfo];
+    let index = newOutfitProductsInfo.indexOf(id);
+    if (index < 0) {
+      return;
+    }
+    newOutfitProductsInfo.splice(index, 1);
+    setOutfitProductsInfo(newOutfitProductsInfo);
+
     const newUserOutfit = [...userOutfit];
-    const index = newUserOutfit.indexOf(id);
+    index = newUserOutfit.indexOf(id.info.id);
     if (index < 0) {
       return;
     }
@@ -131,9 +148,7 @@ function YourOutfit({
       )}
       <div id="your_outfit" ref={scrollContainerRef}>
         <AddItemToOutfit
-          productId={productId}
-          userOutfit={userOutfit}
-          setUserOutfit={setUserOutfit}
+          addToOutfit={addToOutfit}
         />
         {outfitProductsInfo.map((item) => (
           <RelatedProductCard
@@ -153,7 +168,7 @@ function YourOutfit({
 YourOutfit.propTypes = {
   productId: PropTypes.number.isRequired,
   setProductId: PropTypes.func.isRequired,
-  bridge: PropTypes.shape({}).isRequired,
+  productInfo: PropTypes.shape({}).isRequired,
 };
 
 export default YourOutfit;

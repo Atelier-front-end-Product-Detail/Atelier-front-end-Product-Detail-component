@@ -161,7 +161,7 @@ RelatedProductCard.propTypes = {
   productInformation: PropTypes.shape({
     info: PropTypes.shape({}),
     styles: PropTypes.shape({
-      results: PropTypes.arrayOf().isRequired,
+      results: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     }).isRequired,
     meta: PropTypes.shape({
       ratings: PropTypes.shape({}).isRequired,

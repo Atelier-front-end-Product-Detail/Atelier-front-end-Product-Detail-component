@@ -131,7 +131,7 @@ function RelatedProducts({
           />
         ))}
       </div>
-      {(relatedItem && relatedItem !== {})
+      {(relatedItem && JSON.stringify(relatedItem) !== '{}')
         ? (
           <ComparisonModal
             relatedItem={relatedItem}

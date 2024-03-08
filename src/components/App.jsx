@@ -22,15 +22,17 @@ function App() {
 
   // ------------------------------------------
   // FOR TESTING
-  // UNCOMMENT THE FOLLOWING LINE TO VIEW THE SCTRUCTURE OF THE productInfo object
+  // UNCOMMENT THE FOLLOWING LINE TO VIEW THE STRUCTURE OF THE productInfo object
+
   // useEffect(() => {
   //   console.log(`productInfo.info : ${JSON.stringify(productInfo.info)}`);
   //   console.log(`productInfo.styles : ${JSON.stringify(productInfo.styles)}`);
   //   console.log(`productInfo.relatedProducts : ${JSON.stringify(productInfo.relatedProducts)}`);
-  //   console.log(`productInfo.reviews : ${JSON.stringify(productInfo.reviews)}`);
   //   console.log(`productInfo.meta : ${JSON.stringify(productInfo.meta)}`);
+  //   console.log(`productInfo.reviews : ${JSON.stringify(productInfo.reviews)}`);
   //   console.log(`productInfo.questions : ${JSON.stringify(productInfo.questions)}`);
   // }, [productInfo]);
+
   // ------------------------------------------
   // const [results, setResults] = useState(null);
 
@@ -63,14 +65,14 @@ function App() {
     )
     : (
       <div>
-        {/* <Overview bridge={bridge} /> */}
+        <Overview bridge={bridge} />
         <RelatedItems
           productId={productId}
           setProductId={setProductId}
           productInfo={productInfo}
         />
-        {/* <QuestionsAnswers bridge={bridge} productId={productId}/>
-        <RatingsAndReviews productId={40347} bridge={bridge} /> */}
+        <QuestionsAnswers bridge={bridge} productId={productId} />
+        <RatingsAndReviews productId={40347} bridge={bridge} />
       </div>
     );
 }

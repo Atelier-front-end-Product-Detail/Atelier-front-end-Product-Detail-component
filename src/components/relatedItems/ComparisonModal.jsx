@@ -14,8 +14,6 @@ function ComparisonModal({ relatedItem, productInfo }) {
         || !productInfo.info.features) { return; }
 
     function constructFeaturesInRows(obj1, obj2) {
-      console.log(`obj1: ${JSON.stringify(obj1)}`);
-      console.log(`obj2: ${JSON.stringify(obj2)}`);
       const allFeatures = Array.from(new Set(
         [...obj1.features.map((feature) => feature.feature),
           ...obj2.features.map((feature) => feature.feature)],
@@ -36,16 +34,14 @@ function ComparisonModal({ relatedItem, productInfo }) {
       setComparisonInfo(newComparisonInfo);
     }
 
-    const obj1 = productInfo.info;
-    const obj2 = relatedItem;
-    constructFeaturesInRows(obj1, obj2);
+    const mainProduct = productInfo.info;
+    const comparisonProduct = relatedItem.info;
+    constructFeaturesInRows(mainProduct, comparisonProduct);
   }, [relatedItem]);
 
   return comparisonInfo.length ? (
     <div className="comparison_modal_outer_div">
       Comparing:
-      {/* {' '}
-      {JSON.stringify(comparisonRatings)} */}
       <div className="comparison_modal">
         {comparisonInfo.map((row) => (
           <ComparisonModalRow productInfo={row} key={row.join(',')} />
@@ -57,10 +53,14 @@ function ComparisonModal({ relatedItem, productInfo }) {
 }
 
 ComparisonModal.propTypes = {
-  relatedItem: PropTypes.number.isRequired,
+  relatedItem: PropTypes.shape({
+    info: PropTypes.shape({
+      features: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    }).isRequired,
+  }).isRequired,
   productInfo: PropTypes.shape({
     info: PropTypes.shape({
-      features: PropTypes.arrayOf().isRequired,
+      features: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     }).isRequired,
   }).isRequired,
 };

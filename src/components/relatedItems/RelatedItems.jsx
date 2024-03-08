@@ -31,6 +31,7 @@ function RelatedItems({ productId, setProductId, productInfo }) {
       <YourOutfit
         productId={productId}
         setProductId={setProductId}
+        productInfo={productInfo}
       />
     </div>
   );
