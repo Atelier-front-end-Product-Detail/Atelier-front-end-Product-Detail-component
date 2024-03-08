@@ -7,7 +7,8 @@ import bridge from './bridge';
 
 function App() {
   const [productId, setProductId] = useState(0);
-  const [productName, setProductName] = useState(null)
+  const [productName, setProductName] = useState(null);
+
   // FOR TESTING
   // ------------------------------------------
   // const [results, setResults] = useState(null);
@@ -32,9 +33,10 @@ function App() {
   // SETTING STATE FOR PRODUCTID
   useEffect(() => {
     bridge.listProducts()
-      .then((results) => {setProductId(results.data[0].id);
-      setProductName(results.data[productId].name)}
-      );
+      .then((results) => {
+        setProductId(results.data[0].id);
+        setProductName(results.data[productId].name);
+      });
   }, []);
 
   return !productId
@@ -43,13 +45,12 @@ function App() {
     )
     : (
       <div>
-        <Overview bridge={bridge} />
+        <Overview productId={productId} bridge={bridge} />
         <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
-        <QuestionsAnswers bridge={bridge} productId={productId} productName={productName}/>
+        <QuestionsAnswers bridge={bridge} productId={productId} productName={productName} />
         <RatingsAndReviews productId={productId} bridge={bridge} productName={productName}/>
       </div>
     );
 }
 
 export default App;
-
