@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { GoStar } from 'react-icons/go';
 import ActionButton from './ActionButton';
+import Stars from './Stars';
 
 function RelatedProductCard({
   productId,
@@ -113,32 +115,32 @@ function RelatedProductCard({
       <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
       <br />
       <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
-      <p>
+      <div>
         <span className="product_card_name">
           {productInfo.name}
           {'  '}
         </span>
         <span className="product_card_extra_text">{productInfo.slogan}</span>
-      </p>
-      <p className="product_card_category">{productInfo.category}</p>
+      </div>
+      <div className="product_card_category">{productInfo.category}</div>
       {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
-        <p className="product_card_sale_price">
+        <div className="product_card_sale_price">
           Price:
           {' '}
           {defaultStyle.sale_price}
-        </p>
+        </div>
       ) : (
-        <p className="product_card_price">
+        <div className="product_card_price">
           Price:
           {' '}
           {productInfo.default_price}
-        </p>
+        </div>
       )}
-      <p className="product_card_reviews">
+      <div className="product_card_reviews">
         Reviews:
         {' '}
-        {Math.floor(productReviews / (1 / 4)) * (1 / 4)}
-      </p>
+        <Stars rating={Math.floor(productReviews / (1 / 4)) * (1 / 4)} />
+      </div>
     </div>
   );
 }

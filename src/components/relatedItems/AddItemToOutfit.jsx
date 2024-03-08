@@ -17,23 +17,6 @@ function AddItemToOutfit({ productId, userOutfit, setUserOutfit }) {
     }
   };
 
-  // const removeFromOutfit = () => {
-  //   const newUserOutfit = [...userOutfit];
-  //   const index = newUserOutfit.indexOf(productId);
-  //   if (index < 0) {
-  //     return;
-  //   }
-  //   newUserOutfit.splice(index, 1);
-  //   localStorage.setItem('fecYourOutfit', JSON.stringify(newUserOutfit));
-  //   setUserOutfit(newUserOutfit);
-  // };
-
-  // const handleKeyPressRemoveItem = (e) => {
-  //   if (e.key === 'Enter') {
-  //     addToOutfit();
-  //   }
-  // };
-
   return (
     <div>
       <div id="add_item_to_outfit" role="button" tabIndex="0" aria-label="add_item_to_outfit" onClick={addToOutfit} onKeyPress={handleKeyPressAddItem}>

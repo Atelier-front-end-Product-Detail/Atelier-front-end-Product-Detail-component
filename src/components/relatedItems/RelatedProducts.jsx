@@ -11,12 +11,13 @@ function RelatedProducts({
 }) {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [relatedItem, setRelatedItem] = useState(0);
 
   const relatedProductCardWidthPlusGap = 270;
 
   const action = (id) => {
-    console.log(`click related products ${JSON.stringify(id)}`);
+    setRelatedItem(relatedItem === id ? 0 : id);
   };
 
   const scrollLeft = () => {
@@ -127,7 +128,15 @@ function RelatedProducts({
           />
         ))}
       </div>
-      <ComparisonModal bridge={bridge} relatedItems={relatedItems} productId={productId} />
+      {relatedItem
+        ? (
+          <ComparisonModal
+            bridge={bridge}
+            relatedItem={relatedItem}
+            productId={productId}
+          />
+        )
+        : null }
     </div>
   );
 }
