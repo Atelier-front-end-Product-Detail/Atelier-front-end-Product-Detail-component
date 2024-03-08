@@ -1,21 +1,24 @@
 .overview {
   display: flex;
   max-width: 1200px;
-  margin: auto; /* centers overview container */
+  margin: auto; /* Centers the overview container */
 }
 
-.left-section {
-  flex: 3;
-}
-
-.right-section {
-  flex: 1;
+.left-section, .right-section {
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
 }
 
-/* left side */
+.image-gallery-wrapper {
+  flex-grow: 1;
+}
+
+.slogan-description-wrapper {
+  flex-grow: 0;
+}
+
+
+/* Left side */
 
 .image-container {
   padding: 10px;
@@ -46,14 +49,28 @@
   cursor: pointer;
 }
 
+/* expanded gallery container  */
 .image-gallery.expanded .gallery-container {
-  width: 100%; /* Extend to full width */
-  /* Make sure the height is maintained and it covers the ProductInformation component */
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 2; /* Ensure it's above other content */
+  width: calc(100% + 90% );
+  z-index: 29;
+  right: -30%;
 }
+.image-gallery.expanded .slogan-description-wrapper {
+  position: static;
+}
+
+.image-gallery.expanded .main-image {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+}
+
+/* right-section is hidden when  expanded */
+
+.image-gallery.expanded .right-section {
+  display: none;
+}
+
 
 .main-image {
   display: flex;
@@ -79,7 +96,6 @@
 }
 
 .thumbnail-gallery {
-  flex-grow: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -127,6 +143,8 @@
   right: -25px;
 }
 
+/* Right side */
+
 .product-description {
   text-align: left;
 }
@@ -139,8 +157,6 @@
   margin-bottom: 20px;
 }
 
-
-/* right side */
 /* category */
 .product-information h3 {
   font-size: 1em;
@@ -148,12 +164,12 @@
   margin-bottom: 0px;
 }
 
-/* product name */
+/* item name */
 .product-information h2 {
   font-size: 1.8em;
   font-weight: bold;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 .price {
@@ -174,11 +190,11 @@
   text-decoration: line-through;
 }
 
-/* make quantity, size, and add to cart share one parent container for styling */
 .selectors-container {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .size-selector {
@@ -193,13 +209,10 @@
   margin-top: 10px;
 }
 
-
 .add-to-cart-button {
   width: 100%;
   padding: 10px 20px;
 }
-
-/*  container for slogan/description with filler text to the right */
 
 .slogan-description {
   flex: 1;
