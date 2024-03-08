@@ -39,14 +39,14 @@ function RelatedItems({ productId, setProductId }) {
   // FOR TESTING
   // UNCOMMENT THE FOLLOWING LINE TO VIEW THE STRUCTURE OF THE productInfo object
 
-  useEffect(() => {
-    console.log(`productInfo.info : ${JSON.stringify(productInfo.info)}`);
-    console.log(`productInfo.styles : ${JSON.stringify(productInfo.styles)}`);
-    console.log(`productInfo.relatedProducts : ${JSON.stringify(productInfo.relatedProducts)}`);
-    console.log(`productInfo.meta : ${JSON.stringify(productInfo.meta)}`);
-    console.log(`productInfo.reviews : ${JSON.stringify(productInfo.reviews)}`);
-    console.log(`productInfo.questions : ${JSON.stringify(productInfo.questions)}`);
-  }, [productInfo]);
+  // useEffect(() => {
+  //   console.log(`productInfo.info : ${JSON.stringify(productInfo.info)}`);
+  //   console.log(`productInfo.styles : ${JSON.stringify(productInfo.styles)}`);
+  //   console.log(`productInfo.relatedProducts : ${JSON.stringify(productInfo.relatedProducts)}`);
+  //   console.log(`productInfo.meta : ${JSON.stringify(productInfo.meta)}`);
+  //   console.log(`productInfo.reviews : ${JSON.stringify(productInfo.reviews)}`);
+  //   console.log(`productInfo.questions : ${JSON.stringify(productInfo.questions)}`);
+  // }, [productInfo]);
 
   // ------------------------------------------
 
@@ -70,9 +70,6 @@ function RelatedItems({ productId, setProductId }) {
 RelatedItems.propTypes = {
   productId: PropTypes.number.isRequired,
   setProductId: PropTypes.func.isRequired,
-  productInfo: PropTypes.shape({
-    relatedProducts: PropTypes.arrayOf(PropTypes.number).isRequired,
-  }).isRequired,
 };
 
 export default RelatedItems;

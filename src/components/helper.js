@@ -4,13 +4,20 @@ const helper = {
   getProductInfo: async (productId) => {
     const productInformation = {};
     if (productId) {
-       const [productInfo, productStyles, productRelatedProducts, productMeta, productReviews, productQuestions] = await Promise.all([
+      const [
+        productInfo,
+        productStyles,
+        productRelatedProducts,
+        productMeta,
+        // productReviews,
+        // productQuestions,
+      ] = await Promise.all([
         bridge.productInformation(productId),
         bridge.productStyles(productId),
         bridge.relatedProducts(productId),
         bridge.reviewsMeta(productId),
-        bridge.listReviews(productId),
-        bridge.questions(productId),
+        // bridge.listReviews(productId),
+        // bridge.questions(productId),
       ]);
 
       // Once all promises have resolved, proceed to assign their results
@@ -18,8 +25,8 @@ const helper = {
       productInformation.styles = productStyles.data;
       productInformation.relatedProducts = productRelatedProducts.data;
       productInformation.meta = productMeta.data;
-      productInformation.reviews = productReviews.data;
-      productInformation.questions = productQuestions.data;
+      // productInformation.reviews = productReviews.data;
+      // productInformation.questions = productQuestions.data;
     }
     return productInformation;
   },
