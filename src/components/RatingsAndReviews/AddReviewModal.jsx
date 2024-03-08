@@ -20,6 +20,8 @@ function AddReviewModal({
     characteristics: {},
   });
 
+  const [isRatingSelected, setIsRatingSelected] = useState(false);
+
   // console.log('PHOTOS: ', reviewData.photos);
   const handleCharacteristicChange = (value, id) => {
     setReviewData({ ...reviewData, characteristics: { ...reviewData.characteristics, [id]: value } });
@@ -45,6 +47,16 @@ function AddReviewModal({
     }
   };
 
+  const onSubmitClick = (e) => {
+    e.preventDefault();
+    if (!isRatingSelected) {
+      console.log('Please select a rating before submitting.');
+      return;
+    }
+    handleAddReview(reviewData);
+    handleShowModal(false);
+  };
+
   // console.log('Classname: ', handleClassName);
   // console.log('showAddReviewModal: ', showAddReviewModal);
   // console.log('reviewData: ', reviewData);
@@ -52,7 +64,10 @@ function AddReviewModal({
   return (
     <div className={handleClassName}>
 
-      <form className="review-form">
+      <form
+        className="review-form"
+        onSubmit={onSubmitClick}
+      >
         <h4>Write Your Review</h4>
         <h6>About the "product name"</h6>
 
@@ -62,6 +77,7 @@ function AddReviewModal({
             interactive="true"
             onRatingChange={(rating) => {
               setReviewData({ ...reviewData, rating });
+              setIsRatingSelected(true);
             }}
           />
           <p>selected rating:  </p>
@@ -74,6 +90,7 @@ function AddReviewModal({
               type="radio"
               name="recommendation"
               value="true"
+              required
               onChange={(() => {
                 setReviewData({ ...reviewData, recommend: true });
               })}
@@ -97,6 +114,7 @@ function AddReviewModal({
           <label>Review summary</label>
           <input
             type="text"
+            required
             placeholder="Example: Best purchase ever!"
             onChange={((event) => {
               setReviewData({ ...reviewData, summary: event.target.value });
@@ -110,6 +128,7 @@ function AddReviewModal({
           <label>Review body*</label>
           <textarea
             placeholder="Why did you like the product or not?"
+            required
             onChange={((event) => {
               setReviewData({ ...reviewData, body: event.target.value });
             })}
@@ -125,6 +144,7 @@ function AddReviewModal({
           <label>What is your nickname?*</label>
           <input
             type="text"
+            required
             placeholder="Example: nickname!"
             onChange={((event) => {
               setReviewData({ ...reviewData, name: event.target.value });
@@ -184,22 +204,23 @@ function AddReviewModal({
         </div>
 
         <button
-          onClick={() => {
-            handleAddReview(reviewData);
-            handleShowModal(false);
-          }}
-          type="button"
+          type="submit"
         >
           Submit Review
         </button>
 
+        {!isRatingSelected && (
+        <div style={{ color: 'red' }}>*Please select a star rating before submitting.</div>
+        )}
+
         <button
+          className="close-button"
           onClick={() => {
             handleShowModal(false);
           }}
           type="button"
         >
-          CLOSE WINDOW
+          X
         </button>
 
       </form>
@@ -277,6 +298,7 @@ function CharacteristicInput({ title, id, onChange }) {
             <input
               type="radio"
               name={title}
+              required
               value={value}
               onChange={() => handleChange(value)}
             />

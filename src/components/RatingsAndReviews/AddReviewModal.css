@@ -24,3 +24,10 @@
   transform: translate(-50%,-50%);
   overflow: scroll;
 }
+
+.close-button {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}

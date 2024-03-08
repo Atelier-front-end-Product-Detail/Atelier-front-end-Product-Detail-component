@@ -33,7 +33,7 @@ function ReviewsView({
         ),
       );
     }
-  }, [reviewsMeta.ratings]);
+  }, [reviewsMeta.ratings, productId]);
 
   const fetchAllData = () => {
     bridge.listReviews(productId, 1, currentTotalReviews, selectedValue)
@@ -48,7 +48,7 @@ function ReviewsView({
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
     fetchAllData();
-  }, [selectedValue, currentTotalReviews]);
+  }, [selectedValue, currentTotalReviews, productId]);
 
   // console.log('selectedSORT: ', selectedValue);
   // console.log('reviews: ', reviews);

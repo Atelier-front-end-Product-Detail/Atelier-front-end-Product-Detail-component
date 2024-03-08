@@ -42,7 +42,7 @@ function RatingsAndReviews({ bridge, productId }) {
       .then((results) => {
         setReviewsMeta(results.data);
       });
-  }, []);
+  }, [productId]);
 
   // useEffect(() => {
   //   // console.log(`api key = ${process.env.GIT_API_KEY}`);
