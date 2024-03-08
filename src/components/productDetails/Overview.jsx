@@ -4,6 +4,7 @@ import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
 import './StyleSelector.css';
 import './Holistic.css';
+import './Star.css';
 import AddToCart from './AddToCart';
 import bridge from '../bridge';
 
@@ -50,22 +51,25 @@ function Overview() {
   return (
     <div className="overview">
       <div className="left-section">
-        <ImageGallery style={selectedStyle} />
-
-        <div className="slogan-description-container">
-          <div className="slogan-description">
-            <div className="slogan">{productInfo.slogan}</div>
-            <div className="description">{productInfo.description}</div>
-          </div>
-          <div className="vertical-divider" />
-          <div className="filler-text">
-            <p>
-              ✓ No pesticides
-              <br />
-              ✓ GMO free
-              <br />
-              ✓ Organic Living Soil
-            </p>
+        <div className="image-gallery-wrapper">
+          <ImageGallery style={selectedStyle} />
+        </div>
+        <div className="slogan-description-wrapper">
+          <div className="slogan-description-container">
+            <div className="slogan-description">
+              <div className="slogan">{productInfo.slogan}</div>
+              <div className="description">{productInfo.description}</div>
+            </div>
+            <div className="vertical-divider" />
+            <div className="filler-text">
+              <p>
+                ✓ No pesticides
+                <br />
+                ✓ GMO free
+                <br />
+                ✓ Organic Living Soil
+              </p>
+            </div>
           </div>
         </div>
       </div>

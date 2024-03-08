@@ -20,7 +20,6 @@ function ImageGallery({ style }) {
   };
 
   const handleMainImageArrowClick = (direction, event) => {
-    // fixes clicking arrows opening expanded view
     event.stopPropagation();
     const newIndex = selectedImageIndex + (direction === 'next' ? 1 : -1);
     if (newIndex >= 0 && newIndex < style.photos.length) {
