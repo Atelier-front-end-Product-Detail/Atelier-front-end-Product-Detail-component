@@ -41,13 +41,13 @@ function App() {
     )
     : (
       <div>
-        {/* <Overview bridge={bridge} /> */}
+        <Overview bridge={bridge} />
         <RelatedItems
           productId={productId}
           setProductId={setProductId}
         />
-        {/* <QuestionsAnswers bridge={bridge} productId={productId} />
-        <RatingsAndReviews productId={40347} bridge={bridge} /> */}
+        <QuestionsAnswers bridge={bridge} productId={productId} />
+        <RatingsAndReviews productId={40347} bridge={bridge} />
       </div>
     );
 }

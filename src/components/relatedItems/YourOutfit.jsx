@@ -18,8 +18,9 @@ function YourOutfit({
 
   useEffect(() => {
     const fetchData = async () => {
-      const info = await helper.getItemsProductInfo(userOutfit);
+      const info = await helper.getItemsProductInfo(JSON.parse(localStorage.getItem('fecYourOutfit')));
       setOutfitProductsInfo(info);
+      setUserOutfit(JSON.parse(localStorage.getItem('fecYourOutfit')));
     };
     fetchData();
   }, []);

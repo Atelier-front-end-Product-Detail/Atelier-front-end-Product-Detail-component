@@ -27,7 +27,7 @@ function RelatedItems({ productId, setProductId }) {
 
     const relatedItemsSet = new Set();
     const relatedItemsList = [...productInfo.relatedProducts].filter((item) => {
-      if (!relatedItemsSet.has(item)) {
+      if (!relatedItemsSet.has(item) && item !== productId) {
         relatedItemsSet.add(item);
         return true;
       }
