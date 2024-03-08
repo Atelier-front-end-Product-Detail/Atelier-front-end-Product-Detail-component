@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit}) => {
+const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit, productName, question}) => {
   const [answerData, setAnswerData] = useState({
     body: '',
     name: '',
@@ -19,12 +19,16 @@ const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit}) => {
 
   const photoUpload = (e) => {
     let photos = []
-    photos.push(URL.createObjectURL(e.target.files[0]))
 
-    setAnswerData(prevValue => ({
-      ...prevValue,
-      photos: photos
-    }))
+    for(let i = 0; i < e.target.files.length; i++) {
+      photos.push(URL.createObjectURL(e.target.files[i]))
+      URL.revokeObjectURL(photos)
+      setAnswerData(prevValue => ({
+        ...prevValue,
+        photos: photos
+      }))
+    }
+
   }
   const handleClassName = showAnswerModal ? "answer-modal-display" : "answer-modal-display-none"
 
@@ -67,25 +71,39 @@ const AnswerModal = ({showAnswerModal, setAnswerModal, handleAnswerSubmit}) => {
       <div className={handleClassName}>
         <form className="answer-form" name="answerForm" onSubmit={(e) => {
           e.preventDefault()}}>
-        <div className="x-button"><button onClick={() => {setAnswerModal(!showAnswerModal)}}>x</button></div>
-          <label>Enter a answer</label>
-          <input name="body" type="text" onChange={handleChange} required maxLength="1000" value={answerData.body}></input>
-          <label>Username</label>
+        <div className="x-button">
+          <button onClick={() => {setAnswerModal(!showAnswerModal)}}>x</button></div>
+          <h1>{productName}: {question}</h1>
+          <label>Enter a answer *</label>
+          <textarea name="body" type="text" onChange={handleChange} required maxLength="1000" value={answerData.body}></textarea>
+          <label>Username *</label>
           <input maxLength="60" placeholder="Example: jackson11!" required name="name" type="text" value={answerData.name}onChange={handleChange}></input>
-          <label>Email</label>
+          <p>For privacy reasons, do not use your full name or email address</p>
+          <label>Email *</label>
           <input name="email" type="email" required onChange={handleChange} maxLength="60" value={answerData.email}></input>
           <p>For authentication reasons, you will not be emailed</p>
           <label>Upload photos</label>
-          <input type="file" onChange={photoUpload} name="photos"></input>
+          <input type="file" onChange={photoUpload} name="photos" multiple></input>
           <button type="submit" onClick={() => {
-            handleAnswerSubmit(answerData);
+            if(answerData.photos.length > 3) {
+              alert('You can only upload a maximum of 5 files!')
+            } else if (answerData.body === ''){
+              alert('You must enter the following: Enter your Answer')
+            } else if (answerData.name === ''){
+              alert('You must enter the following: Name')
+            } else if(answerData.email === '' || !answerData.email.includes('@')){
+              alert('You must enter the following: Email')
+            } else {
+              handleAnswerSubmit(answerData);
             setAnswerModal(!showAnswerModal)
-            setAnswerData({
-              body: '',
-              name: '',
-              email: '',
-              photos: []
-            })
+            console.log(answerData)
+            // setAnswerData({
+            //   body: '',
+            //   name: '',
+            //   email: '',
+            //   photos: []
+            // })
+            }
           }}>Submit</button>
         </form>
       </div>

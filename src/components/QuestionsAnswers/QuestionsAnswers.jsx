@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 
-const QuestionsAnswers = ({bridge, productId}) => {
-  const [dataNum, setDataNum] = useState(2)
+const QuestionsAnswers = ({bridge, productId, productName}) => {
+  const [dataNum, setDataNum] = useState(4)
   const [data, setData] = useState([])
   const [filtered, setFiltered] = useState([])
   const [isFiltered, setIsFiltered] = useState(false)
@@ -31,18 +31,18 @@ const QuestionsAnswers = ({bridge, productId}) => {
     if(data.length > 4 && dataNum < data.length) {
       return (
         <>
-           <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
-        <button type="button" onClick={() => {
-              setDataNum(dataNum +2)
+           <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum} productName={productName} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
+        <button id="question-button"type="button" onClick={() => {
+              setDataNum(dataNum +4)
             }}>More Questions</button>
-        <button type="button" onClick={() => {handleShowModal(true)}} id="question-button">Add a question</button>
+        <button type="button" onClick={() => {handleShowModal(true)}} id="add-question-button">Add a question &#43;</button>
         </>
       )
     } else {
       return (
         <>
-        <QuestionsAnswersList bridge={bridge} data={data} dataNum={dataNum} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
-        <button type="button" onClick={() => {handleShowModal(true)}} id="question-button">Add a question</button>
+        <QuestionsAnswersList productName={productName} bridge={bridge} data={data} dataNum={dataNum} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
+        <button type="button" onClick={() => {handleShowModal(true)}} id="add-question-button">Add a question &#43;</button>
         </>
       )
     }
@@ -118,18 +118,21 @@ const QuestionsAnswers = ({bridge, productId}) => {
     })
   }
 
-return (
+return !data ? (
   <div className="questions-answers-overview">
-    <h1 data-testid='title'>Questions & Answers</h1>
-    <SearchQuestionsAnswers handleSearch={handleSearch}/>
-    <QuestionModal handlePostQuestion={handlePostQuestion} handleShowModal={handleShowModal} showQuestionModal={showQuestionModal} />
-    {isFiltered ? <QuestionsAnswersList bridge={bridge} data={filtered} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/> :
-      <>
-      {showQuestionsButton()}
-      </>
-      }
+    There are no questions for this product
   </div>
-)
+) : (<div className="questions-answers-overview">
+<h1 data-testid='title'>Questions & Answers</h1>
+if(!data) {}
+<SearchQuestionsAnswers handleSearch={handleSearch}/>
+<QuestionModal handlePostQuestion={handlePostQuestion} handleShowModal={handleShowModal} showQuestionModal={showQuestionModal} />
+{isFiltered ? <QuestionsAnswersList productName={productName} bridge={bridge} data={filtered} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/> :
+  <>
+  {showQuestionsButton()}
+  </>
+  }
+</div>)
 }
 
 

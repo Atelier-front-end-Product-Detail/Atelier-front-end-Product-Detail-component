@@ -49,6 +49,14 @@
   z-index: 5;
   cursor: pointer;
 }
+
+.image-gallery.expanded .expand-collapse-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1010;
+}
+
 .main-image {
   position: relative;
   width: 80%;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import bridge from '../bridge';
 
 function AddToCart({ style }) {
   const [selectedSize, setSelectedSize] = useState('');
@@ -9,7 +10,6 @@ function AddToCart({ style }) {
   const [message, setMessage] = useState('');
   const sizeSelectRef = useRef(null);
 
-  // find sizes for that type of style/sku
   useEffect(() => {
     if (style && style.skus) {
       const sizes = Object.values(style.skus).reduce((acc, { size, quantity }) => {
@@ -28,7 +28,6 @@ function AddToCart({ style }) {
     const sizeObj = availableSizes.find((s) => s.size === size);
     setMaxQuantity(Math.min(15, sizeObj ? sizeObj.quantity : 0));
     setSelectedQuantity(1);
-    // clears Please Select Size message when size selected
     setMessage('');
   };
 
@@ -40,9 +39,19 @@ function AddToCart({ style }) {
     if (!selectedSize) {
       sizeSelectRef.current.focus();
       setMessage('Please select size');
-    } else {
-      // add cart... here later
-      console.log(`Added ${selectedQuantity} of size ${selectedSize} to cart`);
+      return;
+    }
+
+    const skuId = Object.keys(style.skus).find((key) => style.skus[key].size === selectedSize);
+
+    if (skuId) {
+      for (let i = 0; i < selectedQuantity; i + 1) {
+        bridge.addToCart(parseInt(skuId, 10)).then(() => {
+          console.log(`Added size ${selectedSize} to cart`);
+        }).catch((error) => {
+          console.error('Error adding to cart:', error);
+        });
+      }
     }
   };
 
