@@ -37,8 +37,7 @@ function App() {
   return (
     <div>
       HELLO =D
-      <Overview bridge={bridge} />
-      {/* removed states and hooks */}
+      <Overview productId={productId} bridge={bridge} />
       <RelatedItems productId={productId} bridge={bridge} setProductId={setProductId} />
       <QuestionsAnswers bridge={bridge} />
       <RatingsAndReviews productId={40345} bridge={bridge} />
