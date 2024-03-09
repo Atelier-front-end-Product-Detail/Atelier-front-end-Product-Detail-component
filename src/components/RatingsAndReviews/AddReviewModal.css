@@ -23,6 +23,7 @@
   background-color: white;
   transform: translate(-50%,-50%);
   overflow: scroll;
+  padding: 20px;
 }
 
 .close-button {
@@ -30,4 +31,33 @@
   top: 5px;
   right: 5px;
   cursor: pointer;
+}
+
+.title {
+  font-size: larger;
+  margin-bottom: 2px;
+  font-weight: bold
+}
+
+.subtitle {
+  margin-top: 2px;
+  font-weight: bold
+}
+
+.review-rating {
+  align-items: center;
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.review-element {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.review-undertext {
+  margin-top: 1px;
+  font-size: smaller;
 }

@@ -88,11 +88,11 @@ function AddReviewModal({
         className="review-form"
         onSubmit={onSubmitClick}
       >
-        <h4>Write Your Review</h4>
-        <h6>About the {productName}</h6>
+        <p className="title">Write Your Review</p>
+        <p className="subtitle">About the {productName}</p>
 
-        <label> Overall rating* </label>
-        <div>
+        <label> Overall rating:* </label>
+        <div className="review-rating">
           <StarRating
             interactive="true"
             onRatingChange={(rating) => {
@@ -100,11 +100,11 @@ function AddReviewModal({
               setIsRatingSelected(true);
             }}
           />
-          <p>selected rating:  </p>
+          <div>  selected rating:  </div>
         </div>
 
         <label>Do you recommend this product?* </label>
-        <div>
+        <div className="review-rating">
           <label>
             <input
               type="radio"
@@ -130,61 +130,62 @@ function AddReviewModal({
           </label>
         </div>
 
-        <div>
-          <label>Review summary</label>
-          <input
+        <div className="review-element">
+          <label>Review summary:*</label>
+          <textarea
             type="text"
             required
-            placeholder="Example: Best purchase ever!"
+            placeholder="Enter review summary here"
             onChange={((event) => {
               setReviewData({ ...reviewData, summary: event.target.value });
             })}
             maxLength={60}
           />
-          <p>{`${reviewData.summary.length}/60 characters`}</p>
+          <p className="review-undertext ">{`${reviewData.summary.length}/60 characters`}</p>
         </div>
 
-        <div>
-          <label>Review body*</label>
+        <div className="review-element">
+          <label>Review body:*</label>
           <textarea
-            placeholder="Why did you like the product or not?"
+            placeholder="Enter review here"
             required
             onChange={((event) => {
               setReviewData({ ...reviewData, body: event.target.value });
             })}
+            maxLength={1000}
           />
-          <p>
+          <p className="review-undertext ">
             {reviewData.body.length < 50
               ? `Minimum required characters left: ${50 - reviewData.body.length}`
               : 'Minimum reached'}
           </p>
         </div>
 
-        <div>
+        <div className="review-element">
           <label>What is your nickname?*</label>
           <input
             type="text"
             required
-            placeholder="Example: nickname!"
+            placeholder="Enter nickname here"
             onChange={((event) => {
               setReviewData({ ...reviewData, name: event.target.value });
             })}
           />
-          <p>For privacy reasons, do not use your full name or email address</p>
+          <p className="review-undertext ">For privacy reasons, do not use your full name or email address</p>
 
         </div>
 
-        <div>
-          <label>Your email*</label>
+        <div className="review-element">
+          <label>Your email:*</label>
           <input
             type="email"
             required
-            placeholder="Example: email@email.com"
+            placeholder="email@email.com"
             onChange={((event) => {
               setReviewData({ ...reviewData, email: event.target.value });
             })}
           />
-          <p>For authentication reasons, you will not be emailed</p>
+          <p className="review-undertext ">For authentication reasons, you will not be emailed</p>
         </div>
 
         {reviewData.photos.length > 0 && (
@@ -201,8 +202,8 @@ function AddReviewModal({
         )}
 
         {reviewData.photos.length < 5 && (
-        <div>
-          <label>Add Photo</label>
+        <div className="review-element">
+          <label>Add Photos:</label>
           <input
             type="file"
             accept="image/*"
@@ -212,7 +213,7 @@ function AddReviewModal({
         </div>
         )}
 
-        <div>
+        <div className="review-element">
           {reviewsMeta.characteristics && Object.entries(reviewsMeta.characteristics).map(([key, details]) => (
             <CharacteristicInput
               key={key}
@@ -311,7 +312,7 @@ function CharacteristicInput({ title, id, onChange }) {
 
   return (
     <div>
-      <label>{title}</label>
+      <label>{title}:</label>
       <div>
         {radioValues.map((value) => (
           <label key={value}>
@@ -327,7 +328,7 @@ function CharacteristicInput({ title, id, onChange }) {
         ))}
       </div>
       <div>
-        <p>
+        <p className="review-undertext ">
           {`Meaning: ${selectedValue ? getMeaning(selectedValue, title) : 'None selected'}`}
         </p>
       </div>
