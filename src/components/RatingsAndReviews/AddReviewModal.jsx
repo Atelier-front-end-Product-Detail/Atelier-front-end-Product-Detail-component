@@ -3,7 +3,7 @@ import StarRating from './StarRating';
 import './AddReviewModal.css';
 
 function AddReviewModal({
-  handleShowModal, showAddReviewModal, handleAddReview, productId, reviewsMeta, productName
+  handleShowModal, showAddReviewModal, handleAddReview, productId, reviewsMeta, productName,
 }) {
   const handleClassName = showAddReviewModal ? 'AddReviewModal-display' : 'AddReviewModal-display-none';
 
@@ -23,6 +23,16 @@ function AddReviewModal({
   });
 
   const [isRatingSelected, setIsRatingSelected] = useState(false);
+
+  const ratingDescriptions = {
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Average',
+    4: 'Good',
+    5: 'Great',
+  };
+
+  const getRatingDescription = (rating) => ratingDescriptions[rating];
 
   // console.log('PHOTOS: ', reviewData.photos);
   const handleCharacteristicChange = (value, id) => {
@@ -52,7 +62,6 @@ function AddReviewModal({
   const onSubmitClick = (e) => {
     e.preventDefault();
 
-
     if (!isRatingSelected) {
       console.log('Please select a rating before submitting.');
       return;
@@ -74,7 +83,7 @@ function AddReviewModal({
       email: '',
       photos: [],
       characteristics: {},
-    })
+    });
   };
 
   // console.log('Classname: ', handleClassName);
@@ -89,18 +98,23 @@ function AddReviewModal({
         onSubmit={onSubmitClick}
       >
         <p className="title">Write Your Review</p>
-        <p className="subtitle">About the {productName}</p>
+        <p className="subtitle">
+          About the
+          {productName}
+        </p>
 
         <label> Overall rating:* </label>
         <div className="review-rating">
           <StarRating
             interactive="true"
             onRatingChange={(rating) => {
-              setReviewData({ ...reviewData, rating,product_id: productId  });
+              setReviewData({ ...reviewData, rating, product_id: productId });
               setIsRatingSelected(true);
             }}
           />
-          <div>  selected rating:  </div>
+          <div className="rating-description">
+            {getRatingDescription(reviewData.rating)}
+          </div>
         </div>
 
         <label>Do you recommend this product?* </label>
@@ -189,15 +203,15 @@ function AddReviewModal({
         </div>
 
         {reviewData.photos.length > 0 && (
-        <div>
+        <div className="review-rating">
           <p>Photos:</p>
-          <ul>
+          <div>
             {reviewData.photos.map((photo, index) => (
-              <li key={index}>
+              <span key={index}>
                 <img src={photo} alt={`Upload ${index + 1}`} />
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
         </div>
         )}
 
@@ -312,7 +326,10 @@ function CharacteristicInput({ title, id, onChange }) {
 
   return (
     <div>
-      <label>{title}:</label>
+      <label>
+        {title}
+        :
+      </label>
       <div>
         {radioValues.map((value) => (
           <label key={value}>
