@@ -78,6 +78,7 @@
 .related_items_action_button_heart {
   color: var(--color_5);
   background-color: var(--color_8);
+  border: none;
 }
 
 
