@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaHeart } from "react-icons/fa";
+import { FaHeart } from 'react-icons/fa';
 
-function ActionButton({ type, action, productId }) {
+function ActionButton({ type, action, productInformation }) {
   const handleClickAction = (e) => {
     e.stopPropagation();
-    action(productId);
+    action(productInformation);
   };
   const handleKeyPressAction = (e) => {
     if (e.key === 'Enter') {
-      action(productId);
+      action(productInformation);
     }
   };
 
@@ -28,7 +28,7 @@ function ActionButton({ type, action, productId }) {
 ActionButton.propTypes = {
   type: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-  productId: PropTypes.number.isRequired,
+  productInformation: PropTypes.shape({}).isRequired,
 };
 
 export default ActionButton;

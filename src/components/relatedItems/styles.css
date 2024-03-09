@@ -1,26 +1,43 @@
 :root {
-  --background_color_1: rgb(196, 196, 196); /*related_product_card*/
-  --background_color_2: rgb(216, 216, 216);
-  --border_color_1: rgb(175, 175, 175);
+  --color_1: rgb(196, 196, 196);
+   /* product card - background */
+  --color_2: rgb(175, 175, 175);
+   /* add item button - border, related product / your outfit labels - background */
+  --color_3: green;
+   /* add item button - background, next/prev pic - background, left/right arrow - background, main comparison row - background */
+  --color_4: black;
+   /* x action button - color, sale price - color, main comparison row - border */
+  --color_5: red;
+   /* heart - color, sale price - background */
+  --color_6: rgb(145, 145, 145);
+   /* x button - background */
+  --color_7: whitesmoke;
+   /* add item button - color, next/prev pic - color, left/right arrow - background, main comp row - color */
+  --color_8: rgba(255, 255, 255, 0);
+  /* heart - background,  */
+  --color_9: rgb(118, 107, 34);
   --related_products_gap: 20px;
   --related_product_card_width: 250px;
   --related_product_card_height: 500px;
   --product_card_image_width: 235px;
   --product_card_image_height: 300px;
   --related_product_card_prev_next_img_offest: 0;
-  --related_product_card_prev_next_img_height: 20px;
+  --related_product_card_prev_next_img_height: 35px;
   --related_products_arrow_height: 50px;
+  --background_1: linear-gradient(to bottom right, #fff700, #59501d);
+  /* related product / your outfit labels - background */
 }
 
 .related_items {
   width: 100%;
+  padding: 0 10% 0 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .related_items * {
-  border: 0px solid black;
   box-sizing: border-box;
 }
 
@@ -36,9 +53,9 @@
   position: relative;
   width: var(--related_product_card_width);
   height: var(--related_product_card_height);
-  background-color: var(--background_color_1);
+  background-color: var(--color_1);
   z-index: 0;
-  border: 5px outset var(--border_color_1);
+  border: 5px outset var(--color_2);
   box-sizing: border-box;
 }
 
@@ -59,38 +76,32 @@
 }
 
 .related_items_action_button_heart {
-  color: red;
-  background-color: rgba(255, 255, 255, 0);
+  color: var(--color_5);
+  background-color: var(--color_8);
+  border: none;
 }
 
 
 .related_items_action_button_x {
-  color: black;
-  background-color: rgb(145, 145, 145);
-}
-
-#add_item_to_outfit,
-#remove_item_from_outfit {
-  display: flex;
-  flex-direction: column;
-  padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
-  width: calc(var(--related_product_card_width) / 2);
-  min-width: calc(var(--related_product_card_width) / 2);
-  height: var(--related_product_card_height);
-  z-index: 0;
-  border: 5px outset var(--border_color_1);
-  box-sizing: border-box;
-  justify-content: center;
-  align-content: center;
+  color: var(--color_4);
+  background-color: var(--color_6);
 }
 
 #add_item_to_outfit {
-  background-color: green;
-  color: whitesmoke;
-}
-
-#remove_item_from_outfit{
-  background-color: red;
+  display: flex;
+  flex-direction: column;
+  padding: calc((var(--related_product_card_width) - var(--product_card_image_width)) / 2);
+  z-index: 0;
+  border: 5px outset var(--color_2);
+  box-sizing: border-box;
+  justify-content: center;
+  align-content: center;
+  background-color: var(--color_3);
+  color: var(--color_4);
+  align-items: center;
+  font-size: 125px;
+  height: auto;
+  width: auto;
 }
 
 #related_products,
@@ -101,6 +112,7 @@
   position: relative;
   max-width: 100%;
   scrollbar-width: none;
+  align-items: center;
 }
 
 #related_products::-webkit-scrollbar,
@@ -111,11 +123,13 @@
 .related_product_prev_pic,
 .related_product_next_pic {
   position: absolute;
-  background-color: green;
-  color: white;
+  background-color: var(--color_3);
+  color: var(--color_7);
   height: var(--related_product_card_prev_next_img_height);
   top: calc(var(--product_card_image_height) / 2 - var(--related_product_card_prev_next_img_height) / 2);
   z-index: 1;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
 }
 
 .related_product_prev_pic {
@@ -139,8 +153,13 @@
   top: -15px;
 }
 
-.product_card_sale_price {
-  background-color: red;
+.product_card_default_price_span {
+  text-decoration: line-through;
+}
+
+.product_card_sale_price_span {
+  color: var(--color_4);
+  background-color: var(--color_5);
 }
 
 .product_card_reviews {
@@ -153,6 +172,7 @@
   display: inline-flex;
   flex-direction: column;
   max-width: 100%;
+  align-items: center;
 }
 
 .related_products_left_arrow_button,
@@ -160,12 +180,16 @@
 .your_outfit_left_arrow_button,
 .your_outfit_right_arrow_button {
   display: flex;
-  height: var(--related_products_arrow_height);
   align-self: center;
   text-align: center;
   z-index: 2;
   position: absolute;
   top: calc(var(--related_product_card_height) / 2 - var(--related_products_arrow_height) / 2);
+  opacity: 0;
+  color: var(--color_3);
+  height: auto;
+  width: auto;
+  font-size: 50px;
 }
 
 .related_products_left_arrow_button,
@@ -194,9 +218,26 @@
 #your_outfit_outer_div:hover .your_outfit_left_arrow_button,
 #your_outfit_outer_div:hover .your_outfit_right_arrow_button,
 #gradient_effect:hover .related_products_right_arrow_button,
-#gradient_effect:hover .your_outfit_right_arrow_button {
+#gradient_effect:hover .your_outfit_right_arrow_button,
+.related_product_card:hover > .related_product_prev_pic,
+.related_product_card:hover > .related_product_next_pic {
+  opacity: .5;
+}
 
-  opacity: 1;
+.related_products_left_arrow_button:hover,
+.related_products_right_arrow_button:hover,
+.your_outfit_left_arrow_button:hover,
+.your_outfit_right_arrow_button:hover,
+.related_product_prev_pic:hover,
+.related_product_next_pic:hover {
+  opacity: 1 !important;
+}
+
+.related_products_left_arrow_button:hover,
+.related_products_right_arrow_button:hover,
+.your_outfit_left_arrow_button:hover,
+.your_outfit_right_arrow_button:hover {
+  background-color: var(--color_7);
 }
 
 .comparison_modal_outer_div {
@@ -226,13 +267,24 @@
 }
 
 .comparison_modal_row > div:first-child {
-  background-color: green;
-  border: 2px solid black;
-  color: whitesmoke;
+  background-color: var(--color_3);
+  color: var(--color_7);
   padding: 5px;
 }
 
 .comparison_modal_column {
-  border: 2px solid black;
+  border: 2px solid var(--color_4);
   padding: 5px;
+}
+
+#related_products_label,
+#your_outfit_label {
+  display: flex;
+  position: relative;
+  border: 10px outset var(--color_9);
+  font-size: x-large;
+  padding: 0 10px 0 10px;
+  background: var(--background_1);
+  color: var(--color_4);
+  margin: 20px 0 20px 0;
 }
