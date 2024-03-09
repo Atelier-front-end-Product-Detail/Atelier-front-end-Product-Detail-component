@@ -95,7 +95,7 @@ function RelatedProducts({
 
   return (
     <div id="related_products_outer_div">
-      <div id="related_products_label">RELATED PRODUCTS</div>
+      {relatedProductsInfo && relatedProductsInfo.length && <div id="related_products_label">RELATED PRODUCTS</div>}
       {showLeftArrow && (
       <div
         role="button"
