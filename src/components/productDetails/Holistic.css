@@ -13,7 +13,6 @@
   flex-grow: 1;
 }
 
-
 /* Left side */
 
 .image-container {
@@ -207,6 +206,7 @@
   font-size: 1em;
   font-weight: normal;
   margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 /* item name */
@@ -242,6 +242,8 @@
   margin-top: 10px;
 }
 
+/* button styles */
+
 .size-selector {
   flex-grow: 1;
 }
@@ -265,8 +267,8 @@
   justify-content: flex-end;
   align-items: center;
   gap: 20px;
-  margin-left: auto; /* This will push the content to the right */
-  margin-left: 20vw; /* Adjust this as needed to push the content more to the right */
+  margin-left: auto;
+  margin-left: 20vw;
   margin-bottom: 30px;
 }
 
@@ -281,23 +283,43 @@
   height: 100%;
   align-self: stretch;
   margin-bottom: 20px;
+
 }
 
 .filler-text {
   display: block;
   margin-left: 20px;
   white-space: nowrap;
+  line-height: 1.6;
 }
-
-
 
 .slogan {
   font-weight: bold;
   font-size: 1.2em;
-
 }
 
 .description {
   font-size: 1em;
   margin-top: 0.5px;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* social media */
+
+.social-media-share {
+  margin-bottom: 10px;
+}
+
+.social-media-share a {
+  margin-right: 10px;
+}
+
+.social-media-share svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* font work */
