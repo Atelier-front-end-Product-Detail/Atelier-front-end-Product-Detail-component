@@ -91,7 +91,7 @@ function RatingsBreakdown({
       <div className="remove-filter">
         {appliedFiltersMessage}
         {appliedFilters.length > 0
-        && <button onClick={removeAllFilters}>Remove all filters</button>}
+        && <button className="reviews-view-buttons" onClick={removeAllFilters}>Remove all filters</button>}
       </div>
 
       {reviewsMeta.characteristics

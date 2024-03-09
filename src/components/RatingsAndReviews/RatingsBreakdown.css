@@ -100,8 +100,22 @@
 
 
 
-.reviews-view-buttons {
+.reviews-view-buttons-container {
   display: flex;
+}
+
+.reviews-view-buttons {
+  padding-right: 10px;
+  margin: 10px 5px 10px 5px;
+  height: 40px;
+  border-radius: 0;
+  background-color: white;
+  border: 0.1px solid;
+  border-color: black;
+}
+
+.reviews-view-buttons:hover {
+  background-color: lightgray;
 }
 
 a:hover {
