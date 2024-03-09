@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MdOutlineAddToPhotos } from 'react-icons/md';
 
 function AddItemToOutfit({ addToOutfit }) {
   const handleKeyPressAddItem = (e) => {
@@ -11,7 +12,7 @@ function AddItemToOutfit({ addToOutfit }) {
   return (
     <div>
       <div id="add_item_to_outfit" role="button" tabIndex="0" aria-label="add_item_to_outfit" onClick={addToOutfit} onKeyPress={handleKeyPressAddItem}>
-        CLICK HERE TO ADD CURRENTLY VIEWED ITEM TO OUTFIT
+        <MdOutlineAddToPhotos />
       </div>
     </div>
   );

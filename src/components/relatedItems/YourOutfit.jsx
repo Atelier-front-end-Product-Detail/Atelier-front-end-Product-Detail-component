@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import AddItemToOutfit from './AddItemToOutfit';
 import RelatedProductCard from './RelatedProductCard';
-import helper from '../helper';
+import helper from './helper';
 
 function YourOutfit({
   productId,
@@ -123,6 +123,7 @@ function YourOutfit({
 
   return (
     <div id="your_outfit_outer_div">
+      <div id="your_outfit_label">YOUR OUTFIT</div>
       {showLeftArrow && (
       <div
         role="button"

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProducts from './RelatedProducts';
 import YourOutfit from './YourOutfit';
-import helper from '../helper';
+import helper from './helper';
 import './styles.css';
 
 function RelatedItems({ productId, setProductId }) {

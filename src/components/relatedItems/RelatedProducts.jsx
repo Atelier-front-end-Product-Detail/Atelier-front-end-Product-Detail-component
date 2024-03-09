@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import RelatedProductCard from './RelatedProductCard';
 import ComparisonModal from './ComparisonModal';
-import helper from '../helper';
+import helper from './helper';
 
 function RelatedProducts({
   relatedItems,
@@ -95,6 +95,7 @@ function RelatedProducts({
 
   return (
     <div id="related_products_outer_div">
+      <div id="related_products_label">RELATED PRODUCTS</div>
       {showLeftArrow && (
       <div
         role="button"
