@@ -5,7 +5,7 @@ import StarRating from './StarRating';
 import AddReviewModal from './AddReviewModal';
 
 function ReviewsView({
-  bridge, productId, starFilters, reviewsMeta, removeAllFilters,
+  bridge, productId, starFilters, reviewsMeta, removeAllFilters,productName
 }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
@@ -33,7 +33,7 @@ function ReviewsView({
         ),
       );
     }
-  }, [reviewsMeta.ratings]);
+  }, [reviewsMeta.ratings, productId]);
 
   const fetchAllData = () => {
     bridge.listReviews(productId, 1, currentTotalReviews, selectedValue)
@@ -48,7 +48,7 @@ function ReviewsView({
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
     fetchAllData();
-  }, [selectedValue, currentTotalReviews]);
+  }, [selectedValue, currentTotalReviews, productId]);
 
   // console.log('selectedSORT: ', selectedValue);
   // console.log('reviews: ', reviews);
@@ -108,9 +108,9 @@ function ReviewsView({
         modalImage={modalImage}
         showImageModal={showImageModal}
       />
-      <div className="reviews-view-buttons">
-        <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
-        <button type="button" onClick={() => { handleShowModal(true); }}>Add a Review</button>
+      <div className="reviews-view-buttons-container">
+        <button className="reviews-view-buttons" type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+        <button className="reviews-view-buttons" type="button" onClick={() => { handleShowModal(true); }}>Add a Review +</button>
       </div>
       <AddReviewModal
         handleAddReview={handleAddReview}
@@ -118,6 +118,7 @@ function ReviewsView({
         showAddReviewModal={showAddReviewModal}
         productId={productId}
         reviewsMeta={reviewsMeta}
+        productName={productName}
       />
     </div>
   );
@@ -195,6 +196,17 @@ function ReviewTile({
       });
   };
 
+
+  const [showFullReview, setShowFullReview] = useState(false);
+
+  const shortBody = review.body.slice(0, 250);
+  const remainingBody = review.body.slice(250);
+
+  const toggleShowFullReview = () => {
+    setShowFullReview(!showFullReview);
+  };
+
+
   return (
     <div className="reviewTile">
       {/* {review.review_id} */}
@@ -216,8 +228,13 @@ function ReviewTile({
 
       <h4>{review.summary}</h4>
 
-      <div>
-        {review.body}
+      <div style={{wordWrap: 'break-word'}}>
+      {showFullReview ? review.body : shortBody}
+      {review.body.length > 250 && (
+        <span onClick={toggleShowFullReview} style={{ color: 'blue', cursor: 'pointer' }}>
+          {showFullReview ? ' Show less' : ' Show more'}
+        </span>
+      )}
         <br />
         {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
