@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as fasFaStar } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faFacebookF, faPinterestP, faTwitter } from '@fortawesome/free-brands-svg-icons';
+
 function ProductInformation({ product, style, reviewsMeta }) {
   function renderStarRating(rating) {
     const widthPercentage = `${(rating / 5) * 100}%`;
@@ -37,9 +41,9 @@ function ProductInformation({ product, style, reviewsMeta }) {
         <div className="star-rating">
           {renderStarRating(roundedAverageRating)}
           <a href="#ratings-and-reviews">
-            Read all
+            Read all&nbsp;
             {totalReviews}
-            reviews
+            &nbsp;reviews
           </a>
         </div>
       )}
@@ -69,7 +73,18 @@ function ProductInformation({ product, style, reviewsMeta }) {
       </div>
 
       <div className="social-media-share">
-        {/* social media share buttons */}
+        <a href="http://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <FontAwesomeIcon icon={faInstagram} />
+        </a>
+        <a href="http://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <FontAwesomeIcon icon={faFacebookF} />
+        </a>
+        <a href="http://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+          <FontAwesomeIcon icon={faPinterestP} />
+        </a>
+        <a href="http://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <FontAwesomeIcon icon={faTwitter} />
+        </a>
       </div>
     </div>
   );

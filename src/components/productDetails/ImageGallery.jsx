@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './Holistic.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExpand } from '@fortawesome/free-solid-svg-icons';
+import { faCompress } from '@fortawesome/free-solid-svg-icons';
+
 function ImageGallery({ style }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -128,9 +132,15 @@ function ImageGallery({ style }) {
               </button>
             )}
           </div>
-          <button className="expand-collapse-btn" onClick={toggleExpandedView} type="button">
-            {isExpanded ? 'Collapse' : 'Expand'}
+          <button
+            className="expand-collapse-btn"
+            onClick={toggleExpandedView}
+            type="button"
+            aria-label={isExpanded ? 'Collapse content' : 'Expand content'}
+          >
+            <FontAwesomeIcon icon={isExpanded ? faCompress : faExpand} />
           </button>
+
         </div>
       )}
     </div>
