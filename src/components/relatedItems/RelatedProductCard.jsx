@@ -10,6 +10,8 @@ function RelatedProductCard({
   type,
   action,
   productInformation,
+  relatedItem,
+  setRelatedItem,
 }) {
   const [productInfo, setProductInfo] = useState({});
   const [productStyles, setProductStyles] = useState([]);
@@ -113,17 +115,53 @@ function RelatedProductCard({
       </div>
     )
     : (
-      <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
-        <ActionButton type={type} action={action} productInformation={productInformation} />
+      <div
+        role="button"
+        tabIndex="0"
+        aria-label="related_product_card"
+        className="related_product_card"
+        onClick={() => {
+          setProductId(productId);
+          setRelatedItem({});
+        }}
+        onKeyPress={(e) => handleKeyPressSetProductId(e)}
+      >
+        <ActionButton
+          type={type}
+          action={action}
+          productInformation={productInformation}
+          relatedItem={relatedItem}
+        />
         {defaultStyle && defaultStyle.photos && defaultStyle.photos.length > 1
         && (
         <>
-          <button type="button" className="related_product_prev_pic" aria-label="next picture" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}><FaArrowLeft /></button>
-          <button type="button" className="related_product_next_pic" aria-label="related_product_card" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}><FaArrowRight /></button>
+          <button
+            type="button"
+            className="related_product_prev_pic"
+            aria-label="next picture"
+            onClick={(e) => decrementPhotoIndex(e)}
+            onKeyPress={handleKeyPressDecrement}
+          >
+            <FaArrowLeft />
+          </button>
+          <button
+            type="button"
+            className="related_product_next_pic"
+            aria-label="related_product_card"
+            onClick={(e) => incrementPhotoIndex(e)}
+            onKeyPress={handleKeyPressIncrement}
+          >
+            <FaArrowRight />
+          </button>
         </>
         )}
         <br />
-        <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
+        <img
+          src={productPhotos}
+          className="product_card_image"
+          alt="product_card_image"
+          onError={handleImageError}
+        />
         <div>
           <span className="product_card_name">
             {productInfo.name}
@@ -172,6 +210,21 @@ RelatedProductCard.propTypes = {
       ratings: PropTypes.shape({}).isRequired,
     }).isRequired,
   }).isRequired,
+  relatedItem: PropTypes.shape({
+    info: PropTypes.shape({
+      features: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+  }),
+  setRelatedItem: PropTypes.func,
+};
+
+RelatedProductCard.defaultProps = {
+  relatedItem: {
+    info: {
+      features: [],
+    },
+  },
+  setRelatedItem: null,
 };
 
 export default RelatedProductCard;

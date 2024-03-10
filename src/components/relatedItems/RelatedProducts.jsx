@@ -15,6 +15,18 @@ function RelatedProducts({
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [relatedItem, setRelatedItem] = useState({});
   const [relatedProductsInfo, setRelatedProductsInfo] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [heartClass, setHeartClass] = useState('comparison_div comparison_div_closed');
+
+  useEffect(() => {
+    setIsModalVisible(relatedItem && JSON.stringify(relatedItem) !== '{}');
+  }, [relatedItem]);
+
+  useEffect(() => setHeartClass(
+    isModalVisible
+      ? 'comparison_div'
+      : 'comparison_div comparison_div_closed',
+  ), [isModalVisible]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,10 +46,10 @@ function RelatedProducts({
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      const remainder = currentScroll % relatedProductCardWidthPlusGap;
+      const remainder = (currentScroll % relatedProductCardWidthPlusGap);
       const scrollTarget = currentScroll - remainder - (
         remainder === 0 ? relatedProductCardWidthPlusGap : 0
-      );
+      ) - relatedProductCardWidthPlusGap + 70;
       container.scrollTo({ left: scrollTarget, behavior: 'smooth' });
     }
   };
@@ -53,7 +65,7 @@ function RelatedProducts({
     if (container) {
       const currentScroll = container.scrollLeft;
       if (showRightArrow) {
-        const additionalScroll = relatedProductCardWidthPlusGap - (
+        const additionalScroll = 65 + relatedProductCardWidthPlusGap - (
           currentScroll % relatedProductCardWidthPlusGap
         );
         const scrollTarget = currentScroll + additionalScroll;
@@ -95,7 +107,9 @@ function RelatedProducts({
 
   return (
     <div id="related_products_outer_div">
-      {relatedProductsInfo && relatedProductsInfo.length ? <div id="related_products_label">RELATED PRODUCTS</div> : null}
+      {relatedProductsInfo && relatedProductsInfo.length
+        ? <div id="related_products_label">RELATED PRODUCTS</div>
+        : null}
       {showLeftArrow && (
       <div
         role="button"
@@ -129,17 +143,24 @@ function RelatedProducts({
             type="related products"
             action={action}
             productInformation={item}
+            setRelatedItem={setRelatedItem}
+            relatedItem={relatedItem}
           />
         ))}
       </div>
-      {(relatedItem && JSON.stringify(relatedItem) !== '{}')
-        ? (
-          <ComparisonModal
-            relatedItem={relatedItem}
-            productInfo={productInfo}
-          />
-        )
-        : null }
+      <div
+        className={heartClass}
+        style={{
+          display: 'flex',
+          overflow: 'hidden',
+          height: 'auto',
+          transition: 'transform .2s ease-in-out',
+          transformOrigin: 'top',
+          transform: isModalVisible ? 'scaleY(1)' : 'scaleY(0)',
+        }}
+      >
+        <ComparisonModal relatedItem={relatedItem} productInfo={productInfo} />
+      </div>
     </div>
   );
 }

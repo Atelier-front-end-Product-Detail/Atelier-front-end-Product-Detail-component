@@ -58,7 +58,7 @@ function YourOutfit({
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      const remainder = (currentScroll + 101) % relatedProductCardWidthPlusGap;
+      const remainder = (currentScroll + 31) % relatedProductCardWidthPlusGap;
       const scrollTarget = currentScroll - remainder - (
         remainder === 0 ? relatedProductCardWidthPlusGap : 0
       );
@@ -78,7 +78,7 @@ function YourOutfit({
       const currentScroll = container.scrollLeft;
       if (showRightArrow) {
         const additionalScroll = relatedProductCardWidthPlusGap - (
-          (currentScroll + 101) % relatedProductCardWidthPlusGap
+          (currentScroll + 31) % relatedProductCardWidthPlusGap
         );
         const scrollTarget = currentScroll + additionalScroll;
         container.scrollTo({ left: scrollTarget, behavior: 'smooth' });

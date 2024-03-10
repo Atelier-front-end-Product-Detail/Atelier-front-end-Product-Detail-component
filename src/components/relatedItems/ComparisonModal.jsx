@@ -41,7 +41,9 @@ function ComparisonModal({ relatedItem, productInfo }) {
 
   return comparisonInfo.length ? (
     <div className="comparison_modal_outer_div">
-      Comparing:
+      <p>
+        Comparing:
+      </p>
       <div className="comparison_modal">
         {comparisonInfo.map((row) => (
           <ComparisonModalRow productInfo={row} key={row.join(',')} />
@@ -55,14 +57,27 @@ function ComparisonModal({ relatedItem, productInfo }) {
 ComparisonModal.propTypes = {
   relatedItem: PropTypes.shape({
     info: PropTypes.shape({
-      features: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    }).isRequired,
-  }).isRequired,
+      features: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+  }),
   productInfo: PropTypes.shape({
     info: PropTypes.shape({
-      features: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    }).isRequired,
-  }).isRequired,
+      features: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+  }),
+};
+
+ComparisonModal.defaultProps = {
+  relatedItem: {
+    info: {
+      features: [],
+    },
+  },
+  productInfo: {
+    info: {
+      features: [{}],
+    },
+  },
 };
 
 export default ComparisonModal;

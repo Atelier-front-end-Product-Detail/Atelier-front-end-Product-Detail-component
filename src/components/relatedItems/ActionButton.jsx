@@ -2,24 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
 
-function ActionButton({ type, action, productInformation }) {
+function ActionButton({
+  type, action, productInformation, relatedItem,
+}) {
   const handleClickAction = (e) => {
     e.stopPropagation();
-    action(productInformation);
+    const actionObj = relatedItem
+      && relatedItem.info
+      && relatedItem.info.id
+      && productInformation.info.id === relatedItem.info.id
+      ? {}
+      : productInformation;
+    action(actionObj);
   };
   const handleKeyPressAction = (e) => {
     if (e.key === 'Enter') {
-      action(productInformation);
+      const actionObj = relatedItem
+        && relatedItem.info
+        && relatedItem.info.id
+        && productInformation.info.id === relatedItem.info.id
+        ? {}
+        : productInformation;
+      action(actionObj);
     }
   };
 
   return type === 'related products' ? (
-    <button type="button" className="related_items_action_button_heart" aria-label="open comparison modal" onClick={handleClickAction} onKeyPress={handleKeyPressAction}>
+    <button
+      type="button"
+      className="related_items_action_button_heart"
+      aria-label="open comparison modal"
+      onClick={handleClickAction}
+      onKeyPress={handleKeyPressAction}
+    >
       <FaHeart />
     </button>
   )
     : (
-      <button type="button" className="related_items_action_button_x" aria-label="remove from your outfit" onClick={handleClickAction} onKeyPress={handleKeyPressAction}>
+      <button
+        type="button"
+        className="related_items_action_button_x"
+        aria-label="remove from your outfit"
+        onClick={handleClickAction}
+        onKeyPress={handleKeyPressAction}
+      >
         X
       </button>
     );
@@ -28,7 +54,24 @@ function ActionButton({ type, action, productInformation }) {
 ActionButton.propTypes = {
   type: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-  productInformation: PropTypes.shape({}).isRequired,
+  productInformation: PropTypes.shape({
+    info: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  relatedItem: PropTypes.shape({
+    info: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }),
+};
+
+ActionButton.defaultProps = {
+  relatedItem: {
+    info: {
+      id: null,
+    },
+  },
 };
 
 export default ActionButton;
