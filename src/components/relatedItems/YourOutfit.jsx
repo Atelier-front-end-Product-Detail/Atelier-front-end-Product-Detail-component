@@ -129,7 +129,7 @@ function YourOutfit({
         role="button"
         className="your_outfit_left_arrow_button"
         onClick={scrollLeft}
-        onKeyPress={handleKeyPressScrollLeft}
+        onKeyDown={handleKeyPressScrollLeft}
         aria-label="Scroll left"
         tabIndex="0"
       >
@@ -141,7 +141,7 @@ function YourOutfit({
         role="button"
         className="your_outfit_right_arrow_button"
         onClick={scrollRight}
-        onKeyPress={handleKeyPressScrollRight}
+        onKeyDown={handleKeyPressScrollRight}
         aria-label="Scroll left"
         tabIndex="0"
       >

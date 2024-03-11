@@ -33,7 +33,7 @@ function ActionButton({
       className="related_items_action_button_heart"
       aria-label="open comparison modal"
       onClick={handleClickAction}
-      onKeyPress={handleKeyPressAction}
+      onKeyDown={handleKeyPressAction}
     >
       <FaHeart />
     </button>
@@ -44,7 +44,7 @@ function ActionButton({
         className="related_items_action_button_x"
         aria-label="remove from your outfit"
         onClick={handleClickAction}
-        onKeyPress={handleKeyPressAction}
+        onKeyDown={handleKeyPressAction}
       >
         X
       </button>
@@ -56,9 +56,9 @@ ActionButton.propTypes = {
   action: PropTypes.func.isRequired,
   productInformation: PropTypes.shape({
     info: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+      id: PropTypes.number,
+    }),
+  }),
   relatedItem: PropTypes.shape({
     info: PropTypes.shape({
       id: PropTypes.number,
@@ -67,6 +67,11 @@ ActionButton.propTypes = {
 };
 
 ActionButton.defaultProps = {
+  productInformation: {
+    info: {
+      id: null,
+    },
+  },
   relatedItem: {
     info: {
       id: null,

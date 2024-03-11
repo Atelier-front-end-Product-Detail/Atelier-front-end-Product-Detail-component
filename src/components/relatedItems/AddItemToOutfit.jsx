@@ -17,7 +17,7 @@ function AddItemToOutfit({ addToOutfit }) {
         tabIndex="0"
         aria-label="add_item_to_outfit"
         onClick={addToOutfit}
-        onKeyPress={handleKeyPressAddItem}
+        onKeyDown={handleKeyPressAddItem}
       >
         <MdOutlineAddToPhotos />
       </div>

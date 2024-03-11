@@ -115,7 +115,7 @@ function RelatedProducts({
         role="button"
         className="related_products_left_arrow_button"
         onClick={scrollLeft}
-        onKeyPress={handleKeyPressScrollLeft}
+        onKeyDown={handleKeyPressScrollLeft}
         aria-label="Scroll left"
         tabIndex="0"
       >
@@ -127,7 +127,7 @@ function RelatedProducts({
         role="button"
         className="related_products_right_arrow_button"
         onClick={scrollRight}
-        onKeyPress={handleKeyPressScrollRight}
+        onKeyDown={handleKeyPressScrollRight}
         aria-label="Scroll left"
         tabIndex="0"
       >

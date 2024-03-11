@@ -124,7 +124,10 @@ function RelatedProductCard({
           setProductId(productId);
           setRelatedItem({});
         }}
-        onKeyPress={(e) => handleKeyPressSetProductId(e)}
+        onKeyDown={(e) => {
+          handleKeyPressSetProductId(e);
+          setRelatedItem({});
+        }}
       >
         <ActionButton
           type={type}
@@ -138,18 +141,18 @@ function RelatedProductCard({
           <button
             type="button"
             className="related_product_prev_pic"
-            aria-label="next picture"
+            aria-label="prev picture"
             onClick={(e) => decrementPhotoIndex(e)}
-            onKeyPress={handleKeyPressDecrement}
+            onKeyDown={handleKeyPressDecrement}
           >
             <FaArrowLeft />
           </button>
           <button
             type="button"
             className="related_product_next_pic"
-            aria-label="related_product_card"
+            aria-label="next picture"
             onClick={(e) => incrementPhotoIndex(e)}
-            onKeyPress={handleKeyPressIncrement}
+            onKeyDown={handleKeyPressIncrement}
           >
             <FaArrowRight />
           </button>
