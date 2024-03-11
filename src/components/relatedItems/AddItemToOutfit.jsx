@@ -11,7 +11,14 @@ function AddItemToOutfit({ addToOutfit }) {
 
   return (
     <div>
-      <div id="add_item_to_outfit" role="button" tabIndex="0" aria-label="add_item_to_outfit" onClick={addToOutfit} onKeyPress={handleKeyPressAddItem}>
+      <div
+        id="add_item_to_outfit"
+        role="button"
+        tabIndex="0"
+        aria-label="add_item_to_outfit"
+        onClick={addToOutfit}
+        onKeyDown={handleKeyPressAddItem}
+      >
         <MdOutlineAddToPhotos />
       </div>
     </div>

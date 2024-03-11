@@ -1,20 +1,12 @@
 :root {
   --color_1: rgb(196, 196, 196);
-   /* product card - background */
   --color_2: rgb(175, 175, 175);
-   /* add item button - border, related product / your outfit labels - background */
   --color_3: green;
-   /* add item button - background, next/prev pic - background, left/right arrow - background, main comparison row - background */
   --color_4: black;
-   /* x action button - color, sale price - color, main comparison row - border */
   --color_5: red;
-   /* heart - color, sale price - background */
   --color_6: rgb(145, 145, 145);
-   /* x button - background */
   --color_7: whitesmoke;
-   /* add item button - color, next/prev pic - color, left/right arrow - background, main comp row - color */
   --color_8: rgba(255, 255, 255, 0);
-  /* heart - background,  */
   --color_9: rgb(118, 107, 34);
   --related_products_gap: 20px;
   --related_product_card_width: 250px;
@@ -25,7 +17,7 @@
   --related_product_card_prev_next_img_height: 35px;
   --related_products_arrow_height: 50px;
   --background_1: linear-gradient(to bottom right, #fff700, #59501d);
-  /* related product / your outfit labels - background */
+  --background_2: linear-gradient(to bottom right, #7d7d7d, #ded8d8);
 }
 
 .related_items {
@@ -59,6 +51,10 @@
   box-sizing: border-box;
 }
 
+.related_product_card:hover {
+  cursor: pointer;
+}
+
 .related_product_card p {
   margin: 3px;
 }
@@ -73,12 +69,30 @@
   position: absolute;
   top: 15px;
   right: 15px;
+  transition: .2s background-color ease-in-out;
+}
+
+.related_items_action_button_heart:hover {
+  background-color: var(--color_7);
+}
+
+.related_items_action_button_heart:hover,
+.related_items_action_button_x:hover {
+  cursor: pointer;
 }
 
 .related_items_action_button_heart {
   color: var(--color_5);
   background-color: var(--color_8);
   border: none;
+  border-width: 2px !important;
+  border-style: outset !important;
+  border-color: buttonborder !important;
+  border-image: initial !important;
+}
+
+.related_items_action_button_heart_clicked {
+  background-color: var(--color_3) !important;
 }
 
 
@@ -113,6 +127,7 @@
   max-width: 100%;
   scrollbar-width: none;
   align-items: center;
+  padding: 0 80px 0 80px;
 }
 
 #related_products::-webkit-scrollbar,
@@ -129,7 +144,6 @@
   top: calc(var(--product_card_image_height) / 2 - var(--related_product_card_prev_next_img_height) / 2);
   z-index: 1;
   opacity: 0;
-  transition: opacity .5s ease-in-out;
 }
 
 .related_product_prev_pic {
@@ -190,19 +204,20 @@
   height: auto;
   width: auto;
   font-size: 50px;
+  border-radius: 25px;
 }
 
 .related_products_left_arrow_button,
 .your_outfit_left_arrow_button {
   opacity: 0;
-  transition: opacity .5s ease-in-out;
+  transition: opacity .2s ease-in-out;
   left: 20px;
 }
 
 .related_products_right_arrow_button,
 .your_outfit_right_arrow_button {
   opacity: 0;
-  transition: opacity .2s ease-in-out;
+  transition: opacity, border .2s ease-in-out;
   right: 20px;
 }
 
@@ -222,6 +237,9 @@
 .related_product_card:hover > .related_product_prev_pic,
 .related_product_card:hover > .related_product_next_pic {
   opacity: .5;
+  color: var(--color_3);
+  background-color: var(--color_8);
+  border: none;
 }
 
 .related_products_left_arrow_button:hover,
@@ -231,6 +249,17 @@
 .related_product_prev_pic:hover,
 .related_product_next_pic:hover {
   opacity: 1 !important;
+  cursor: pointer;
+  color: var(--color_3) !important;
+  background-color: var(--color_7) !important;
+}
+
+.related_product_prev_pic:hover,
+.related_product_next_pic:hover {
+  border-width: 2px !important;
+  border-style: outset !important;
+  border-color: buttonborder !important;
+  border-image: initial !important;
 }
 
 .related_products_left_arrow_button:hover,
@@ -241,10 +270,24 @@
 }
 
 .comparison_modal_outer_div {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  background: var(--background_2);
+  z-index: 1;
+  border-width: 2px !important;
+  border-style: outset !important;
+  border-color: buttonborder !important;
+  border-image: initial !important;
+  margin-top: 50px;
+  padding: 10px 40px 10px 40px;
+}
+
+.comparison_modal_outer_div > p:first-child {
+  background-color: var(--color_7);
+  margin: 0;
+  padding: 15px;
+  border: 2px solid black;
 }
 
 .comparison_modal {
@@ -252,6 +295,7 @@
   flex-direction: column;
   max-width: 100%;
   overflow: auto;
+  background-color: var(--color_7);
 }
 
 .comparison_modal_row {
@@ -277,6 +321,17 @@
   padding: 5px;
 }
 
+.comparison_div * {
+  transition: .2s height ease-in-out;
+}
+
+.comparison_div_closed * {
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  height: 0;
+}
+
 #related_products_label,
 #your_outfit_label {
   display: flex;
@@ -287,4 +342,11 @@
   background: var(--background_1);
   color: var(--color_4);
   margin: 20px 0 20px 0;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 899px) {
+  .related_items {
+    padding: 0;
+  }
 }

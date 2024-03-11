@@ -58,7 +58,7 @@ function YourOutfit({
     const container = scrollContainerRef.current;
     if (container) {
       const currentScroll = container.scrollLeft;
-      const remainder = (currentScroll + 101) % relatedProductCardWidthPlusGap;
+      const remainder = (currentScroll + 31) % relatedProductCardWidthPlusGap;
       const scrollTarget = currentScroll - remainder - (
         remainder === 0 ? relatedProductCardWidthPlusGap : 0
       );
@@ -78,7 +78,7 @@ function YourOutfit({
       const currentScroll = container.scrollLeft;
       if (showRightArrow) {
         const additionalScroll = relatedProductCardWidthPlusGap - (
-          (currentScroll + 101) % relatedProductCardWidthPlusGap
+          (currentScroll + 31) % relatedProductCardWidthPlusGap
         );
         const scrollTarget = currentScroll + additionalScroll;
         container.scrollTo({ left: scrollTarget, behavior: 'smooth' });
@@ -129,7 +129,7 @@ function YourOutfit({
         role="button"
         className="your_outfit_left_arrow_button"
         onClick={scrollLeft}
-        onKeyPress={handleKeyPressScrollLeft}
+        onKeyDown={handleKeyPressScrollLeft}
         aria-label="Scroll left"
         tabIndex="0"
       >
@@ -141,7 +141,7 @@ function YourOutfit({
         role="button"
         className="your_outfit_right_arrow_button"
         onClick={scrollRight}
-        onKeyPress={handleKeyPressScrollRight}
+        onKeyDown={handleKeyPressScrollRight}
         aria-label="Scroll left"
         tabIndex="0"
       >
