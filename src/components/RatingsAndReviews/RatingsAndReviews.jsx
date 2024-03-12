@@ -59,7 +59,7 @@ function RatingsAndReviews({ bridge, productId, productName }) {
 
   return (
     <div className="rrContainer" id="ratings-reviews">
-      <h3 className="rrHeader">Ratings & Reviews </h3>
+      <div className="rrHeader">Ratings & Reviews</div>
       <div style={{ display: 'flex' }}>
         <RatingsBreakdown
           reviewsMeta={reviewsMeta}

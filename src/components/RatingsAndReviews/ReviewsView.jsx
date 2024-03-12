@@ -266,13 +266,13 @@ function ReviewTile({
 
       <span>
         Helpful?
-        <a className="helpful" onClick={onHelpfulClick}>
+        <span className="helpful" onClick={onHelpfulClick}>
           Yes (
           {review.helpfulness}
           )
           {' '}
-        </a>
-        <a className="report" onClick={onReportClick}>Report</a>
+        </span>
+        <span className="report" onClick={onReportClick}>Report</span>
       </span>
 
     </div>
@@ -290,6 +290,7 @@ function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
         onError={(e) => {
           e.target.src = process.env.IMAGE_NOT_FOUND;
         }}
+        alt="review image"
       />
       <button
         onClick={() => {
@@ -365,4 +366,5 @@ ReviewTile.propTypes = {
   }).isRequired,
 };
 
+export {ReviewTile}
 export default ReviewsView;

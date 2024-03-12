@@ -1,12 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import RatingsBreakdown from '../components/RatingsAndReviews/RatingsBreakdown';
+import RatingsBreakdown from '../../components/RatingsAndReviews/RatingsBreakdown';
 
 // mock CSS file, otherwise there is error
-jest.mock('../components/RatingsAndReviews/RatingsBreakdown.css', () => ({}));
+jest.mock('../../components/RatingsAndReviews/RatingsBreakdown.css', () => ({}));
 
 describe('RatingsBreakdown', () => {
-  // create sample data
   const reviewsMeta = {
     ratings: {
       5: 10,
@@ -37,20 +36,6 @@ describe('RatingsBreakdown', () => {
     const { queryByText } = render(
       <RatingsBreakdown reviewsMeta={reviewsMeta} starFilters={starFilters} />,
     );
-
-    // expect these values to be in the document
-    // expect(getByText('Average Rating')).toBeInTheDocument();
-
-    // expect(queryByText('30 reviews')).toBeInTheDocument();
-    // expect(queryByText('100% of people recommend this product')).toBeInTheDocument();
-    // expect(queryByText('5 star')).toBeInTheDocument();
-    // expect(queryByText('4 star')).toBeInTheDocument();
-    // expect(queryByText('3 star')).toBeInTheDocument();
-    // expect(queryByText('2 star')).toBeInTheDocument();
-    // expect(queryByText('1 star')).toBeInTheDocument();
-    // expect(queryByText('Quality')).toBeInTheDocument();
-    // expect(queryByText('Size')).toBeInTheDocument();
-
 
     expect(queryByText('30 reviews')).toBeTruthy();
     expect(queryByText('100% of people recommend this product')).toBeTruthy();
