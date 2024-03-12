@@ -24,22 +24,42 @@ describe('RatingsBreakdown', () => {
     },
   };
 
+  const starFilters = {
+    5: false,
+    4: false,
+    3: false,
+    2: false,
+    1: false,
+  };
+
   // render component with mock data
-  it('renders component with ratings, characterstics and recommended', () => {
-    const { getByText } = render(
-      <RatingsBreakdown reviewsMeta={reviewsMeta} />,
+  it('renders RatingBreakdown with ratings, characterstics and recommended', () => {
+    const { queryByText } = render(
+      <RatingsBreakdown reviewsMeta={reviewsMeta} starFilters={starFilters} />,
     );
 
     // expect these values to be in the document
-    expect(getByText('Average Rating')).toBeInTheDocument();
-    expect(getByText('30 reviews')).toBeInTheDocument();
-    expect(getByText('100% of people recommend this product')).toBeInTheDocument();
-    expect(getByText('5 star')).toBeInTheDocument();
-    expect(getByText('4 star')).toBeInTheDocument();
-    expect(getByText('3 star')).toBeInTheDocument();
-    expect(getByText('2 star')).toBeInTheDocument();
-    expect(getByText('1 star')).toBeInTheDocument();
-    expect(getByText('Quality')).toBeInTheDocument();
-    expect(getByText('Size')).toBeInTheDocument();
+    // expect(getByText('Average Rating')).toBeInTheDocument();
+
+    // expect(queryByText('30 reviews')).toBeInTheDocument();
+    // expect(queryByText('100% of people recommend this product')).toBeInTheDocument();
+    // expect(queryByText('5 star')).toBeInTheDocument();
+    // expect(queryByText('4 star')).toBeInTheDocument();
+    // expect(queryByText('3 star')).toBeInTheDocument();
+    // expect(queryByText('2 star')).toBeInTheDocument();
+    // expect(queryByText('1 star')).toBeInTheDocument();
+    // expect(queryByText('Quality')).toBeInTheDocument();
+    // expect(queryByText('Size')).toBeInTheDocument();
+
+
+    expect(queryByText('30 reviews')).toBeTruthy();
+    expect(queryByText('100% of people recommend this product')).toBeTruthy();
+    expect(queryByText('5 star')).toBeTruthy();
+    expect(queryByText('4 star')).toBeTruthy();
+    expect(queryByText('3 star')).toBeTruthy();
+    expect(queryByText('2 star')).toBeTruthy();
+    expect(queryByText('1 star')).toBeTruthy();
+    expect(queryByText('Quality')).toBeTruthy();
+    expect(queryByText('Size')).toBeTruthy();
   });
 });

@@ -99,13 +99,14 @@ function AddReviewModal({
       >
         <p className="title">Write Your Review</p>
         <p className="subtitle">
-          About the
-          {productName}
+          About the {productName}
         </p>
 
-        <label> Overall rating:* </label>
+        <label htmlFor="overallRating"> Overall rating:* </label>
         <div className="review-rating">
           <StarRating
+            id="overallRating"
+            aria-labelledby="overallRating"
             interactive="true"
             onRatingChange={(rating) => {
               setReviewData({ ...reviewData, rating, product_id: productId });
@@ -117,10 +118,11 @@ function AddReviewModal({
           </div>
         </div>
 
-        <label>Do you recommend this product?* </label>
+        <label >Do you recommend this product?* </label>
         <div className="review-rating">
-          <label>
+          <label htmlFor="recommendYes">
             <input
+              id="recommendYes"
               type="radio"
               name="recommendation"
               value="true"
@@ -145,8 +147,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Review summary:*</label>
+          <label htmlFor="summary">Review summary:*</label>
           <textarea
+            id="summary"
             type="text"
             required
             placeholder="Enter review summary here"
@@ -159,8 +162,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Review body:*</label>
+          <label htmlFor="reviewBody">Review body:*</label>
           <textarea
+            id="reviewBody"
             placeholder="Enter review here"
             required
             onChange={((event) => {
@@ -176,8 +180,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>What is your nickname?*</label>
+          <label htmlFor="nickname">What is your nickname?*</label>
           <input
+            id="nickname"
             type="text"
             required
             placeholder="Enter nickname here"
@@ -190,8 +195,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Your email:*</label>
+          <label htmlFor="email">Your email:*</label>
           <input
+            id="email"
             type="email"
             required
             placeholder="email@email.com"

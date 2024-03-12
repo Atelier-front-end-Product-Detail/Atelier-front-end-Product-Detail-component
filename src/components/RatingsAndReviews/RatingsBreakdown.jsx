@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './RatingsBreakdown.css';
-import StarRating from './StarRating';
+// import StarRating from './StarRating';
 
 function RatingsBreakdown({
   reviewsMeta, updateStarFilter, starFilters, removeAllFilters,
@@ -240,7 +240,7 @@ CharacteristicBar.propTypes = {
 
 RatingBar.propTypes = {
   rating: PropTypes.string.isRequired,
-  count: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
   totalReviews: PropTypes.number.isRequired,
 };
 

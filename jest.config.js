@@ -3,6 +3,6 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text'],
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/src/tests/styleMock.js',
+    '\\.css$': 'identity-obj-proxy',
   },
 };

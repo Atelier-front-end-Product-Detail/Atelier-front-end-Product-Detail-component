@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ProductInformation from '../components/productDetails/ProductInformation';
 
 // test product
@@ -25,22 +25,18 @@ describe('ProductInformation', () => {
 
   // should show pertinent data
   it('renders product name, category, and description', () => {
-    const { getByText } = render(
-      <ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />,
-    );
+    render(<ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />);
 
-    expect(getByText(product.name)).not.toBeNull();
-    expect(getByText(product.category)).not.toBeNull();
-    expect(getByText(product.description)).not.toBeNull();
+    expect(screen.getByText(product.name)).toBeInTheDocument();
+    expect(screen.getByText(product.category)).toBeInTheDocument();
+    expect(screen.getByText(product.description)).toBeInTheDocument();
   });
 
   it('renders product prices correctly', () => {
-    const { getByText } = render(
-      <ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />,
-    );
+    render(<ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />);
 
-    expect(getByText(`$${style.sale_price}`)).not.toBeNull();
-    expect(getByText(`$${style.original_price}`)).not.toBeNull();
+    expect(screen.getByText(`$${style.sale_price}`)).toBeInTheDocument();
+    expect(screen.getByText(`$${style.original_price}`, { style: { textDecoration: 'line-through' } })).toBeInTheDocument();
   });
 
   // test for stars based on reviews
@@ -49,9 +45,13 @@ describe('ProductInformation', () => {
       <ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />,
     );
 
-    // get text content (star emojis) of rating
-    const starRatingText = container.querySelector('.star-rating').textContent;
-    // use jest matchers to check content
-    expect(starRatingText).toContain('★★★¾☆');
+    // Check if the star rating wrapper is rendered
+    const starRatingWrapper = container.querySelector('.star-rating-wrapper');
+    expect(starRatingWrapper).toBeInTheDocument();
+
+    // Check if the width style for full stars is correct based on the average rating calculation
+    const expectedWidthPercentage = `${(((1 * 1 + 2 * 2 + 3 * 3 + 4 * 4 + 5 * 5) / (1 + 2 + 3 + 4 + 5)) / 5) * 100}%`;
+    const fullStars = container.querySelector('.full-stars');
+    expect(fullStars).toHaveStyle(`width: ${expectedWidthPercentage}`);
   });
 });
