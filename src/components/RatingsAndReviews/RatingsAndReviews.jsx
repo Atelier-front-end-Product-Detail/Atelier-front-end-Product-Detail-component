@@ -31,8 +31,8 @@ function RatingsAndReviews({ bridge, productId, productName }) {
   };
 
   const updateStarFilter = (filter) => {
-    setStarFilters((starFilters) => (
-      { ...starFilters, [filter]: !starFilters[filter] }
+    setStarFilters((prevStarFilters) => (
+      { ...prevStarFilters, [filter]: !prevStarFilters[filter] }
     ));
   };
 
@@ -82,10 +82,18 @@ function RatingsAndReviews({ bridge, productId, productName }) {
 }
 
 RatingsAndReviews.propTypes = {
+  productName: PropTypes.string.isRequired,
   productId: PropTypes.number.isRequired,
   bridge: PropTypes.shape({
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
-  // setProductId: PropTypes.func.isRequired,
+  // starFilters: PropTypes.shape({
+  //   1: PropTypes.bool,
+  //   2: PropTypes.bool,
+  //   3: PropTypes.bool,
+  //   4: PropTypes.bool,
+  //   5: PropTypes.bool,
+  // }).isRequired,
 };
+
 export default RatingsAndReviews;

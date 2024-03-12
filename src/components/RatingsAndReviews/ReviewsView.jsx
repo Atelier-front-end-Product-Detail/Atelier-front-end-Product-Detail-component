@@ -160,7 +160,11 @@ function ReviewsList({
         />
       ))}
 
-      <ImageModal showImageModal={showImageModal} modalImage={modalImage} handleShowImageModal={handleShowImageModal} />
+      <ImageModal
+        showImageModal={showImageModal}
+        modalImage={modalImage}
+        handleShowImageModal={handleShowImageModal}
+      />
 
     </div>
   );
@@ -202,10 +206,13 @@ function ReviewTile({
   const [showFullReview, setShowFullReview] = useState(false);
 
   const shortBody = review.body.slice(0, 250);
-  const remainingBody = review.body.slice(250);
+  // const remainingBody = review.body.slice(250);
 
   const toggleShowFullReview = () => {
     setShowFullReview(!showFullReview);
+  };
+
+  const handleKeyPress = () => {
   };
 
   return (
@@ -232,27 +239,43 @@ function ReviewTile({
       <div style={{ wordWrap: 'break-word' }}>
         {showFullReview ? review.body : shortBody}
         {review.body.length > 250 && (
-        <span onClick={toggleShowFullReview} style={{ color: 'blue', cursor: 'pointer' }}>
+        <span
+          onClick={toggleShowFullReview}
+          style={{ color: 'blue', cursor: 'pointer' }}
+          onKeyPress={handleKeyPress}
+          role="button"
+          tabIndex={0}
+        >
           {showFullReview ? ' Show less' : ' Show more'}
         </span>
         )}
         <br />
-        {review.photos.length > 0
+        <div className="photos-container">
+          {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
-              <img
+              <div
+                onKeyPress={handleKeyPress}
                 className="review-image"
                 key={eachPhoto.id}
-                src={`${eachPhoto.url}${eachPhoto.id}`}
-                alt={`Review ${eachPhoto.id}`}
-                onError={(e) => {
-                  e.target.src = process.env.IMAGE_NOT_FOUND;
-                }}
+                tabIndex={0}
+                role="button"
                 onClick={() => {
                   handleShowImageModal(true);
                   setModalImage(`${eachPhoto.url}${eachPhoto.id}`);
                 }}
-              />
+              >
+                <img
+                  className="review-image"
+                  key={eachPhoto.id}
+                  src={`${eachPhoto.url}${eachPhoto.id}`}
+                  alt={`Review ${eachPhoto.id}`}
+                  onError={(e) => {
+                    e.target.src = process.env.IMAGE_NOT_FOUND;
+                  }}
+                />
+              </div>
             ))}
+        </div>
       </div>
 
       <br />
@@ -267,13 +290,27 @@ function ReviewTile({
 
       <span>
         Helpful?
-        <span className="helpful" onClick={onHelpfulClick}>
+        <span
+          className="helpful"
+          onClick={onHelpfulClick}
+          onKeyPress={handleKeyPress}
+          tabIndex={0}
+          role="button"
+        >
           Yes (
           {review.helpfulness}
           )
           {' '}
         </span>
-        <span className="report" onClick={onReportClick}>Report</span>
+        <span
+          className="report"
+          onClick={onReportClick}
+          onKeyPress={handleKeyPress}
+          tabIndex={0}
+          role="button"
+        >
+          Report
+        </span>
       </span>
 
     </div>
@@ -291,7 +328,7 @@ function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
         onError={(e) => {
           e.target.src = process.env.IMAGE_NOT_FOUND;
         }}
-        alt="review image"
+        alt="reviewer upload"
       />
       <button
         onClick={() => {
@@ -323,11 +360,31 @@ function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
 // }
 
 ReviewsView.propTypes = {
-  // productId: PropTypes.number.isRequired,
   bridge: PropTypes.shape({
-    // reviewsMeta: PropTypes.func.isRequired,
     listReviews: PropTypes.func.isRequired,
   }).isRequired,
+  productId: PropTypes.number.isRequired,
+  starFilters: PropTypes.shape({
+    1: PropTypes.bool,
+    2: PropTypes.bool,
+    3: PropTypes.bool,
+    4: PropTypes.bool,
+    5: PropTypes.bool,
+  }).isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: PropTypes.shape({
+      rating: PropTypes.number,
+    }),
+    characteristics: PropTypes.shape({
+      description: PropTypes.string,
+    }),
+    recommended: PropTypes.shape({
+      boolean: PropTypes.bool,
+      true: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+  removeAllFilters: PropTypes.func.isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 SortReviews.propTypes = {
@@ -339,14 +396,6 @@ SortReviews.propTypes = {
   // }).isRequired,
 };
 
-// AddReview.propTypes = {
-//   onAddReviewsClick: PropTypes.func.isRequired,
-//   bridge: PropTypes.shape({
-//     reviewsMeta: PropTypes.func.isRequired,
-//     listReviews: PropTypes.func.isRequired,
-//   }).isRequired,
-// };
-
 ReviewsList.propTypes = {
   filteredReviews: PropTypes.arrayOf(
     PropTypes.shape({
@@ -356,6 +405,13 @@ ReviewsList.propTypes = {
       date: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  bridge: PropTypes.shape({
+  }).isRequired,
+  fetchAllData: PropTypes.func.isRequired,
+  handleShowImageModal: PropTypes.func.isRequired,
+  setModalImage: PropTypes.func.isRequired,
+  modalImage: PropTypes.string.isRequired,
+  showImageModal: PropTypes.bool.isRequired,
 };
 
 ReviewTile.propTypes = {
@@ -365,6 +421,17 @@ ReviewTile.propTypes = {
     reviewer_name: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   }).isRequired,
+  fetchAllData: PropTypes.func.isRequired,
+  handleShowImageModal: PropTypes.func.isRequired,
+  setModalImage: PropTypes.func.isRequired,
+  modalImage: PropTypes.string.isRequired,
+  showImageModal: PropTypes.bool.isRequired,
+};
+
+ImageModal.propTypes = {
+  showImageModal: PropTypes.bool.isRequired,
+  modalImage: PropTypes.string.isRequired,
+  handleShowImageModal: PropTypes.func.isRequired,
 };
 
 export { ReviewTile };

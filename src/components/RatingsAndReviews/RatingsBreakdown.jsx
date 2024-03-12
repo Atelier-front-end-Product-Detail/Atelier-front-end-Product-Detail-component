@@ -37,8 +37,9 @@ function RatingsBreakdown({
   // console.log("percentRecommend: ", percentRecommend)
   // console.log(reviewsMeta.ratings);
   const appliedFilters = Object.entries(starFilters)
+  // eslint-disable-next-line no-unused-vars
     .filter(([rating, value]) => value)
-    .map(([rating, value]) => rating);
+    .map(([rating]) => rating);
 
   const appliedFiltersMessage = appliedFilters.length > 0
     ? `Star filters applied: ${appliedFilters.join(', ')}`
@@ -48,15 +49,13 @@ function RatingsBreakdown({
 
   return (
     <div className="RatingsBreakdownContainer">
-      {!isNaN(averageRating)
+      {!Number.isNaN(Number(averageRating))
         ? (
           <>
             <div className="average-star-render">
-            <div className="RR-AverageRating">{averageRating}</div>
-            <RenderStarRating rating={averageRating} />
+              <div className="RR-AverageRating">{averageRating}</div>
+              <RenderStarRating rating={averageRating} />
             </div>
-
-
 
             <div className="number-of-reviews">
               {totalReviews}
@@ -91,13 +90,17 @@ function RatingsBreakdown({
       <div className="remove-filter">
         {appliedFiltersMessage}
         {appliedFilters.length > 0
-        && <button className="reviews-view-buttons" onClick={removeAllFilters}>Remove all filters</button>}
+        && <button type="button" className="reviews-view-buttons" onClick={removeAllFilters}>Remove all filters</button>}
       </div>
 
       {reviewsMeta.characteristics
         && Object.entries(reviewsMeta.characteristics)
           .map(([description, object]) => (
-            <CharacteristicBar key={description} characteristic={description} rating={object.value} />
+            <CharacteristicBar
+              key={description}
+              characteristic={description}
+              rating={object.value}
+            />
           ))}
 
     </div>
@@ -107,8 +110,16 @@ function RatingsBreakdown({
 function RatingBar({
   rating, count, totalReviews, updateStarFilter,
 }) {
+  const handleKeyPress = () => {
+  };
   return (
-    <div className="RatingsBarContainer" onClick={() => updateStarFilter(rating)}>
+    <div
+      className="RatingsBarContainer"
+      onClick={() => updateStarFilter(rating)}
+      onKeyPress={handleKeyPress}
+      role="button"
+      tabIndex={0}
+    >
       <div>
         {`${rating} star`}
         {' '}
@@ -199,8 +210,8 @@ function CharacteristicBar({ characteristic, rating }) {
       </div>
 
       <div className="scaleText">
-        {characteristicTexts.map((text, index) => (
-          <div key={index}>{text}</div>
+        {characteristicTexts.map((text) => (
+          <div key={text}>{text}</div>
         ))}
       </div>
 
@@ -209,7 +220,7 @@ function CharacteristicBar({ characteristic, rating }) {
   );
 }
 
-function RenderStarRating ({ rating }) {
+function RenderStarRating({ rating }) {
   const widthPercentage = `${(rating / 5) * 100}%`;
 
   return (
@@ -220,7 +231,6 @@ function RenderStarRating ({ rating }) {
 }
 
 RatingsBreakdown.propTypes = {
-  // productId: PropTypes.number.isRequired,
   reviewsMeta: PropTypes.shape({
     ratings: PropTypes.shape({
       rating: PropTypes.number,
@@ -230,18 +240,34 @@ RatingsBreakdown.propTypes = {
     }),
     recommended: PropTypes.shape({
       boolean: PropTypes.bool,
+      true: PropTypes.string.isRequired,
     }),
   }).isRequired,
+  updateStarFilter: PropTypes.func.isRequired,
+  starFilters: PropTypes.shape({
+    1: PropTypes.bool,
+    2: PropTypes.bool,
+    3: PropTypes.bool,
+    4: PropTypes.bool,
+    5: PropTypes.bool,
+  }).isRequired,
+  removeAllFilters: PropTypes.func.isRequired,
 };
 
 CharacteristicBar.propTypes = {
   characteristic: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired,
 };
 
 RatingBar.propTypes = {
   rating: PropTypes.string.isRequired,
   count: PropTypes.string.isRequired,
   totalReviews: PropTypes.number.isRequired,
+  updateStarFilter: PropTypes.func.isRequired,
+};
+
+RenderStarRating.propTypes = {
+  rating: PropTypes.string.isRequired,
 };
 
 export default RatingsBreakdown;
