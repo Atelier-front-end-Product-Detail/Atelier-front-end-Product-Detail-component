@@ -106,7 +106,7 @@ function RelatedProducts({
   });
 
   return (
-    <div id="related_products_outer_div">
+    <div id="related_products_outer_div" data-testid="related products outer div">
       {relatedProductsInfo && relatedProductsInfo.length
         ? <div id="related_products_label">RELATED PRODUCTS</div>
         : null}
@@ -116,7 +116,7 @@ function RelatedProducts({
         className="related_products_left_arrow_button"
         onClick={scrollLeft}
         onKeyDown={handleKeyPressScrollLeft}
-        aria-label="Scroll left"
+        aria-label="scroll left"
         tabIndex="0"
       >
         <FaArrowAltCircleLeft />
@@ -128,13 +128,13 @@ function RelatedProducts({
         className="related_products_right_arrow_button"
         onClick={scrollRight}
         onKeyDown={handleKeyPressScrollRight}
-        aria-label="Scroll left"
+        aria-label="scroll right"
         tabIndex="0"
       >
         <FaArrowAltCircleRight />
       </div>
       )}
-      <div id="related_products" ref={scrollContainerRef}>
+      <div id="related_products" data-testid="related products" ref={scrollContainerRef}>
         {relatedProductsInfo.map((item) => (
           <RelatedProductCard
             productId={item.info.id}
