@@ -193,7 +193,7 @@ function RelatedProductCard({
         <div className="product_card_reviews">
           Reviews:
           {' '}
-          <Stars rating={Math.floor(productReviews / (1 / 4)) * (1 / 4)} />
+          <Stars rating={Math.round(productReviews / (1 / 4)) * (1 / 4)} />
         </div>
       </div>
     );
