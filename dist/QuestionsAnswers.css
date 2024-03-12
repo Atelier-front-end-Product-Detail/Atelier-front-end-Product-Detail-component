@@ -1,6 +1,5 @@
 .questions-answers-overview {
-
-  width: 70%;
+  min-width: 600px;
   margin: 0 auto;
 }
 .questions-answers-list {

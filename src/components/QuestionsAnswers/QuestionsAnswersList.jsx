@@ -1,37 +1,33 @@
-import QuestionAnswerEntry from './QuestionAnswerEntry.jsx'
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import QuestionAnswerEntry from './QuestionAnswerEntry';
 
-const QuestionsAnswersList = ({data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport, productName}) => {
-  const [questionsData, setQuestionData] = useState([])
+function QuestionsAnswersList({
+  data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport, productName,
+}) {
+  const [questionsData, setQuestionData] = useState([]);
 
   useEffect(() => {
-    setQuestionData(data)
-  })
+    setQuestionData(data);
+  });
 
   const questionsMap = (object) => {
-    let questionsArr = []
+    const questionsArr = [];
 
-    for(let key in object) {
-      questionsArr.push(object[key])
+    for (const key in object) {
+      questionsArr.push(object[key]);
     }
 
-    questionsArr.sort((a, b) => {
-      return b.question_helpfulness - a.question_helpfulness
-    })
-    return questionsArr
-  }
-
-
+    questionsArr.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
+    return questionsArr;
+  };
 
   return (
     <div className="questions-answers-list">
-      {questionsMap(questionsData).slice(0, dataNum).map((question) => {
-        return (
-          <QuestionAnswerEntry productName={productName} key={question.question_id} bridge={bridge} question={question} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport}/>
-        )
-      })}
+      {questionsMap(questionsData).slice(0, dataNum).map((question) => (
+        <QuestionAnswerEntry productName={productName} key={question.question_id} bridge={bridge} question={question} handleQuestionHelpful={handleQuestionHelpful} handleQuestionReport={handleQuestionReport} />
+      ))}
     </div>
-  )
+  );
 }
 
-export default QuestionsAnswersList
+export default QuestionsAnswersList;
