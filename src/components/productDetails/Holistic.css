@@ -71,13 +71,9 @@
 }
 
 .active-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  width: auto;
+  width: 65%;
   height: auto;
-  transition: transform 0.3s ease;
-  margin-right: 20px;
+  object-fit: contain;
 }
 
 
@@ -146,8 +142,8 @@
 }
 
 .image-gallery.expanded .active-image {
-  max-width: 100%;
-  max-height: 100%;
+  width: 40vw;
+  height: 40vw;
   /* aspect ratio */
   width: auto;
   height: auto;
