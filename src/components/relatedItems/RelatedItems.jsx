@@ -2,59 +2,53 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RelatedProducts from './RelatedProducts';
 import YourOutfit from './YourOutfit';
-// import GradientEffect from './GradientEffect';
+import helper from './helper';
 import './styles.css';
 
-function RelatedItems({ productId, bridge, setProductId }) {
-  const [relatedItems, setRelatedItems] = useState([]);
-  // const [relatedItemsHeight, setRelatedItemsHeight] = useState(0);
+function RelatedItems({ productId, setProductId }) {
   const parentRef = useRef(null);
-
-  // const setHeight = () => {
-  //   if (parentRef.current) {
-  //     setRelatedItemsHeight(parentRef.current.offsetHeight);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setHeight();
-  //   window.addEventListener('scroll', setHeight);
-  //   window.addEventListener('mousemove', setHeight);
-  //   return () => {
-  //     window.removeEventListener('scroll', setHeight);
-  //     window.addEventListener('mousemove', setHeight);
-  //   };
-  // }, []);
+  const [relatedItems, setRelatedItems] = useState([]);
+  const [productInfo, setProductInfo] = useState({});
 
   useEffect(() => {
-    bridge.relatedProducts(productId)
-      .then((results) => {
-        const resultsSet = new Set();
-        const result = results.data.filter((item) => {
-          if (!resultsSet.has(item)) {
-            resultsSet.add(item);
-            return true;
-          }
-          return false;
-        });
-        return setRelatedItems(result);
-      });
+    const fetchData = async () => {
+      if (!productId) { return; }
+      const results = await helper.getProductInfo(productId);
+      setProductInfo(results);
+    };
+
+    fetchData();
   }, [productId]);
+
+  if (JSON.stringify(productInfo) === '{}');
+
+  useEffect(() => {
+    if (!productInfo.relatedProducts) return;
+
+    const relatedItemsSet = new Set();
+    const relatedItemsList = [...productInfo.relatedProducts].filter((item) => {
+      if (!relatedItemsSet.has(item) && item !== productId) {
+        relatedItemsSet.add(item);
+        return true;
+      }
+      return false;
+    });
+    setRelatedItems(relatedItemsList);
+  }, [productInfo, productId]);
 
   return (
     <div className="related_items" ref={parentRef}>
-      {/* <GradientEffect relatedItemsHeight={relatedItemsHeight} /> */}
       <RelatedProducts
         relatedItems={relatedItems}
-        bridge={bridge}
         setProductId={setProductId}
-        productId={productId}
+        productInfo={productInfo}
+        setProductInfo={setProductInfo}
       />
       <br />
       <YourOutfit
         productId={productId}
-        bridge={bridge}
         setProductId={setProductId}
+        productInfo={productInfo}
       />
     </div>
   );
@@ -62,9 +56,6 @@ function RelatedItems({ productId, bridge, setProductId }) {
 
 RelatedItems.propTypes = {
   productId: PropTypes.number.isRequired,
-  bridge: PropTypes.shape({
-    relatedProducts: PropTypes.func.isRequired,
-  }).isRequired,
   setProductId: PropTypes.func.isRequired,
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function AnswerModal({
   showAnswerModal, setAnswerModal, handleAnswerSubmit, productName, question,
@@ -27,10 +28,10 @@ function AnswerModal({
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => {
-      const base64String = reader.result
-      .replace('data:', '')
-      .replace(/^.+,/, '');
-      console.log(base64String);
+        const base64String = reader.result
+          .replace('data:', '')
+          .replace(/^.+,/, '');
+        console.log(base64String);
       };
       // URL.revokeObjectURL(photos);
       setAnswerData((prevValue) => ({
@@ -41,40 +42,6 @@ function AnswerModal({
   };
   const handleClassName = showAnswerModal ? 'answer-modal-display' : 'answer-modal-display-none';
 
-  // const answerFormValidation = () => {
-  //   const body = document.forms.answerForm.body.value
-  //   const name = document.forms.answerForm.name.value
-  //   const email = document.forms.answerForm.email.value
-
-  //   console.log(body, name, email)
-
-  //   if(body === '') {
-  //     window.alert("Please enter a answer");
-  //     body.focus()
-  //     return false
-  //   }
-  //   if(name === '') {
-  //     window.alert('Please enter in your username')
-  //     name.focus()
-  //     return false
-  //   }
-  //   if(email === '' || !email.includes('@')) {
-  //     window.alert('Please enter a valid email address')
-  //     email.focus()
-  //     return false
-  //   }
-
-  //   return true
-  // }
-
-  // const validate = () => {
-  //   if(answerFormValidation() === true) {
-  //     handleAnswerSubmit(answerData);
-  //     setAnswerModal(!showAnswerModal)
-  //   } else {
-  //     console.log("form not validated")
-  //   }
-  // }
   return (
     <div className={handleClassName}>
       <form
@@ -141,5 +108,21 @@ function AnswerModal({
     </div>
   );
 }
+
+AnswerModal.propTypes = {
+  showAnswerModal: PropTypes.bool,
+  setAnswerModal: PropTypes.func,
+  handleAnswerSubmit: PropTypes.func,
+  productName: PropTypes.string,
+  question: PropTypes.string,
+};
+
+AnswerModal.defaultProps = {
+  showAnswerModal: '',
+  setAnswerModal: '',
+  handleAnswerSubmit: '',
+  productName: '',
+  question: '',
+};
 
 export default AnswerModal;

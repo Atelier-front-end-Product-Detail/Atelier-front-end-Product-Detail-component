@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { GoStar } from 'react-icons/go';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import ActionButton from './ActionButton';
 import Stars from './Stars';
 
 function RelatedProductCard({
   productId,
-  bridge,
   setProductId,
   type,
   action,
+  productInformation,
+  relatedItem,
+  setRelatedItem,
 }) {
   const [productInfo, setProductInfo] = useState({});
-  const [productStyles, setProductStyles] = useState([{}]);
+  const [productStyles, setProductStyles] = useState([]);
   const [defaultStyle, setDefaultStyle] = useState({});
   const [productPhotos, setProductPhotos] = useState('');
   const [productPhotoIndex, setProductPhotoIndex] = useState(0);
@@ -69,36 +71,34 @@ function RelatedProductCard({
 
   // SET INITIAL STATES
   useEffect(() => {
-    bridge.productInformation(productId)
-      .then((results) => {
-        setProductInfo(results.data);
-      });
-    bridge.productStyles(productId)
-      .then((results) => setProductStyles(results.data.results));
-    bridge.reviewsMeta(productId)
-      .then((results) => {
-        let result = 0;
-        const keys = Object.keys(results.data.ratings);
-        for (let i = 0; i < keys.length; i += 1) {
-          result += (parseInt(keys[i], 10) * parseInt(results.data.ratings[keys[i]], 10));
-        }
-        const ratingValues = Object.values(results.data.ratings).map((val) => parseInt(val, 10));
-        const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 10);
-        result /= sumOfRatings;
-        return result;
-      })
-      .then((results) => setProductReviews(results));
-  }, [productId]);
+    if (!productInformation || !productInformation.info) return;
 
-  // SET DERIVATIVE STATES
+    setProductInfo(productInformation.info);
+    setProductStyles(productInformation.styles.results);
+
+    const { ratings } = productInformation.meta;
+    if (!ratings) return;
+
+    let ratingsResult = 0;
+    const keys = Object.keys(ratings);
+    for (let i = 0; i < keys.length; i += 1) {
+      ratingsResult += (parseInt(keys[i], 10) * parseInt(ratings[keys[i]], 10));
+    }
+    const ratingValues = Object.values(ratings).map((val) => parseInt(val, 10));
+    const sumOfRatings = ratingValues.reduce((acc, curVal) => acc + curVal, 0);
+    ratingsResult /= sumOfRatings;
+    setProductReviews(ratingsResult);
+  }, [productInformation]);
+
   useEffect(() => {
-    let newDefaultStyle = productStyles.filter((style) => style['default?'] === true)[0] || {};
-    if (JSON.stringify(newDefaultStyle) === '{}' && productStyles.length) { [newDefaultStyle] = productStyles; }
+    if (!productStyles || !productStyles.length) return;
+    const filteredStyles = productStyles.filter((style) => style['default?'] === true);
+    const newDefaultStyle = filteredStyles.length > 0 ? filteredStyles[0] : productStyles[0];
     setDefaultStyle(newDefaultStyle);
   }, [productStyles]);
 
   useEffect(() => {
-    if (defaultStyle.photos && defaultStyle.photos.length) {
+    if (defaultStyle && defaultStyle.photos && defaultStyle.photos.length) {
       const thumbnailUrl = defaultStyle.photos[productPhotoIndex].thumbnail_url;
       if (thumbnailUrl) {
         setProductPhotos(thumbnailUrl);
@@ -108,53 +108,126 @@ function RelatedProductCard({
     }
   }, [defaultStyle, productPhotoIndex]);
 
-  return (
-    <div role="button" tabIndex="0" aria-label="related_product_card" className="related_product_card" onClick={() => setProductId(productId)} onKeyPress={(e) => handleKeyPressSetProductId(e)}>
-      <ActionButton type={type} action={action} productId={productId} />
-      <button type="button" className="related_product_prev_pic" onClick={(e) => decrementPhotoIndex(e)} onKeyPress={handleKeyPressDecrement}>prev pic</button>
-      <button type="button" className="related_product_next_pic" onClick={(e) => incrementPhotoIndex(e)} onKeyPress={handleKeyPressIncrement}>next pic</button>
-      <br />
-      <img src={productPhotos} className="product_card_image" alt="product_card_image" onError={handleImageError} />
+  return (!defaultStyle || defaultStyle === {})
+    ? (
       <div>
-        <span className="product_card_name">
-          {productInfo.name}
-          {'  '}
-        </span>
-        <span className="product_card_extra_text">{productInfo.slogan}</span>
+        Loading...
       </div>
-      <div className="product_card_category">{productInfo.category}</div>
-      {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
-        <div className="product_card_sale_price">
-          Price:
-          {' '}
-          {defaultStyle.sale_price}
+    )
+    : (
+      <div
+        role="button"
+        tabIndex="0"
+        aria-label="related_product_card"
+        className="related_product_card"
+        onClick={() => {
+          setProductId(productId);
+          setRelatedItem({});
+        }}
+        onKeyDown={(e) => {
+          handleKeyPressSetProductId(e);
+          setRelatedItem({});
+        }}
+      >
+        <ActionButton
+          type={type}
+          action={action}
+          productInformation={productInformation}
+          relatedItem={relatedItem}
+        />
+        {defaultStyle && defaultStyle.photos && defaultStyle.photos.length > 1
+        && (
+        <>
+          <button
+            type="button"
+            className="related_product_prev_pic"
+            aria-label="prev picture"
+            onClick={(e) => decrementPhotoIndex(e)}
+            onKeyDown={handleKeyPressDecrement}
+          >
+            <FaArrowLeft />
+          </button>
+          <button
+            type="button"
+            className="related_product_next_pic"
+            aria-label="next picture"
+            onClick={(e) => incrementPhotoIndex(e)}
+            onKeyDown={handleKeyPressIncrement}
+          >
+            <FaArrowRight />
+          </button>
+        </>
+        )}
+        <br />
+        <img
+          src={productPhotos}
+          className="product_card_image"
+          alt="product_card_image"
+          onError={handleImageError}
+        />
+        <div>
+          <span className="product_card_name">
+            {productInfo.name}
+            {'  '}
+          </span>
+          <span className="product_card_extra_text">{productInfo.slogan}</span>
         </div>
-      ) : (
-        <div className="product_card_price">
-          Price:
+        <div className="product_card_category">{productInfo.category}</div>
+        {(defaultStyle.sale_price && defaultStyle.sale_price !== null) ? (
+          <div className="product_card_sale_price">
+            <span className="product_card_default_price_span">
+              Price: $
+              {productInfo.default_price}
+            </span>
+            <span className="product_card_sale_price_span">
+              Price: $
+              {defaultStyle.sale_price}
+            </span>
+          </div>
+        ) : (
+          <div className="product_card_price">
+            Price: $
+            {productInfo.default_price}
+          </div>
+        )}
+        <div className="product_card_reviews">
+          Reviews:
           {' '}
-          {productInfo.default_price}
+          <Stars rating={Math.floor(productReviews / (1 / 4)) * (1 / 4)} />
         </div>
-      )}
-      <div className="product_card_reviews">
-        Reviews:
-        {' '}
-        <Stars rating={Math.floor(productReviews / (1 / 4)) * (1 / 4)} />
       </div>
-    </div>
-  );
+    );
 }
 
 RelatedProductCard.propTypes = {
   productId: PropTypes.number.isRequired,
-  bridge: PropTypes.shape({
-    productInformation: PropTypes.func.isRequired,
-    productStyles: PropTypes.func.isRequired,
-    reviewsMeta: PropTypes.func.isRequired,
-  }).isRequired,
   setProductId: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  productInformation: PropTypes.shape({
+    info: PropTypes.shape({}),
+    styles: PropTypes.shape({
+      results: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    }).isRequired,
+    meta: PropTypes.shape({
+      ratings: PropTypes.shape({}).isRequired,
+    }).isRequired,
+  }).isRequired,
+  relatedItem: PropTypes.shape({
+    info: PropTypes.shape({
+      features: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+  }),
+  setRelatedItem: PropTypes.func,
+};
+
+RelatedProductCard.defaultProps = {
+  relatedItem: {
+    info: {
+      features: [],
+    },
+  },
+  setRelatedItem: null,
 };
 
 export default RelatedProductCard;

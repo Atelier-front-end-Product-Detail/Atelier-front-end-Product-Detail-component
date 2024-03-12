@@ -1,7 +1,7 @@
 .overview {
   display: flex;
   max-width: 1200px;
-  margin: auto; /* Centers the overview container */
+  margin: auto;
 }
 
 .left-section, .right-section {
@@ -12,11 +12,6 @@
 .image-gallery-wrapper {
   flex-grow: 1;
 }
-
-.slogan-description-wrapper {
-  flex-grow: 0;
-}
-
 
 /* Left side */
 
@@ -49,6 +44,14 @@
   z-index: 5;
   cursor: pointer;
 }
+
+.image-gallery.expanded .expand-collapse-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1010;
+}
+
 .main-image {
   position: relative;
   width: 80%;
@@ -203,6 +206,7 @@
   font-size: 1em;
   font-weight: normal;
   margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 /* item name */
@@ -238,6 +242,8 @@
   margin-top: 10px;
 }
 
+/* button styles */
+
 .size-selector {
   flex-grow: 1;
 }
@@ -255,26 +261,65 @@
   padding: 10px 20px;
 }
 
-.slogan-description {
-  flex: 1;
-}
-
-.slogan, .description {
-  margin-bottom: 10px;
-  margin-right: 50px;
+.slogan-description-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  margin-left: auto;
+  margin-left: 20vw;
+  margin-bottom: 30px;
 }
 
 .slogan-description-container {
   display: flex;
-  align-items: stretch;
-  margin-left: 140px;
-  margin-bottom: 50px;
+  flex-direction: column;
 }
-
 
 .vertical-divider {
   width: 2px;
   background-color: rgb(10, 9, 9);
-  height: 100px;
-  margin: 20px;
+  height: 100%;
+  align-self: stretch;
+  margin-bottom: 20px;
+
 }
+
+.filler-text {
+  display: block;
+  margin-left: 20px;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+
+.slogan {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.description {
+  font-size: 1em;
+  margin-top: 0.5px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* social media */
+
+.social-media-share {
+  margin-bottom: 10px;
+}
+
+.social-media-share a {
+  margin-right: 10px;
+}
+
+.social-media-share svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* font work */

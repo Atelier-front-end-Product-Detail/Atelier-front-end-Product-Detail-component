@@ -95,15 +95,14 @@ describe('QuestionsAndAnswers', () => {
   });
 
   it('QuestionsAnswers component exists', async () => {
-    const { findByText, queryByTestId } = await act(async () => render(
+    await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     expect(screen.queryByTestId('title').textContent).toEqual('Questions & Answers');
   });
 
   it('should filter data on search', async () => {
-    const handleSearch = jest.fn();
-    const { findByText, queryByTestId } = await act(async () => render(
+    await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     const searchInput = screen.queryByTestId('search');
@@ -130,7 +129,7 @@ describe('QuestionsAndAnswers', () => {
   it('should post an answer', async () => {
     const { alert } = window;
     window.alert = jest.fn(() => ({}));
-    const { findByText, queryByTestId, getByText } = await act(async () => render(
+    const { queryByTestId, getByText } = await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     const postAnswerBttn = screen.queryByTestId('helpful-question-add-answer');
@@ -147,9 +146,7 @@ describe('QuestionsAndAnswers', () => {
   });
 
   it('should report a question', async () => {
-    const {
-      findByText, queryAllByTestId, getByText, getByRole,
-    } = await act(async () => render(
+    await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     const reportbttn = screen.queryAllByTestId('question-report')[0];
@@ -158,9 +155,7 @@ describe('QuestionsAndAnswers', () => {
   });
 
   it('should update helpful count for question', async () => {
-    const {
-      findByText, queryAllByTestId,
-    } = await act(async () => render(
+    await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     const helpfulBttn = screen.queryAllByTestId('helpful-count-inc')[0];
@@ -169,9 +164,7 @@ describe('QuestionsAndAnswers', () => {
   });
 
   it('should report an answer', async () => {
-    const {
-      findByText, queryAllByTestId, queryByTestId, queryAllByText,
-    } = await act(async () => render(
+    await act(async () => render(
       <QuestionsAnswers bridge={mockBridge} />,
     ));
     const reportAnswer = screen.queryAllByTestId('answer-report')[0];

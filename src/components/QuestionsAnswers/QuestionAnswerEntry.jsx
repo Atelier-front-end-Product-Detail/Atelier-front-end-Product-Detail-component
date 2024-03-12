@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import AnswerModal from './AnswerModal';
 
 function QuestionAnswerEntry({
@@ -21,13 +22,13 @@ function QuestionAnswerEntry({
   const answersMap = (object) => {
     const answersArr = [];
 
-    for (const key in object) {
+    Object.keys(object).forEach((key) => {
       if (key === 'results') {
-        for (const nestedKey in object[key]) {
-          answersArr.push(object[key][nestedKey]);
-        }
+        object[key].forEach((nestedKey) => {
+          answersArr.push(nestedKey);
+        });
       }
-    }
+    });
 
     answersArr.sort((a, b) => b.helpfulness - a.helpfulness);
     return answersArr;
@@ -88,11 +89,6 @@ function QuestionAnswerEntry({
     }
   };
 
-  const getTime = () => {
-    const time = new Date();
-    return (`${time.getHours()}:${time.getMinutes()}:`, time.getSeconds()).toString();
-  };
-
   const showMoreAnswers = () => {
     if (answersMap(answersData).length > 2 && showAnswers < answersMap(answersData).length) {
       return (
@@ -110,26 +106,28 @@ function QuestionAnswerEntry({
                   ,
                   {new Date(answer.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                 </p>
-                <p
-                  data-testid="helpful-answer-put"
+                <button
                   className="helpful-answer"
                   onClick={() => {
                     handleAnswerHelpful(answer.answer_id);
                   }}
+                  data-testid="helpful-answer-put"
+                  type="button"
                 >
                   Helpful? (
                   {answer.helpfulness}
                   )
-                </p>
-                <p
-                  data-testid="answer-report"
+                </button>
+                <button
                   className="helpful-answer-report"
+                  type="button"
+                  data-testid="answer-report"
                   onClick={() => {
                     handleAnswerReport(answer.answer_id);
                   }}
                 >
                   Report
-                </p>
+                </button>
               </div>
               {answer.photos.map((photo) => (
                 <img
@@ -142,7 +140,11 @@ function QuestionAnswerEntry({
               <div />
             </div>
           ))}
-          <p className="answers-button" onClick={() => { setShowAnswers(showAnswers + 2); }}>Load More answers</p>
+          <p className="answers-button">
+            <button type="button" onClick={() => { setShowAnswers(showAnswers + 2); }}>
+              Load More answers
+            </button>
+          </p>
         </div>
       );
     }
@@ -161,7 +163,8 @@ function QuestionAnswerEntry({
                 ,
                 {new Date(answer.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
-              <p
+              <button
+                type="button"
                 data-testid="answer-helpful-inc"
                 className="helpful-answer"
                 onClick={() => {
@@ -171,8 +174,10 @@ function QuestionAnswerEntry({
                 Helpful? (
                 {answer.helpfulness}
                 )
-              </p>
-              <p
+              </button>
+
+              <button
+                type="button"
                 data-testid="report-answer"
                 className="helpful-answer-report"
                 onClick={() => {
@@ -180,10 +185,10 @@ function QuestionAnswerEntry({
                 }}
               >
                 Report
-              </p>
+              </button>
             </div>
             {answer.photos.map((photo) => (
-              <img key={photo.id} src={photo.url} className="answer-photo" />
+              <img key={photo.id} src={photo.url} className="answer-photo" alt="" />
             ))}
             <div />
           </div>
@@ -191,26 +196,16 @@ function QuestionAnswerEntry({
       </div>
     );
   };
-  // const handleInteraction = (data) => {
-  //   bridge.QAInteractionLog(data)
-  //   .then(() => {
-  //     console.log("interaction logged")
-  //   })
-  //   .catch((err) => {
-  //     throw err;
-  //   })
-  //   console.log(data)
-  // }
-
-  // const date = () => {
-  //   const today = new Date();
-
-  //   return (today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()).toString();
-  // }
 
   return (
     <div className="questions-answers-container">
-      <AnswerModal showAnswerModal={showAnswerModal} productName={productName} setAnswerModal={setAnswerModal} handleAnswerSubmit={handleAnswerSubmit} question={question.question_body} />
+      <AnswerModal
+        showAnswerModal={showAnswerModal}
+        productName={productName}
+        setAnswerModal={setAnswerModal}
+        handleAnswerSubmit={handleAnswerSubmit}
+        question={question.question_body}
+      />
       <div className="question-container">
         <div className="question-title-container">
           <p className="question-title">
@@ -220,7 +215,8 @@ function QuestionAnswerEntry({
         </div>
 
         <div className="question-helpful-container">
-          <p
+          <button
+            type="button"
             data-testid="helpful-count-inc"
             className="helpful-question"
             onClick={() => {
@@ -230,8 +226,9 @@ function QuestionAnswerEntry({
             Helpful? YES (
             {question.question_helpfulness}
             )
-          </p>
-          <p
+          </button>
+          <button
+            type="button"
             data-testid="helpful-question-add-answer"
             className="helpful-question-add-answer"
             onClick={() => {
@@ -240,8 +237,9 @@ function QuestionAnswerEntry({
           >
             {' '}
             Add Answer
-          </p>
-          <p
+          </button>
+          <button
+            type="button"
             data-testid="question-report"
             className="helpful-question-report"
             onClick={() => {
@@ -249,12 +247,31 @@ function QuestionAnswerEntry({
             }}
           >
             Report
-          </p>
+          </button>
         </div>
       </div>
       {showMoreAnswers()}
     </div>
   );
 }
+
+QuestionAnswerEntry.propTypes = {
+  bridge: PropTypes.objectOf(PropTypes.func),
+  question: PropTypes.shape({
+    question_id: PropTypes.number,
+    question_body: PropTypes.string,
+    question_helpfulness: PropTypes.number,
+  }).isRequired,
+  handleQuestionHelpful: PropTypes.func,
+  handleQuestionReport: PropTypes.func,
+  productName: PropTypes.string,
+};
+
+QuestionAnswerEntry.defaultProps = {
+  bridge: null,
+  handleQuestionHelpful: '',
+  handleQuestionReport: '',
+  productName: '',
+};
 
 export default QuestionAnswerEntry;

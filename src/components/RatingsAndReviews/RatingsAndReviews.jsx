@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import RatingsBreakdown from './RatingsBreakdown';
 import ReviewsView from './ReviewsView';
 
-function RatingsAndReviews({ bridge, productId }) {
+function RatingsAndReviews({ bridge, productId, productName }) {
   // console.log(props.product_id)
 
   const [reviewsMeta, setReviewsMeta] = useState({});
@@ -42,7 +42,7 @@ function RatingsAndReviews({ bridge, productId }) {
       .then((results) => {
         setReviewsMeta(results.data);
       });
-  }, []);
+  }, [productId]);
 
   // useEffect(() => {
   //   // console.log(`api key = ${process.env.GIT_API_KEY}`);
@@ -58,7 +58,7 @@ function RatingsAndReviews({ bridge, productId }) {
   // useEffect(() => console.log((reviews)), [reviews]);
 
   return (
-    <div className="rrContainer">
+    <div className="rrContainer" id="ratings-reviews">
       <h3 className="rrHeader">Ratings & Reviews </h3>
       <div style={{ display: 'flex' }}>
         <RatingsBreakdown
@@ -73,6 +73,7 @@ function RatingsAndReviews({ bridge, productId }) {
           starFilters={starFilters}
           reviewsMeta={reviewsMeta}
           removeAllFilters={removeAllFilters}
+          productName={productName}
         />
       </div>
     </div>

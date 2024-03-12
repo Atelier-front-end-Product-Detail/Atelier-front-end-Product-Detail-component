@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './RatingsBreakdown.css';
-import StarRating from './StarRating';
+// import StarRating from './StarRating';
 
 function RatingsBreakdown({
   reviewsMeta, updateStarFilter, starFilters, removeAllFilters,
@@ -51,7 +51,13 @@ function RatingsBreakdown({
       {!isNaN(averageRating)
         ? (
           <>
+            <div className="average-star-render">
             <div className="RR-AverageRating">{averageRating}</div>
+            <RenderStarRating rating={averageRating} />
+            </div>
+
+
+
             <div className="number-of-reviews">
               {totalReviews}
               {' '}
@@ -82,10 +88,10 @@ function RatingsBreakdown({
             ))}
       </div>
 
-
-      <div className="remove-filter">{appliedFiltersMessage}
-      {appliedFilters.length > 0
-        && <button onClick={removeAllFilters}>Remove all filters</button>}
+      <div className="remove-filter">
+        {appliedFiltersMessage}
+        {appliedFilters.length > 0
+        && <button className="reviews-view-buttons" onClick={removeAllFilters}>Remove all filters</button>}
       </div>
 
       {reviewsMeta.characteristics
@@ -203,6 +209,16 @@ function CharacteristicBar({ characteristic, rating }) {
   );
 }
 
+function RenderStarRating ({ rating }) {
+  const widthPercentage = `${(rating / 5) * 100}%`;
+
+  return (
+    <div className="star-rating-wrapper">
+      <div className="full-stars" style={{ width: widthPercentage }} />
+    </div>
+  );
+}
+
 RatingsBreakdown.propTypes = {
   // productId: PropTypes.number.isRequired,
   reviewsMeta: PropTypes.shape({
@@ -224,7 +240,7 @@ CharacteristicBar.propTypes = {
 
 RatingBar.propTypes = {
   rating: PropTypes.string.isRequired,
-  count: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
   totalReviews: PropTypes.number.isRequired,
 };
 

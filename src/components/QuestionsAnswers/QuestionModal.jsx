@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function QuestionModal({ handleShowModal, showQuestionModal, handlePostQuestion, productId }) {
+function QuestionModal({
+  handleShowModal, showQuestionModal, handlePostQuestion, productId,
+}) {
   const handleClassName = showQuestionModal ? 'modal-display' : 'modal-display-none';
 
   const [questionData, setQuestionData] = useState({
@@ -24,7 +27,7 @@ function QuestionModal({ handleShowModal, showQuestionModal, handlePostQuestion,
         <div className="x-button"><button type="button" onClick={() => { handleShowModal(false); }}>x</button></div>
         <label htmlFor="question-enter">
           Enter your question
-          <textarea maxLength="1000" type="text" onChange={handleChange} name="body" required value={questionData.body} data-testid="question-body"/>
+          <textarea maxLength="1000" type="text" onChange={handleChange} name="body" required value={questionData.body} data-testid="question-body" />
         </label>
         <label htmlFor="username-q">
           Username
@@ -59,5 +62,19 @@ function QuestionModal({ handleShowModal, showQuestionModal, handlePostQuestion,
     </div>
   );
 }
+
+QuestionModal.propTypes = {
+  handleShowModal: PropTypes.func,
+  showQuestionModal: PropTypes.bool,
+  handlePostQuestion: PropTypes.func,
+  productId: PropTypes.number,
+};
+
+QuestionModal.defaultProps = {
+  handleShowModal: '',
+  showQuestionModal: '',
+  handlePostQuestion: '',
+  productId: '',
+};
 
 export default QuestionModal;
