@@ -1,11 +1,10 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import 'dotenv/config';
-import RelatedProducts from '../../components/relatedItems/RelatedProducts';
+import YourOutfit from '../../components/relatedItems/YourOutfit';
 import mockData from './mockData';
 
-describe('RelatedProducts', () => {
+describe('YourOutfit', () => {
   let mockProps;
   beforeEach(() => {
     jest.clearAllMocks();
@@ -13,35 +12,24 @@ describe('RelatedProducts', () => {
       getItemsProductInfo: jest.fn().mockResolvedValue(mockData),
     }));
     mockProps = {
-      relatedItems: [40345],
+      productId: 40345,
       setProductId: jest.fn(),
-      productInfo: {
-        info: {
-          id: 40344,
-        },
-      },
+      productInfo: {},
     };
   });
 
-  it('should render properly', () => {
-    const { getByTestId } = render(<RelatedProducts
-      relatedItems={mockProps.relatedItems}
+  it('should render properly', async () => {
+    const { getByText, getByTestId, getByRole } = render(<YourOutfit
+      productId={mockProps.productId}
       setProductId={mockProps.setProductId}
       productInfo={mockProps.productInfo}
     />);
 
-    expect(getByTestId('related products outer div')).toBeInTheDocument();
-    expect(getByTestId('related products')).toBeInTheDocument();
-  });
+    expect(getByText('YOUR OUTFIT')).toBeInTheDocument();
+    expect(getByTestId('your outfit outer div')).toBeInTheDocument();
+    expect(getByTestId('your outfit')).toBeInTheDocument();
 
-  it('should render scroll buttons properly', async () => {
-    const { getByRole, getByTestId } = render(<RelatedProducts
-      relatedItems={mockProps.relatedItems}
-      setProductId={mockProps.setProductId}
-      productInfo={mockProps.productInfo}
-    />);
-
-    const relatedProductsDiv = getByTestId('related products');
+    const relatedProductsDiv = getByTestId('your outfit');
     Object.defineProperty(relatedProductsDiv, 'scrollWidth', { value: 1000 });
     Object.defineProperty(relatedProductsDiv, 'clientWidth', { value: 500 });
     Object.defineProperty(relatedProductsDiv, 'scrollLeft', { value: 100 });

@@ -240,7 +240,7 @@ CharacteristicBar.propTypes = {
 
 RatingBar.propTypes = {
   rating: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired,
+  count: PropTypes.string.isRequired,
   totalReviews: PropTypes.number.isRequired,
 };
 

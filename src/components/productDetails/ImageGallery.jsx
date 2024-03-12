@@ -82,6 +82,7 @@ function ImageGallery({ style }) {
                   <img
                     src={photo.thumbnail_url}
                     alt={`Thumbnail ${index}`}
+                    loading="lazy"
                   />
                 </button>
               ))}
@@ -100,7 +101,6 @@ function ImageGallery({ style }) {
             tabIndex="0"
             onMouseMove={handleMouseMove}
           >
-
             {(selectedImageIndex > 0 && !isZoomed) && (
               <button
                 className="arrow left-arrow"
@@ -140,7 +140,6 @@ function ImageGallery({ style }) {
           >
             <FontAwesomeIcon icon={isExpanded ? faCompress : faExpand} />
           </button>
-
         </div>
       )}
     </div>

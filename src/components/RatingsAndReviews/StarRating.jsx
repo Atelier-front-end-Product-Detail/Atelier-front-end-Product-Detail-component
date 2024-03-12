@@ -16,7 +16,8 @@ function StarRating({ ratingToDisplay, interactive, onRatingChange, id }) {
     <div
       aria-labelledby="overallRating"
       className="starRating"
-      id={id}>
+      // id="overallRating"
+      >
       {[1, 2, 3, 4, 5].map((starIndex) => (
         <span
           key={starIndex}

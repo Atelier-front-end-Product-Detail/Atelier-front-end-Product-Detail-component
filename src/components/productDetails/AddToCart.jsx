@@ -67,7 +67,7 @@ function AddToCart({ style }) {
           disabled={availableSizes.length === 0}
           className="size-selector"
         >
-          <option value="">Select Size</option>
+          <option value="">Select Size XS S M L XL</option>
           {availableSizes.map(({ size }) => (
             <option key={size} value={size}>{size}</option>
           ))}
@@ -79,7 +79,7 @@ function AddToCart({ style }) {
           disabled={!selectedSize || maxQuantity === 0}
           className="quantity-selector"
         >
-          <option value="">-</option>
+          <option value="">Quantity</option>
           {[...Array(maxQuantity).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>{num + 1}</option>
           ))}
