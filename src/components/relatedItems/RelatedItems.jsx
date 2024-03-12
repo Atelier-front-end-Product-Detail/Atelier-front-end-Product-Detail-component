@@ -37,20 +37,24 @@ function RelatedItems({ productId, setProductId }) {
   }, [productInfo, productId]);
 
   return (
-    <div className="related_items" ref={parentRef}>
-      <RelatedProducts
-        relatedItems={relatedItems}
-        setProductId={setProductId}
-        productInfo={productInfo}
-        setProductInfo={setProductInfo}
-      />
-      <br />
-      <YourOutfit
-        productId={productId}
-        setProductId={setProductId}
-        productInfo={productInfo}
-      />
-    </div>
+    relatedItems
+      ? (
+        <div className="related_items" ref={parentRef} data-testid="related items div">
+          <RelatedProducts
+            relatedItems={relatedItems}
+            setProductId={setProductId}
+            productInfo={productInfo}
+            setProductInfo={setProductInfo}
+          />
+          <br />
+          <YourOutfit
+            productId={productId}
+            setProductId={setProductId}
+            productInfo={productInfo}
+          />
+        </div>
+      )
+      : null
   );
 }
 

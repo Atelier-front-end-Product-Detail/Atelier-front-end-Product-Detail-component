@@ -19,8 +19,8 @@ function YourOutfit({
   useEffect(() => {
     const fetchData = async () => {
       const info = await helper.getItemsProductInfo(JSON.parse(localStorage.getItem('fecYourOutfit')));
-      setOutfitProductsInfo(info);
-      setUserOutfit(JSON.parse(localStorage.getItem('fecYourOutfit')));
+      if (info && info.length) setOutfitProductsInfo(info);
+      setUserOutfit(info);
     };
     fetchData();
   }, []);
@@ -122,7 +122,7 @@ function YourOutfit({
   }, []);
 
   return (
-    <div id="your_outfit_outer_div">
+    <div id="your_outfit_outer_div" data-testid="your outfit outer div">
       <div id="your_outfit_label">YOUR OUTFIT</div>
       {showLeftArrow && (
       <div
@@ -130,7 +130,7 @@ function YourOutfit({
         className="your_outfit_left_arrow_button"
         onClick={scrollLeft}
         onKeyDown={handleKeyPressScrollLeft}
-        aria-label="Scroll left"
+        aria-label="scroll left"
         tabIndex="0"
       >
         <FaArrowAltCircleLeft />
@@ -142,17 +142,17 @@ function YourOutfit({
         className="your_outfit_right_arrow_button"
         onClick={scrollRight}
         onKeyDown={handleKeyPressScrollRight}
-        aria-label="Scroll left"
+        aria-label="scroll right"
         tabIndex="0"
       >
         <FaArrowAltCircleRight />
       </div>
       )}
-      <div id="your_outfit" ref={scrollContainerRef}>
+      <div id="your_outfit" ref={scrollContainerRef} data-testid="your outfit">
         <AddItemToOutfit
           addToOutfit={addToOutfit}
         />
-        {outfitProductsInfo.map((item) => (
+        {Array.isArray(outfitProductsInfo) ? outfitProductsInfo.map((item) => (
           <RelatedProductCard
             productId={item.info.id}
             setProductId={setProductId}
@@ -161,7 +161,7 @@ function YourOutfit({
             action={action}
             productInformation={item}
           />
-        ))}
+        )) : null}
       </div>
     </div>
   );

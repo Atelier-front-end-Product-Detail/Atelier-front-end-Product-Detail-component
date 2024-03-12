@@ -15,7 +15,7 @@ function AddItemToOutfit({ addToOutfit }) {
         id="add_item_to_outfit"
         role="button"
         tabIndex="0"
-        aria-label="add_item_to_outfit"
+        aria-label="add item to outfit"
         onClick={addToOutfit}
         onKeyDown={handleKeyPressAddItem}
       >
