@@ -5,7 +5,7 @@ import StarRating from './StarRating';
 import AddReviewModal from './AddReviewModal';
 
 function ReviewsView({
-  bridge, productId, starFilters, reviewsMeta, removeAllFilters,productName
+  bridge, productId, starFilters, reviewsMeta, removeAllFilters, productName,
 }) {
   const [reviews, setReviews] = useState([]);
   // const [nextReviews, setNextReviews] = useState([]);
@@ -48,6 +48,7 @@ function ReviewsView({
   useEffect(() => {
     // console.log(`api key = ${process.env.GIT_API_KEY}`);
     fetchAllData();
+    setDisplayNumber(2);
   }, [selectedValue, currentTotalReviews, productId]);
 
   // console.log('selectedSORT: ', selectedValue);
@@ -93,7 +94,9 @@ function ReviewsView({
 
   const anyFilterApplied = Object.values(starFilters).some((filter) => filter);
 
-  const filteredReviews = anyFilterApplied ? reviews.filter((review) => starFilters[review.rating]).slice(0, displayNumber) : reviews.slice(0, displayNumber);
+  const filteredReviews = anyFilterApplied
+    ? reviews.filter((review) => starFilters[review.rating]).slice(0, displayNumber)
+    : reviews.slice(0, displayNumber);
 
   return (
     <div className="reviewsView">
@@ -196,7 +199,6 @@ function ReviewTile({
       });
   };
 
-
   const [showFullReview, setShowFullReview] = useState(false);
 
   const shortBody = review.body.slice(0, 250);
@@ -205,7 +207,6 @@ function ReviewTile({
   const toggleShowFullReview = () => {
     setShowFullReview(!showFullReview);
   };
-
 
   return (
     <div className="reviewTile">
@@ -228,13 +229,13 @@ function ReviewTile({
 
       <h4>{review.summary}</h4>
 
-      <div style={{wordWrap: 'break-word'}}>
-      {showFullReview ? review.body : shortBody}
-      {review.body.length > 250 && (
+      <div style={{ wordWrap: 'break-word' }}>
+        {showFullReview ? review.body : shortBody}
+        {review.body.length > 250 && (
         <span onClick={toggleShowFullReview} style={{ color: 'blue', cursor: 'pointer' }}>
           {showFullReview ? ' Show less' : ' Show more'}
         </span>
-      )}
+        )}
         <br />
         {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
@@ -266,13 +267,13 @@ function ReviewTile({
 
       <span>
         Helpful?
-        <a className="helpful" onClick={onHelpfulClick}>
+        <span className="helpful" onClick={onHelpfulClick}>
           Yes (
           {review.helpfulness}
           )
           {' '}
-        </a>
-        <a className="report" onClick={onReportClick}>Report</a>
+        </span>
+        <span className="report" onClick={onReportClick}>Report</span>
       </span>
 
     </div>
@@ -290,6 +291,7 @@ function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
         onError={(e) => {
           e.target.src = process.env.IMAGE_NOT_FOUND;
         }}
+        alt="review image"
       />
       <button
         onClick={() => {
@@ -365,4 +367,5 @@ ReviewTile.propTypes = {
   }).isRequired,
 };
 
+export { ReviewTile };
 export default ReviewsView;

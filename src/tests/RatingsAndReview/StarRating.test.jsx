@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import StarRating from '../components/RatingsAndReviews/StarRating';
+import StarRating from '../../components/RatingsAndReviews/StarRating';
 
-jest.mock('../components/RatingsAndReviews/StarRating.css', () => ({}));
+jest.mock('../../components/RatingsAndReviews/StarRating.css', () => ({}));
 
 // function to "parse" individual star spans
 // const findStarRatingText = (stars) => Array.from(stars).map(() => '★').join('');
@@ -25,7 +25,7 @@ describe('StarRating', () => {
   it('renders interactive StarRating component and calls onRatingChange when a star is clicked', () => {
     const onRatingChangeMock = jest.fn();
     const { getAllByText } = render(
-      <StarRating ratingToDisplay={3} interactive onRatingChange={onRatingChangeMock} />
+      <StarRating ratingToDisplay={3} interactive onRatingChange={onRatingChangeMock} />,
     );
 
     const stars = getAllByText('★');
@@ -38,7 +38,7 @@ describe('StarRating', () => {
   it('does not allow interaction when no interactive attribute', () => {
     const onRatingChangeMock = jest.fn();
     const { getAllByText } = render(
-      <StarRating ratingToDisplay={3} onRatingChange={onRatingChangeMock} />
+      <StarRating ratingToDisplay={3} onRatingChange={onRatingChangeMock} />,
     );
 
     const stars = getAllByText('★');
