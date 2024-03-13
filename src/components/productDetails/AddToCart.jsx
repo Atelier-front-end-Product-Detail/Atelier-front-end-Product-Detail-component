@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import bridge from '../bridge';
+import './Holistic.css';
 
 function AddToCart({ style }) {
   const [selectedSize, setSelectedSize] = useState('');

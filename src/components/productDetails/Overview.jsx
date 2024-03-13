@@ -20,26 +20,17 @@ function Overview({ productId }) {
       bridge.productInformation(productId)
         .then((response) => {
           setProductInfo(response.data);
-        })
-        .catch((error) => {
-          console.error('error fetching product information:', error);
         });
 
       bridge.productStyles(productId)
         .then((response) => {
           setProductStyles(response.data);
           setSelectedStyle(response.data.results[0]);
-        })
-        .catch((error) => {
-          console.error('error fetching product styles:', error);
         });
 
       bridge.reviewsMeta(productId)
         .then((response) => {
           setReviewsMeta(response.data);
-        })
-        .catch((error) => {
-          console.error('error fetching reviews metadata:', error);
         });
     }
   }, [productId]);

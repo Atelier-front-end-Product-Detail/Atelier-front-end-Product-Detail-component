@@ -37,7 +37,8 @@ function ImageGallery({ style }) {
 
   const handleThumbnailClick = (index) => {
     setSelectedImageIndex(index);
-    if (isZoomed) setIsZoomed(false); // reset zoom state when changing pic
+    // reset zoom state when changing pic
+    if (isZoomed) setIsZoomed(false);
   };
 
   const handleMouseMove = (event) => {
