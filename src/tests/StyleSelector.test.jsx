@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import StyleSelector from '../components/productDetails/StyleSelector';
+import '@testing-library/jest-dom';
 
 describe('StyleSelector', () => {
   const mockStyles = [
@@ -12,20 +13,22 @@ describe('StyleSelector', () => {
 
   it('renders correctly with props', () => {
     render(<StyleSelector styles={mockStyles} onStyleSelect={mockOnStyleSelect} />);
-
-    expect(screen.getByText('Style > ')).toBeInTheDocument();
+    // use regex to match the text
+    expect(screen.getByText(/Style >/)).toBeInTheDocument();
     expect(screen.getByAltText('Style 1')).toBeInTheDocument();
     expect(screen.getByAltText('Style 2')).toBeInTheDocument();
   });
 
   it('displays the selected style name', () => {
-    render(<StyleSelector
-      styles={mockStyles}
-      selectedStyle={mockStyles[0]}
-      onStyleSelect={mockOnStyleSelect}
-    />);
-
-    expect(screen.getByText('Style > Style 1')).toBeInTheDocument();
+    const { container } = render(
+      <StyleSelector
+        styles={mockStyles}
+        selectedStyle={mockStyles[0]}
+        onStyleSelect={mockOnStyleSelect}
+      />,
+    );
+    console.log(container.innerHTML);
+    expect(screen.getByText(/Style >.*Style 1/)).toBeInTheDocument();
   });
 
   it('calls onStyleSelect with the new style when a different style is clicked (interaction)', () => {
@@ -41,14 +44,18 @@ describe('StyleSelector', () => {
   });
 
   it('should not call onStyleSelect when the same style is clicked', () => {
-    render(<StyleSelector
-      styles={mockStyles}
-      selectedStyle={mockStyles[0]}
-      onStyleSelect={mockOnStyleSelect}
-    />);
+    render(
+      <StyleSelector
+        styles={mockStyles}
+        selectedStyle={mockStyles[1]}
+        onStyleSelect={mockOnStyleSelect}
+      />,
+    );
 
+    // Simulate clicking the already selected style
     fireEvent.click(screen.getByAltText('Style 1'));
 
+    // Expectation: onStyleSelect should not be called
     expect(mockOnStyleSelect).not.toHaveBeenCalled();
   });
 

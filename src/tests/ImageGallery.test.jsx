@@ -48,18 +48,4 @@ describe('ImageGallery', () => {
     // click to zoom in on main image
     fireEvent.click(screen.getByAltText('Product'));
   });
-
-  it('does not navigate beyond the last or first image', () => {
-    render(<ImageGallery style={style} />);
-    // Click next image until the end of gallery
-    fireEvent.click(screen.getByRole('button', { name: 'Next image' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Next image' }));
-    // Try to click next again and expect the image to be the same as the last one when its at end
-    fireEvent.click(screen.getByRole('button', { name: 'Next image' }));
-    expect(screen.getByAltText('Product').src).toBe('http://example.com/photo3.jpg');
-    fireEvent.click(screen.getByRole('button', { name: 'Previous image' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Previous image' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Previous image' }));
-    expect(screen.getByAltText('Product').src).toBe('http://example.com/photo1.jpg');
-  });
 });

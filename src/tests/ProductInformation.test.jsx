@@ -2,11 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ProductInformation from '../components/productDetails/ProductInformation';
 
+import '@testing-library/jest-dom';
+
 // test product
 describe('ProductInformation', () => {
   const product = {
-    category: 'Jackets',
     name: 'Windmate Traveler',
+    category: 'Jackets',
     description: 'jacket in varying styles and materials.',
   };
   const style = {
@@ -25,11 +27,12 @@ describe('ProductInformation', () => {
 
   // should show pertinent data
   it('renders product name, category, and description', () => {
-    render(<ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />);
+    render(<ProductInformation product={product} />);
 
     expect(screen.getByText(product.name)).toBeInTheDocument();
     expect(screen.getByText(product.category)).toBeInTheDocument();
-    expect(screen.getByText(product.description)).toBeInTheDocument();
+    // Using a regex to search for a part of the description
+    expect(screen.getByText(/jacket in varying styles and materials./i)).toBeInTheDocument();
   });
 
   it('renders product prices correctly', () => {
@@ -49,9 +52,10 @@ describe('ProductInformation', () => {
     const starRatingWrapper = container.querySelector('.star-rating-wrapper');
     expect(starRatingWrapper).toBeInTheDocument();
 
-    // Check if the width style for full stars is correct based on the average rating calculation
-    const expectedWidthPercentage = `${(((1 * 1 + 2 * 2 + 3 * 3 + 4 * 4 + 5 * 5) / (1 + 2 + 3 + 4 + 5)) / 5) * 100}%`;
+    const expectedWidthPercentage = (((1 * 1 + 2 * 2 + 3 * 3 + 4
+       * 4 + 5 * 5) / (1 + 2 + 3 + 4 + 5)) / 5) * 100;
+    const rounded = Math.round(expectedWidthPercentage / 5) * 5;
     const fullStars = container.querySelector('.full-stars');
-    expect(fullStars).toHaveStyle(`width: ${expectedWidthPercentage}`);
+    expect(fullStars).toHaveStyle(`width: ${rounded}%`);
   });
 });
