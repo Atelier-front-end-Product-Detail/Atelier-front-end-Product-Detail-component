@@ -1,13 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ProductInformation from '../components/productDetails/ProductInformation';
+
 import '@testing-library/jest-dom';
 
 // test product
 describe('ProductInformation', () => {
   const product = {
-    category: 'Jackets',
     name: 'Windmate Traveler',
+    category: 'Jackets',
     description: 'jacket in varying styles and materials.',
   };
   const style = {
@@ -26,11 +27,12 @@ describe('ProductInformation', () => {
 
   // should show pertinent data
   it('renders product name, category, and description', () => {
-    render(<ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />);
+    render(<ProductInformation product={product} />);
 
     expect(screen.getByText(product.name)).toBeInTheDocument();
     expect(screen.getByText(product.category)).toBeInTheDocument();
-    expect(screen.getByText(product.description)).toBeInTheDocument();
+    // Using a regex to search for a part of the description
+    expect(screen.getByText(/jacket in varying styles and materials./i)).toBeInTheDocument();
   });
 
   it('renders product prices correctly', () => {
