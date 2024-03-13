@@ -4,7 +4,7 @@ import ProductInformation from '../components/productDetails/ProductInformation'
 
 import '@testing-library/jest-dom';
 
-// test product
+// test  product
 describe('ProductInformation', () => {
   const product = {
     name: 'Windmate Traveler',
@@ -27,12 +27,11 @@ describe('ProductInformation', () => {
 
   // should show pertinent data
   it('renders product name, category, and description', () => {
-    render(<ProductInformation product={product} />);
-
+    render(<ProductInformation product={product} style={style} reviewsMeta={reviewsMeta} />);
     expect(screen.getByText(product.name)).toBeInTheDocument();
     expect(screen.getByText(product.category)).toBeInTheDocument();
-    // Using a regex to search for a part of the description
-    expect(screen.getByText(/jacket in varying styles and materials./i)).toBeInTheDocument();
+    // Use a regex matcher with a case-insensitive flag for flexibility
+    expect(screen.getByText(/jacket in varying styles and materials/i)).toBeInTheDocument();
   });
 
   it('renders product prices correctly', () => {
