@@ -18,9 +18,13 @@ function YourOutfit({
 
   useEffect(() => {
     const fetchData = async () => {
-      const info = await helper.getItemsProductInfo(JSON.parse(localStorage.getItem('fecYourOutfit')));
-      if (info && info.length) setOutfitProductsInfo(info);
-      setUserOutfit(info);
+      const fecYourOutfit = localStorage.getItem('fecYourOutfit');
+      const storedOutfit = fecYourOutfit ? JSON.parse(fecYourOutfit) : [];
+      const info = storedOutfit ? await helper.getItemsProductInfo(storedOutfit) : null;
+      if (info && info.length) {
+        setOutfitProductsInfo(info);
+        setUserOutfit(...userOutfit, info.id);
+      }
     };
     fetchData();
   }, []);
@@ -28,22 +32,21 @@ function YourOutfit({
   const relatedProductCardWidthPlusGap = 270;
 
   const addToOutfit = () => {
-    // if (!outfitProductsInfo || !userOutfit) return;
-    if (outfitProductsInfo.some((product) => product.info.id === productId)) return;
+    if (Array.isArray(outfitProductsInfo)
+      && outfitProductsInfo.some((product) => product.info.id === productId)) return;
+
     setOutfitProductsInfo([...outfitProductsInfo, productInfo]);
-    if (!userOutfit) {
+    if (!Array.isArray(userOutfit) || !userOutfit.length) {
       setUserOutfit([productId]);
       localStorage.setItem('fecYourOutfit', JSON.stringify([productId]));
-    }
-    if (userOutfit.some((product) => product === productId)) return;
-    if (userOutfit) {
+    } else if (!userOutfit.some((product) => product === productId)) {
       setUserOutfit([...userOutfit, productId]);
       localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
     }
   };
 
   const action = (id) => {
-    const newOutfitProductsInfo = [...outfitProductsInfo];
+    const newOutfitProductsInfo = outfitProductsInfo.length ? [...outfitProductsInfo] : [];
     let index = newOutfitProductsInfo.indexOf(id);
     if (index < 0) {
       return;
@@ -124,7 +127,8 @@ function YourOutfit({
   }, [userOutfit]);
 
   useEffect(() => {
-    const storedOutfit = JSON.parse(localStorage.getItem('fecYourOutfit')) || [];
+    const fecYourOutfit = localStorage.getItem('fecYourOutfit');
+    const storedOutfit = fecYourOutfit ? JSON.parse(fecYourOutfit) : [];
     setUserOutfit([...storedOutfit]);
   }, []);
 

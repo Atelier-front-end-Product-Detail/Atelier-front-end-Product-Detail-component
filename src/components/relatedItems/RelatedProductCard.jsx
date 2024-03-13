@@ -218,10 +218,11 @@ RelatedProductCard.propTypes = {
       features: PropTypes.arrayOf(PropTypes.shape({})),
     }),
   }),
-  setRelatedItem: PropTypes.func.isRequired,
+  setRelatedItem: PropTypes.func,
 };
 
 RelatedProductCard.defaultProps = {
+  setRelatedItem: () => {},
   relatedItem: {
     info: {
       features: [],
