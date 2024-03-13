@@ -218,7 +218,7 @@ RelatedProductCard.propTypes = {
       features: PropTypes.arrayOf(PropTypes.shape({})),
     }),
   }),
-  setRelatedItem: PropTypes.func,
+  setRelatedItem: PropTypes.func.isRequired,
 };
 
 RelatedProductCard.defaultProps = {
@@ -227,7 +227,6 @@ RelatedProductCard.defaultProps = {
       features: [],
     },
   },
-  setRelatedItem: null,
 };
 
 export default RelatedProductCard;

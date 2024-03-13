@@ -28,11 +28,18 @@ function YourOutfit({
   const relatedProductCardWidthPlusGap = 270;
 
   const addToOutfit = () => {
+    // if (!outfitProductsInfo || !userOutfit) return;
     if (outfitProductsInfo.some((product) => product.info.id === productId)) return;
     setOutfitProductsInfo([...outfitProductsInfo, productInfo]);
+    if (!userOutfit) {
+      setUserOutfit([productId]);
+      localStorage.setItem('fecYourOutfit', JSON.stringify([productId]));
+    }
     if (userOutfit.some((product) => product === productId)) return;
-    setUserOutfit([...userOutfit, productId]);
-    localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+    if (userOutfit) {
+      setUserOutfit([...userOutfit, productId]);
+      localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+    }
   };
 
   const action = (id) => {
@@ -118,7 +125,7 @@ function YourOutfit({
 
   useEffect(() => {
     const storedOutfit = JSON.parse(localStorage.getItem('fecYourOutfit')) || [];
-    setUserOutfit(storedOutfit);
+    setUserOutfit([...storedOutfit]);
   }, []);
 
   return (
