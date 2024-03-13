@@ -3,15 +3,11 @@ import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import 'dotenv/config';
 import RelatedProducts from '../../components/relatedItems/RelatedProducts';
-import mockData from './mockData';
 
 describe('RelatedProducts', () => {
   let mockProps;
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock('../../components/relatedItems/helper', () => ({
-      getItemsProductInfo: jest.fn().mockResolvedValue(mockData),
-    }));
     mockProps = {
       relatedItems: [40345],
       setProductId: jest.fn(),
