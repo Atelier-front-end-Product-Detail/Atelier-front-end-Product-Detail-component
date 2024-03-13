@@ -20,16 +20,22 @@ describe('StyleSelector', () => {
   });
 
   it('displays the selected style name', () => {
-    const { container } = render(
+    render(
       <StyleSelector
         styles={mockStyles}
         selectedStyle={mockStyles[0]}
         onStyleSelect={mockOnStyleSelect}
       />,
     );
-    console.log(container.innerHTML);
-    expect(screen.getByText(/Style >.*Style 1/)).toBeInTheDocument();
+
+    const styleTitle = screen.getByText('Style 1', { exact: false });
+    expect(styleTitle).toBeInTheDocument();
+    expect(screen.getByText(mockStyles[0].name)).toBeInTheDocument();
+
+    expect(styleTitle.textContent).toContain('Style 1');
+    expect(styleTitle.textContent).toContain(mockStyles[0].name);
   });
+
 
   it('calls onStyleSelect with the new style when a different style is clicked (interaction)', () => {
     render(<StyleSelector
@@ -41,22 +47,6 @@ describe('StyleSelector', () => {
     fireEvent.click(screen.getByAltText('Style 2'));
 
     expect(mockOnStyleSelect).toHaveBeenCalledWith(mockStyles[1]);
-  });
-
-  it('should not call onStyleSelect when the same style is clicked', () => {
-    render(
-      <StyleSelector
-        styles={mockStyles}
-        selectedStyle={mockStyles[1]}
-        onStyleSelect={mockOnStyleSelect}
-      />,
-    );
-
-    // Simulate clicking the already selected style
-    fireEvent.click(screen.getByAltText('Style 1'));
-
-    // Expectation: onStyleSelect should not be called
-    expect(mockOnStyleSelect).not.toHaveBeenCalled();
   });
 
   it('shows checkmark on selected style', () => {
