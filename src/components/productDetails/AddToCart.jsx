@@ -45,7 +45,7 @@ function AddToCart({ style }) {
     const skuId = Object.keys(style.skus).find((key) => style.skus[key].size === selectedSize);
 
     if (skuId) {
-      for (let i = 0; i < selectedQuantity; i + 1) {
+      for (let i = 0; i < selectedQuantity; i++) {
         bridge.addToCart(parseInt(skuId, 10)).then(() => {
           console.log(`Added size ${selectedSize} to cart`);
         }).catch((error) => {

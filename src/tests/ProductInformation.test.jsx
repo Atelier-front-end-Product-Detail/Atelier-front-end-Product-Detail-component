@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ProductInformation from '../components/productDetails/ProductInformation';
+import '@testing-library/jest-dom';
 
 // test product
 describe('ProductInformation', () => {

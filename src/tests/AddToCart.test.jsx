@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import AddToCart from '../components/productDetails/AddToCart';
 import bridge from '../components/bridge';
+import '@testing-library/jest-dom';
 
 jest.mock('../components/bridge', () => ({
   addToCart: jest.fn(),
