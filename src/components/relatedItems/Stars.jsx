@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaStar } from "react-icons/fa";
+import { FaStar } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
 function Stars({ rating }) {
   const blackStarsStyle = {
@@ -38,5 +39,9 @@ function Stars({ rating }) {
     </>
   );
 }
+
+Stars.propTypes = {
+  rating: PropTypes.number.isRequired,
+};
 
 export default Stars;

@@ -100,12 +100,14 @@ function AddReviewModal({
         <p className="title">Write Your Review</p>
         <p className="subtitle">
           About the
-          {productName}
+          {` ${productName}`}
         </p>
 
-        <label> Overall rating:* </label>
+        <label id="overallRating" htmlFor="overallRating"> Overall rating:* </label>
         <div className="review-rating">
           <StarRating
+            id="overallRating"
+            aria-labelledby="overallRating"
             interactive="true"
             onRatingChange={(rating) => {
               setReviewData({ ...reviewData, rating, product_id: productId });
@@ -117,12 +119,13 @@ function AddReviewModal({
           </div>
         </div>
 
-        <label>Do you recommend this product?* </label>
+        <label htmlFor="recommendation">Do you recommend this product?* </label>
         <div className="review-rating">
-          <label>
+          <label htmlFor="recommendation">
             <input
+              // id="recommendYes"
               type="radio"
-              name="recommendation"
+              id="recommendation"
               value="true"
               required
               onChange={(() => {
@@ -131,12 +134,12 @@ function AddReviewModal({
             />
             Yes
           </label>
-          <label>
+          <label htmlFor="recommendation">
             <input
               type="radio"
               name="recommendation"
               value="false"
-              onChange={((value) => {
+              onChange={(() => {
                 setReviewData({ ...reviewData, recommend: false });
               })}
             />
@@ -145,8 +148,10 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Review summary:*</label>
+          <label htmlFor="summary">Review summary:*</label>
           <textarea
+            id="summary"
+            name="summary"
             type="text"
             required
             placeholder="Enter review summary here"
@@ -159,8 +164,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Review body:*</label>
+          <label htmlFor="reviewBody">Review body:*</label>
           <textarea
+            id="reviewBody"
             placeholder="Enter review here"
             required
             onChange={((event) => {
@@ -176,8 +182,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>What is your nickname?*</label>
+          <label htmlFor="nickname">What is your nickname?*</label>
           <input
+            id="nickname"
             type="text"
             required
             placeholder="Enter nickname here"
@@ -190,8 +197,9 @@ function AddReviewModal({
         </div>
 
         <div className="review-element">
-          <label>Your email:*</label>
+          <label htmlFor="email">Your email:*</label>
           <input
+            id="email"
             type="email"
             required
             placeholder="email@email.com"
@@ -228,14 +236,15 @@ function AddReviewModal({
         )}
 
         <div className="review-element">
-          {reviewsMeta.characteristics && Object.entries(reviewsMeta.characteristics).map(([key, details]) => (
-            <CharacteristicInput
-              key={key}
-              title={key}
-              id={details.id}
-              onChange={handleCharacteristicChange}
-            />
-          ))}
+          {reviewsMeta.characteristics
+           && Object.entries(reviewsMeta.characteristics).map(([key, details]) => (
+             <CharacteristicInput
+               key={key}
+               title={key}
+               id={details.id}
+               onChange={handleCharacteristicChange}
+             />
+           ))}
         </div>
 
         <button
@@ -326,7 +335,7 @@ function CharacteristicInput({ title, id, onChange }) {
 
   return (
     <div>
-      <label>
+      <label htmlFor={title}>
         {title}
         :
       </label>
@@ -334,6 +343,7 @@ function CharacteristicInput({ title, id, onChange }) {
         {radioValues.map((value) => (
           <label key={value}>
             <input
+              id={title}
               type="radio"
               name={title}
               required
