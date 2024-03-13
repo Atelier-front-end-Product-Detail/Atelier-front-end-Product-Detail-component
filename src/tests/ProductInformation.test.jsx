@@ -4,7 +4,7 @@ import ProductInformation from '../components/productDetails/ProductInformation'
 
 import '@testing-library/jest-dom';
 
-// test product
+// test  product
 describe('ProductInformation', () => {
   const product = {
     name: 'Windmate Traveler',
