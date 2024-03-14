@@ -22,25 +22,45 @@ function AnswerModal({
     })));
   };
 
+  // const convertBase64 = (file) => new Promise((resolve, reject) => {
+  //   console.log(file);
+  //   const fileReader = new FileReader();
+
+  //   fileReader.onloadend = () => {
+  //     const base64String = fileReader.result;
+  //     resolve(base64String.toString());
+  //   };
+
+  //   fileReader.onerror = (err) => {
+  //     reject(err);
+  //   };
+  //   fileReader.readAsDataURL(file);
+  // });
+
   const photoUpload = (e) => {
     const photos = [];
 
     for (let i = 0; i < e.target.files.length; i += 1) {
-      const blob = new Blob(e.target.files[i], { type: 'text/plain' });
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        const base64String = reader.result
-          .replace('data:', '')
-          .replace(/^.+,/, '');
-        console.log(base64String);
-      };
+      const file = URL.createObjectURL(e.target.files[i]);
+      photos.push(file);
+      // photos.push(convertBase64(e.target.files[i]));
+      // const blobURL = convertBase64(e.target.files[i]);
+      // photos.push(blobURL)
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   const base64String = reader.result;
+      //   console.log(base64String);
+
+      // // photos.push(reader.readAsDataURL(e.target.files[i]));
+      // console.log(reader.result);
+
       // URL.revokeObjectURL(photos);
-      setAnswerData((prevValue) => ({
-        ...prevValue,
-        photos,
-      }));
     }
+    setAnswerData((prevValue) => ({
+      ...prevValue,
+      photos,
+    }));
+    console.log(photos);
   };
   const handleClassName = showAnswerModal ? 'answer-modal-display' : 'answer-modal-display-none';
 

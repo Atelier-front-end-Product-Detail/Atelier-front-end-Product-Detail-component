@@ -18,7 +18,6 @@ function QuestionsAnswersList({
       questionsArr.push(object[key]);
     });
 
-    questionsArr.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
     return questionsArr;
   };
 

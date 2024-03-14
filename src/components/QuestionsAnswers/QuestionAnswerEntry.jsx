@@ -31,7 +31,6 @@ function QuestionAnswerEntry({
       }
     });
 
-    answersArr.sort((a, b) => b.helpfulness - a.helpfulness);
     return answersArr;
   };
 
@@ -90,6 +89,10 @@ function QuestionAnswerEntry({
     }
   };
 
+  const handleImageError = (e) => {
+    e.currentTarget.src = process.env.IMAGE_NOT_FOUND;
+  };
+
   const showMoreAnswers = () => {
     if (answersMap(answersData).length > 2 && showAnswers < answersMap(answersData).length) {
       return (
@@ -136,13 +139,14 @@ function QuestionAnswerEntry({
                   src={photo.url}
                   className="answer-photo"
                   alt="img"
+                  onError={handleImageError}
                 />
               ))}
               <div />
             </div>
           ))}
           <p className="answers-button">
-            <button type="button" onClick={() => { setShowAnswers(showAnswers + 2); }}>
+            <button type="button" className="more-answers" onClick={() => { setShowAnswers(showAnswers + 2); }}>
               Load More answers
             </button>
           </p>
