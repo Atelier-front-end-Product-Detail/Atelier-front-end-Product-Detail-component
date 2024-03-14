@@ -2,15 +2,11 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RelatedProductCard from '../../components/relatedItems/RelatedProductCard';
-import mockData from './mockData';
 
 describe('RelatedProductCard', () => {
   let mockProps;
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock('../../components/relatedItems/helper', () => ({
-      getItemsProductInfo: jest.fn().mockResolvedValue(mockData),
-    }));
     mockProps = {
       productId: 1,
       setProductId: jest.fn(),
@@ -163,7 +159,7 @@ describe('RelatedProductCard', () => {
 
   it('defaults to a placeholder image when the src image encounters an error', async () => {
     process.env.IMAGE_NOT_FOUND = 'image not found';
-    const { getByRole, getByAltText } = render(<RelatedProductCard
+    const { getByAltText } = render(<RelatedProductCard
       productId={mockProps.productId}
       setProductId={mockProps.setProductId}
       type={mockProps.type}
