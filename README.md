@@ -1,76 +1,58 @@
-# shopify-fe
-Front End Capstone Project: A front end for our eCommerce application.
+# Shopify Frontend Application
 
-OverView: 
-This is a front-end project designed to simulate a e-commerce website. Users will be able to view products, read reviews and comments, add questions, etc. 
+## Description
 
-Team members:
-Nhu Le: Questions & Answers
-Michael O'Brien: Related items
-Eric Yap: Product details
-Vincent Lieu: Reviews
+Shopify is a responsive, front-end application tailored for e-commerce platforms. It facilitates easy examination of product information through a user-friendly interface. Developed with contemporary UI/UX principles, Shopify ensures smooth interaction with product details.
 
-Description
+This project is a collaborative effort by four students from the Immersive Full Stack Engineering program at Hack Reactor, aimed at implementing a comprehensive "Product Detail" component within a larger e-commerce platform.
 
-Git Workflow:
-{} = just plug in dont actually put in brackets 
+## Features
 
-If you are working on a new feature
-Start on the main branch
-1. git checkout main 
+Shopify is structured around four primary components, each responsible for a distinct aspect of the e-commerce experience:
 
-Make sure your main branch is up to date
-2. git fetch origin
+- Product Details: by Eric Yap
+- Related Items: by Michael O'Brien
+- Questions & Answers: by Nhu Le
+- Ratings & Reviews: by Vincent Lieu
 
-Make sure your staging area is clear
-3. git resset --hard origin/main
+## Technologies Used
 
-Create the new branch you will be working on
-4. git checkout -b {branch name} (make sure you are in this branch when doing any new work 'git checkout new-feature'/ to check 'git branch')
+Shopify leverages a suite of modern development tools and frameworks, including:
 
-If you are done working on your feature
+- React.js: For building dynamic UI components.
+- Webpack: For efficient bundling of assets and modules.
+- Babel: For transpiling ES6+ JavaScript code to backwards-compatible versions.
+- ESLint: To ensure code consistency and prevent errors.
+- Jest & React Testing Library: For comprehensive testing of React components.
 
-Add your files to your staging area
-5. git add .
+## Installation and Setup
 
-Commit the files from your staging area
-6. git commit -m ""
+```bash
 
-Double check that you aren't on the main branch
-7. git branch (to make sure your not on main branch)
+# Clone the repository
+git clone https://github.com/DOMino-s-Pizza/shopify-fe.git
 
-Push from your origin (current branch) to the desired branch
-8. git push -u origin {branch name}
+# Navigate to the project directory
+cd shopify
 
-Submit your pull request
-9. submit PR
+# Install dependencies
+npm install --production
 
-If any merge conflicts then...
+# Configure environment variables
+nano .env
+# Add the following variables:
+# PORT - Assign to your preferred port for running Shopify
+# GIT_API_KEY - Your GitHub API key with permissions for read:org, user, read:user, user:email, user:follow
 
-Go back to your main branch
-10. git checkout main
+# Launch the application
+npm run server-dev
 
-Ensure your main branch is up to date
-11. git pull
+# For development and custom modifications:
+# Install the development dependencies
+npm install
+# Change mode to 'development' in webpack.config.js
+npm run client-dev
 
-Go back to your working branch
-12. git checkout {branch name}
+# To test components:
+npx jest
 
-Merge your main branch into the branch you are on
-13. git merge main
-
-14. Resolve any conflicts
-
-15. Repeat steps 8 & 9. There should no longer be any conflicts
-
-
-RECOURCES: 
-Webpack: Getting Started - https://webpack.js.org/guides/getting-started/
-Webpack: Concepts - https://webpack.js.org/concepts/
-Webpack: Babel Loader - https://webpack.js.org/loaders/babel-loader/
-Package.json: How to create - https://docs.npmjs.com/creating-a-package-json-file
-
-
-
-
-- ADD MORE TO THE README AS WE DEVELOP THE PROJECT -
