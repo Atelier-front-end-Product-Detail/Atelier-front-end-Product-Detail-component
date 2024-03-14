@@ -43,7 +43,7 @@ function ProductInformation({ product, style, reviewsMeta }) {
       {totalReviews > 0 && (
         <div className="star-rating">
           {renderStarRating(roundedAverageRating)}
-          <a href="#ratings-and-reviews">
+          <a href="#ratings-reviews">
             Read all&nbsp;
             {totalReviews}
             &nbsp;reviews
