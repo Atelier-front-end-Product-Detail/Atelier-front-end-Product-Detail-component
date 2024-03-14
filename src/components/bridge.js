@@ -82,15 +82,15 @@ const bridge = {
     headers: { Authorization: process.env.GIT_API_KEY },
     params: { reviewId },
   }),
-  questions: (productid, count = 1000) => axios({
+  questions: (productid, count = 100) => axios({
     method: 'get',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/',
     headers: { Authorization: process.env.GIT_API_KEY },
 
-    params: { product_id: productid, count }
+    params: { product_id: productid, count },
 
   }),
-  answers: (questionid, count = 1000) => axios({
+  answers: (questionid, count = 100) => axios({
     method: 'get',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${questionid}/answers`,
     headers: { Authorization: process.env.GIT_API_KEY },

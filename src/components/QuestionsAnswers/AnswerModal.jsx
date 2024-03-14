@@ -22,25 +22,45 @@ function AnswerModal({
     })));
   };
 
+  // const convertBase64 = (file) => new Promise((resolve, reject) => {
+  //   console.log(file);
+  //   const fileReader = new FileReader();
+
+  //   fileReader.onloadend = () => {
+  //     const base64String = fileReader.result;
+  //     resolve(base64String.toString());
+  //   };
+
+  //   fileReader.onerror = (err) => {
+  //     reject(err);
+  //   };
+  //   fileReader.readAsDataURL(file);
+  // });
+
   const photoUpload = (e) => {
     const photos = [];
 
     for (let i = 0; i < e.target.files.length; i += 1) {
-      const blob = new Blob(e.target.files[i], { type: 'text/plain' });
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        const base64String = reader.result
-          .replace('data:', '')
-          .replace(/^.+,/, '');
-        console.log(base64String);
-      };
+      const file = URL.createObjectURL(e.target.files[i]);
+      photos.push(file);
+      // photos.push(convertBase64(e.target.files[i]));
+      // const blobURL = convertBase64(e.target.files[i]);
+      // photos.push(blobURL)
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   const base64String = reader.result;
+      //   console.log(base64String);
+
+      // // photos.push(reader.readAsDataURL(e.target.files[i]));
+      // console.log(reader.result);
+
       // URL.revokeObjectURL(photos);
-      setAnswerData((prevValue) => ({
-        ...prevValue,
-        photos,
-      }));
     }
+    setAnswerData((prevValue) => ({
+      ...prevValue,
+      photos,
+    }));
+    console.log(photos);
   };
   const handleClassName = showAnswerModal ? 'answer-modal-display' : 'answer-modal-display-none';
 
@@ -64,15 +84,18 @@ function AnswerModal({
         </h1>
         <label htmlFor="answer-a">
           Enter a answer *
+          <br />
           <textarea name="body" type="text" onChange={handleChange} required maxLength="1000" data-testid="answer-body" value={answerData.body} />
         </label>
         <label htmlFor="username-a">
           Username *
+          <br />
           <input maxLength="60" placeholder="Example: jackson11!" required name="name" type="text" value={answerData.name} onChange={handleChange} data-testid="answer-user" />
         </label>
         <p>For privacy reasons, do not use your full name or email address</p>
         <label htmlFor="email-a">
           Email *
+          <br />
           <input name="email" type="email" required onChange={handleChange} maxLength="60" value={answerData.email} data-testid="answer-email" />
         </label>
         <p>For authentication reasons, you will not be emailed</p>

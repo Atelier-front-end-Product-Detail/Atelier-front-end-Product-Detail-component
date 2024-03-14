@@ -1,5 +1,6 @@
 .questions-answers-overview {
-  min-width: 600px;
+  font-family: "Roboto Serif", serif;
+  min-width: 650px;
   margin: 0 auto;
 }
 .questions-answers-list {
@@ -37,7 +38,9 @@
 }
 
 .helpful-question-add-answer {
-  border-right: 1px solid black;
+  background-color: white;
+  border: none;
+  font-size: 10px;
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -54,12 +57,18 @@ cursor: pointer;
 }
 
 .helpful-question {
-  border-right: 1px solid black;
+  background-color: white;
+  border: none;
+  font-size: 10px;
   padding-right: 5px;
   padding-left: 5px;
 }
 
 .helpful-question-report {
+  background-color: white;
+  height: 25px;
+  border: none;
+  font-size: 10px;
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -78,7 +87,11 @@ cursor: pointer;
 }
 
 .helpful-answer {
-  border-right: 1px solid black;
+  background-color: white;
+  margin-top: 6px;
+  height: 20px;
+  border: none;
+  font-size: 10px;
   padding-right:  5px;
 }
 
@@ -88,6 +101,14 @@ cursor: pointer;
 
 .helpful-answer-report:hover {
   cursor: pointer;
+}
+
+.helpful-answer-report {
+  background-color: white;
+  margin-top: 6px;
+  height: 20px;
+  border: none;
+  font-size: 10px;
 }
 
 .answer-body {
@@ -121,7 +142,7 @@ display: flex;
 }
 
 .add-form label{
-  display: block;
+  text-align: center;
 }
 
 .modal-display-none {
@@ -150,7 +171,17 @@ display: flex;
 }
 
 .question-form label {
+  text-align: center;
   display: block;
+}
+.question-form p {
+  text-align: center;
+  font-size: 10px;
+}
+
+.question-button {
+  display: block;
+  text-align: center;
 }
 
 .question-form input {
@@ -168,6 +199,20 @@ display: flex;
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.answer-modal-display p {
+  font-size: 10px;
+
+}
+
+.answer-modal-display button {
+  width: 70px;
+  height: 40px;
+  border-radius: 0;
+  background-color: white;
+  border: 0.1px solid;
+  border-color: black;
 }
 
 .answer-form {
@@ -196,8 +241,9 @@ display: flex;
 }
 
 .answer-photo {
-  border: 1px solid black;
+  width: 100px;
   height: 100px;
+  border: 1px solid black;
 }
 
 .x-button {
@@ -210,8 +256,17 @@ display: flex;
 }
 
 .answers-button {
+  border: none;
   font-size: 12px;
   font-weight: bold;
+}
+
+.more-answers {
+  font-weight: bold;
+  border: none;
+}
+.more-answers:hover {
+  cursor: pointer;
 }
 
 #add-question-button {
