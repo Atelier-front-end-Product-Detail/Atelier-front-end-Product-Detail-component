@@ -103,8 +103,6 @@ function QuestionsAnswers({ bridge, productId, productName }) {
   };
 
   const handleSearch = (searchValue) => {
-    console.log(searchValue);
-
     if (searchValue.length >= 3) {
       const filteredData = data.filter(
         (entry) => entry.question_body
@@ -135,11 +133,7 @@ function QuestionsAnswers({ bridge, productId, productName }) {
       });
   };
 
-  return !data ? (
-    <div className="questions-answers-overview">
-      There are no questions for this product
-    </div>
-  ) : (
+  return (
     <div className="questions-answers-overview">
       <h1 data-testid="title">Questions & Answers</h1>
       <SearchQuestionsAnswers handleSearch={handleSearch} />
@@ -151,6 +145,7 @@ function QuestionsAnswers({ bridge, productId, productName }) {
       />
       {isFiltered ? (
         <QuestionsAnswersList
+          isFiltered={isFiltered}
           productName={productName}
           bridge={bridge}
           data={filtered}
