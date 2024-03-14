@@ -2,15 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ComparisonModal from '../../components/relatedItems/ComparisonModal';
-import mockData from './mockData';
 
 describe('RelatedProducts', () => {
   let mockProps;
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock('../../components/relatedItems/helper', () => ({
-      getItemsProductInfo: jest.fn().mockResolvedValue(mockData),
-    }));
     mockProps = {
       relatedItem: {
         info: {
