@@ -18,9 +18,16 @@ function YourOutfit({
 
   useEffect(() => {
     const fetchData = async () => {
-      const info = await helper.getItemsProductInfo(JSON.parse(localStorage.getItem('fecYourOutfit')));
-      if (info && info.length) setOutfitProductsInfo(info);
-      setUserOutfit(info);
+      const fecYourOutfit = localStorage.getItem('fecYourOutfit');
+      const storedOutfit = fecYourOutfit ? JSON.parse(fecYourOutfit) : [];
+      const info = storedOutfit.length ? await helper.getItemsProductInfo(storedOutfit) : null;
+      if (info && info.length) {
+        setOutfitProductsInfo(info);
+        setUserOutfit(...userOutfit, info.id);
+      } else {
+        setOutfitProductsInfo([]);
+        setUserOutfit([]);
+      }
     };
     fetchData();
   }, []);
@@ -28,24 +35,30 @@ function YourOutfit({
   const relatedProductCardWidthPlusGap = 270;
 
   const addToOutfit = () => {
-    if (outfitProductsInfo.some((product) => product.info.id === productId)) return;
+    if (Array.isArray(outfitProductsInfo)
+      && outfitProductsInfo.some((product) => product.info.id === productId)) return;
+
     setOutfitProductsInfo([...outfitProductsInfo, productInfo]);
-    if (userOutfit.some((product) => product === productId)) return;
-    setUserOutfit([...userOutfit, productId]);
-    localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+    if (!Array.isArray(userOutfit) || !userOutfit.length) {
+      setUserOutfit([productId]);
+      localStorage.setItem('fecYourOutfit', JSON.stringify([productId]));
+    } else if (!userOutfit.some((product) => product === productId)) {
+      localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+      setUserOutfit([...userOutfit, productId]);
+    }
   };
 
   const action = (id) => {
-    const newOutfitProductsInfo = [...outfitProductsInfo];
+    const newOutfitProductsInfo = outfitProductsInfo.length ? [...outfitProductsInfo] : [];
     let index = newOutfitProductsInfo.indexOf(id);
     if (index < 0) {
       return;
     }
     newOutfitProductsInfo.splice(index, 1);
-    setOutfitProductsInfo(newOutfitProductsInfo);
+    setOutfitProductsInfo([...newOutfitProductsInfo]);
 
-    const newUserOutfit = [...userOutfit];
-    index = newUserOutfit.indexOf(id.info.id);
+    const newUserOutfit = userOutfit ? [...userOutfit] : [];
+    index = id.info.id ? newUserOutfit.indexOf(id.info.id) : -1;
     if (index < 0) {
       return;
     }
@@ -117,8 +130,9 @@ function YourOutfit({
   }, [userOutfit]);
 
   useEffect(() => {
-    const storedOutfit = JSON.parse(localStorage.getItem('fecYourOutfit')) || [];
-    setUserOutfit(storedOutfit);
+    const fecYourOutfit = localStorage.getItem('fecYourOutfit');
+    const storedOutfit = fecYourOutfit ? JSON.parse(fecYourOutfit) : [];
+    setUserOutfit([...storedOutfit]);
   }, []);
 
   return (

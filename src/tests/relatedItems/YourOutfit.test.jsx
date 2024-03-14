@@ -2,15 +2,11 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import YourOutfit from '../../components/relatedItems/YourOutfit';
-import mockData from './mockData';
 
 describe('YourOutfit', () => {
   let mockProps;
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock('../../components/relatedItems/helper', () => ({
-      getItemsProductInfo: jest.fn().mockResolvedValue(mockData),
-    }));
     mockProps = {
       productId: 40345,
       setProductId: jest.fn(),

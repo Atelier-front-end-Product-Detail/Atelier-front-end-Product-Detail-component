@@ -1,14 +1,5 @@
-// Ensure jest.mock is at the top of your file, before any imports that use the mocked module
 import helper from '../../components/relatedItems/helper';
 import 'dotenv/config';
-
-// jest.mock('../../components/bridge', () => {
-//   const mockBridge = require('./mockBridge'); // Adjust the path as necessary
-//   return {
-//     __esModule: true,
-//     default: mockBridge,
-//   };
-// });
 
 describe('helper', () => {
   describe('getProductInfo', () => {
