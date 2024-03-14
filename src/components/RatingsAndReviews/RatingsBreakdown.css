@@ -57,11 +57,13 @@
 }
 
 .percent-recommend {
-  margin: 0px 0px 10px 0px
+  margin: 0px 0px 10px 0px;
+  font-size: small;
 }
 
 .number-of-reviews {
-  margin: 10px 0px 0px 0px
+  margin: 10px 0px 0px 0px;
+  font-size: small;
 }
 
 
