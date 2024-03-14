@@ -19,7 +19,7 @@ function QuestionsAnswers({ bridge, productId, productName }) {
       .catch((err) => {
         throw err;
       });
-  }, []);
+  }, [productId]);
 
   const handleShowModal = (boolean) => {
     setShowQuestionModal(boolean);
