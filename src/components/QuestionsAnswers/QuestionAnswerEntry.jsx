@@ -106,8 +106,10 @@ function QuestionAnswerEntry({
               <div className="answer-helpful-container">
                 <p className="helpful-answer-info">
                   by
+                  {' '}
                   {answer.answerer_name}
                   ,
+                  {' '}
                   {new Date(answer.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                 </p>
                 <button

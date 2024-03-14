@@ -1,4 +1,5 @@
 .questions-answers-overview {
+  font-family: "Roboto Serif", serif;
   min-width: 650px;
   margin: 0 auto;
 }
@@ -141,7 +142,7 @@ display: flex;
 }
 
 .add-form label{
-  display: block;
+  text-align: center;
 }
 
 .modal-display-none {
@@ -170,7 +171,17 @@ display: flex;
 }
 
 .question-form label {
+  text-align: center;
   display: block;
+}
+.question-form p {
+  text-align: center;
+  font-size: 10px;
+}
+
+.question-button {
+  display: block;
+  text-align: center;
 }
 
 .question-form input {
@@ -188,6 +199,20 @@ display: flex;
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.answer-modal-display p {
+  font-size: 10px;
+
+}
+
+.answer-modal-display button {
+  width: 70px;
+  height: 40px;
+  border-radius: 0;
+  background-color: white;
+  border: 0.1px solid;
+  border-color: black;
 }
 
 .answer-form {

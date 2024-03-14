@@ -84,15 +84,18 @@ function AnswerModal({
         </h1>
         <label htmlFor="answer-a">
           Enter a answer *
+          <br />
           <textarea name="body" type="text" onChange={handleChange} required maxLength="1000" data-testid="answer-body" value={answerData.body} />
         </label>
         <label htmlFor="username-a">
           Username *
+          <br />
           <input maxLength="60" placeholder="Example: jackson11!" required name="name" type="text" value={answerData.name} onChange={handleChange} data-testid="answer-user" />
         </label>
         <p>For privacy reasons, do not use your full name or email address</p>
         <label htmlFor="email-a">
           Email *
+          <br />
           <input name="email" type="email" required onChange={handleChange} maxLength="60" value={answerData.email} data-testid="answer-email" />
         </label>
         <p>For authentication reasons, you will not be emailed</p>
