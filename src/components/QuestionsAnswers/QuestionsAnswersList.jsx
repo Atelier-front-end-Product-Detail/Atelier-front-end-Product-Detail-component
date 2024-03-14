@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import QuestionAnswerEntry from './QuestionAnswerEntry';
 
 function QuestionsAnswersList({
-  data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport, productName,
+  data, bridge, dataNum, handleQuestionHelpful, handleQuestionReport, productName, isFiltered,
 }) {
   const [questionsData, setQuestionData] = useState([]);
 
@@ -22,18 +22,36 @@ function QuestionsAnswersList({
   };
 
   return (
-    <div className="questions-answers-list">
-      {questionsMap(questionsData).slice(0, dataNum).map((question) => (
-        <QuestionAnswerEntry
-          productName={productName}
-          key={question.question_id}
-          bridge={bridge}
-          question={question}
-          handleQuestionHelpful={handleQuestionHelpful}
-          handleQuestionReport={handleQuestionReport}
-        />
-      ))}
+    <div>
+      {isFiltered ? (
+        <div className="questions-answers-list">
+          {questionsMap(questionsData).map((question) => (
+            <QuestionAnswerEntry
+              productName={productName}
+              key={question.question_id}
+              bridge={bridge}
+              question={question}
+              handleQuestionHelpful={handleQuestionHelpful}
+              handleQuestionReport={handleQuestionReport}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="questions-answers-list">
+          {questionsMap(questionsData).slice(0, dataNum).map((question) => (
+            <QuestionAnswerEntry
+              productName={productName}
+              key={question.question_id}
+              bridge={bridge}
+              question={question}
+              handleQuestionHelpful={handleQuestionHelpful}
+              handleQuestionReport={handleQuestionReport}
+            />
+          ))}
+        </div>
+      )}
     </div>
+
   );
 }
 
