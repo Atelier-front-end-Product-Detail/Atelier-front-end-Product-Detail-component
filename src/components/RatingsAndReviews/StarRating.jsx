@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './StarRating.css';
+import PropTypes from 'prop-types';
 
-
-function StarRating({ ratingToDisplay, interactive, onRatingChange, id }) {
+function StarRating({
+  ratingToDisplay, interactive, onRatingChange,
+}) {
   const [rating, setRating] = useState(ratingToDisplay);
 
   const handleStarClick = (starIndex) => {
@@ -16,8 +18,7 @@ function StarRating({ ratingToDisplay, interactive, onRatingChange, id }) {
     <div
       aria-labelledby="overallRating"
       className="starRating"
-      // id="overallRating"
-      >
+    >
       {[1, 2, 3, 4, 5].map((starIndex) => (
         <span
           key={starIndex}
@@ -25,12 +26,22 @@ function StarRating({ ratingToDisplay, interactive, onRatingChange, id }) {
           onClick={() => handleStarClick(starIndex)}
         >
           ★
-          {/* &#9733; */}
-          {/* {'\u2605'} */}
         </span>
       ))}
     </div>
   );
 }
+
+StarRating.propTypes = {
+  ratingToDisplay: PropTypes.number,
+  interactive: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  onRatingChange: PropTypes.func,
+};
+
+StarRating.defaultProps = {
+  ratingToDisplay: 0,
+  interactive: false,
+  onRatingChange: () => {}, // Default empty function
+};
 
 export default StarRating;

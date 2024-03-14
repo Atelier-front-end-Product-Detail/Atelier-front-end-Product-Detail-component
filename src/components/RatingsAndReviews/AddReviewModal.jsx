@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import StarRating from './StarRating';
 import './AddReviewModal.css';
 
@@ -6,11 +7,7 @@ function AddReviewModal({
   handleShowModal, showAddReviewModal, handleAddReview, productId, reviewsMeta, productName,
 }) {
   const handleClassName = showAddReviewModal ? 'AddReviewModal-display' : 'AddReviewModal-display-none';
-
-  // console.log("ADDREVIEW PRODUCT ID: ", productId)
-
   const [reviewData, setReviewData] = useState({
-    // SEE G-LEARN API
     product_id: productId,
     rating: null,
     summary: '',
@@ -34,9 +31,11 @@ function AddReviewModal({
 
   const getRatingDescription = (rating) => ratingDescriptions[rating];
 
-  // console.log('PHOTOS: ', reviewData.photos);
   const handleCharacteristicChange = (value, id) => {
-    setReviewData({ ...reviewData, characteristics: { ...reviewData.characteristics, [id]: value } });
+    setReviewData({
+      ...reviewData,
+      characteristics: { ...reviewData.characteristics, [id]: value },
+    });
   };
 
   const handlePhotoChange = (event) => {
@@ -84,11 +83,8 @@ function AddReviewModal({
       photos: [],
       characteristics: {},
     });
+    setIsRatingSelected(false);
   };
-
-  // console.log('Classname: ', handleClassName);
-  // console.log('showAddReviewModal: ', showAddReviewModal);
-  // console.log('reviewData: ', reviewData);
 
   return (
     <div className={handleClassName}>
@@ -126,6 +122,7 @@ function AddReviewModal({
               // id="recommendYes"
               type="radio"
               id="recommendation"
+              name="recommendation"
               value="true"
               required
               onChange={(() => {
@@ -153,6 +150,7 @@ function AddReviewModal({
             id="summary"
             name="summary"
             type="text"
+            value={reviewData.summary}
             required
             placeholder="Enter review summary here"
             onChange={((event) => {
@@ -169,6 +167,7 @@ function AddReviewModal({
             id="reviewBody"
             placeholder="Enter review here"
             required
+            value={reviewData.body}
             onChange={((event) => {
               setReviewData({ ...reviewData, body: event.target.value });
             })}
@@ -187,6 +186,7 @@ function AddReviewModal({
             id="nickname"
             type="text"
             required
+            value={reviewData.name}
             placeholder="Enter nickname here"
             onChange={((event) => {
               setReviewData({ ...reviewData, name: event.target.value });
@@ -202,6 +202,7 @@ function AddReviewModal({
             id="email"
             type="email"
             required
+            value={reviewData.email}
             placeholder="email@email.com"
             onChange={((event) => {
               setReviewData({ ...reviewData, email: event.target.value });
@@ -225,11 +226,12 @@ function AddReviewModal({
 
         {reviewData.photos.length < 5 && (
         <div className="review-element">
-          <label>Add Photos:</label>
+          <label htmlFor="photos">Add Photos:</label>
           <input
             type="file"
             accept="image/*"
             multiple
+            id="photos"
             onChange={handlePhotoChange}
           />
         </div>
@@ -341,7 +343,7 @@ function CharacteristicInput({ title, id, onChange }) {
       </label>
       <div>
         {radioValues.map((value) => (
-          <label key={value}>
+          <label htmlFor={title} key={value}>
             <input
               id={title}
               type="radio"
@@ -362,5 +364,31 @@ function CharacteristicInput({ title, id, onChange }) {
     </div>
   );
 }
+
+AddReviewModal.propTypes = {
+  handleShowModal: PropTypes.func.isRequired,
+  showAddReviewModal: PropTypes.bool.isRequired,
+  handleAddReview: PropTypes.func.isRequired,
+  productId: PropTypes.number.isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: PropTypes.shape({
+      rating: PropTypes.number,
+    }),
+    characteristics: PropTypes.shape({
+      description: PropTypes.string,
+    }),
+    recommended: PropTypes.shape({
+      boolean: PropTypes.bool,
+      true: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+  productName: PropTypes.string.isRequired,
+};
+
+CharacteristicInput.propTypes = {
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default AddReviewModal;

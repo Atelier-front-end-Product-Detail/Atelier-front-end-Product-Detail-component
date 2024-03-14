@@ -16,16 +16,8 @@ function ReviewsView({
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImage, setModalImage] = useState('');
 
-  // let totalReviews
-  // if (reviewsMeta.ratings) {
-  //   // calculate total reviews
-  //   totalReviews = Object.values(reviewsMeta.ratings)
-  //     .reduce((acc, eachRating) => (acc + Number(eachRating)), 0);
-  // }
-
   useEffect(() => {
     if (reviewsMeta.ratings) {
-      // calculate total reviews
       setCurrentTotalReviews(
         Object.values(reviewsMeta.ratings).reduce(
           (acc, eachRating) => acc + Number(eachRating),
@@ -46,24 +38,42 @@ function ReviewsView({
   };
 
   useEffect(() => {
-    // console.log(`api key = ${process.env.GIT_API_KEY}`);
     fetchAllData();
     setDisplayNumber(2);
   }, [selectedValue, currentTotalReviews, productId]);
 
-  // console.log('selectedSORT: ', selectedValue);
-  // console.log('reviews: ', reviews);
-  // console.log('filteredReviews: ', filteredReviews);
-
   const onMoreReviewsClick = () => {
-    // console.log("INSIDE totalReviews: ", currentTotalReviews)
-    // bridge.listReviews(40345, 1, currentTotalReviews, selectedValue)
-    //   .then((results) => {
-    //     console.log("INSIDE results", results.data.results)
-    //     setReviews(results.data.results);
     setDisplayNumber(displayNumber + 2);
-    // });
   };
+
+  // **Method for batch GET REQEUSTS**
+
+  // const [page, setPage] = useState(2);
+
+  // useEffect(() => {
+  //   // console.log(`api key = ${process.env.GIT_API_KEY}`);
+  //   bridge.listReviews(40345, 1, 2, selectedValue)
+  //     .then((results) => {
+  //       setReviews(results.data.results);
+  //       setDisplayNumber(2);
+  //     })
+  //     .catch((err) => {
+  //       console.log('listReviews Error: ', err);
+  //     });
+  // }, [selectedValue, productId]);
+  // // console.log('selectedSORT: ', selectedValue);
+  // // console.log('reviews: ', reviews);
+
+  // const onMoreReviewsClick = () => {
+  //   bridge.listReviews(40345, page, 2, selectedValue)
+  //     .then((results) => {
+  //       setReviews([...reviews, ...results.data.results]);
+  //       setPage(page + 1);
+  //       setDisplayNumber(displayNumber + 2);
+  //     });
+  // };
+
+  // **Method for batch GET REQEUSTS**
 
   const handleSelectionChange = (event) => {
     setSelectedValue(event.target.value);
@@ -78,8 +88,6 @@ function ReviewsView({
   const handleShowImageModal = (boolean) => {
     setShowImageModal(boolean);
   };
-  // console.log(showImageModal);
-  // console.log(modalImage);
 
   const handleAddReview = (data) => {
     bridge.addReview(data)
@@ -112,7 +120,11 @@ function ReviewsView({
         showImageModal={showImageModal}
       />
       <div className="reviews-view-buttons-container">
-        <button className="reviews-view-buttons" type="button" onClick={onMoreReviewsClick}> More Reviews </button>
+        {displayNumber < reviews.length && (
+          <button className="reviews-view-buttons" type="button" onClick={onMoreReviewsClick}>
+            More Reviews
+          </button>
+        )}
         <button className="reviews-view-buttons" type="button" onClick={() => { handleShowModal(true); }}>Add a Review +</button>
       </div>
       <AddReviewModal
@@ -141,10 +153,14 @@ function SortReviews({ selectedValue, handleSelectionChange }) {
 }
 
 function ReviewsList({
-  filteredReviews, bridge, fetchAllData, handleShowImageModal, setModalImage, modalImage, showImageModal,
+  filteredReviews,
+  bridge,
+  fetchAllData,
+  handleShowImageModal,
+  setModalImage,
+  modalImage,
+  showImageModal,
 }) {
-  // console.log('reviews: ', reviews);
-
   return (
     <div className="reviewsList">
       {filteredReviews.length > 0 && filteredReviews.map((review) => (
@@ -171,7 +187,7 @@ function ReviewsList({
 }
 
 function ReviewTile({
-  review, bridge, fetchAllData, handleShowImageModal, setModalImage, modalImage, showImageModal,
+  review, bridge, fetchAllData, handleShowImageModal, setModalImage,
 }) {
   const reviewDate = new Date(review.date);
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
@@ -206,18 +222,13 @@ function ReviewTile({
   const [showFullReview, setShowFullReview] = useState(false);
 
   const shortBody = review.body.slice(0, 250);
-  // const remainingBody = review.body.slice(250);
 
   const toggleShowFullReview = () => {
     setShowFullReview(!showFullReview);
   };
 
-  const handleKeyPress = () => {
-  };
-
   return (
     <div className="reviewTile">
-      {/* {review.review_id} */}
 
       <div className="userNameBar">
 
@@ -242,9 +253,7 @@ function ReviewTile({
         <span
           onClick={toggleShowFullReview}
           style={{ color: 'blue', cursor: 'pointer' }}
-          onKeyPress={handleKeyPress}
           role="button"
-          tabIndex={0}
         >
           {showFullReview ? ' Show less' : ' Show more'}
         </span>
@@ -254,10 +263,8 @@ function ReviewTile({
           {review.photos.length > 0
             && review.photos.map((eachPhoto) => (
               <div
-                onKeyPress={handleKeyPress}
                 className="review-image"
                 key={eachPhoto.id}
-                tabIndex={0}
                 role="button"
                 onClick={() => {
                   handleShowImageModal(true);
@@ -293,8 +300,6 @@ function ReviewTile({
         <span
           className="helpful"
           onClick={onHelpfulClick}
-          onKeyPress={handleKeyPress}
-          tabIndex={0}
           role="button"
         >
           Yes (
@@ -305,8 +310,6 @@ function ReviewTile({
         <span
           className="report"
           onClick={onReportClick}
-          onKeyPress={handleKeyPress}
-          tabIndex={0}
           role="button"
         >
           Report
@@ -343,25 +346,10 @@ function ImageModal({ showImageModal, modalImage, handleShowImageModal }) {
   );
 }
 
-// function MoreReviews({ onMoreReviewsClick }) {
-//   return (
-//     <div>
-//       <button type="button" onClick={onMoreReviewsClick}> More Reviews </button>
-//     </div>
-//   );
-// }
-
-// function AddReview() {
-//   return (
-//     <div>
-//       <button type="button"> AddReview </button>
-//     </div>
-//   );
-// }
-
 ReviewsView.propTypes = {
   bridge: PropTypes.shape({
     listReviews: PropTypes.func.isRequired,
+    addReview: PropTypes.func.isRequired,
   }).isRequired,
   productId: PropTypes.number.isRequired,
   starFilters: PropTypes.shape({
@@ -390,10 +378,6 @@ ReviewsView.propTypes = {
 SortReviews.propTypes = {
   selectedValue: PropTypes.string.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
-  // bridge: PropTypes.shape({
-  //   reviewsMeta: PropTypes.func.isRequired,
-  //   listReviews: PropTypes.func.isRequired,
-  // }).isRequired,
 };
 
 ReviewsList.propTypes = {
@@ -415,17 +399,24 @@ ReviewsList.propTypes = {
 };
 
 ReviewTile.propTypes = {
+  bridge: PropTypes.shape({
+    reportReview: PropTypes.func.isRequired,
+    markReviewHelpful: PropTypes.func.isRequired,
+  }).isRequired,
   review: PropTypes.shape({
     review_id: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     reviewer_name: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    recommend: PropTypes.bool.isRequired,
+    response: PropTypes.string,
+    helpfulness: PropTypes.number.isRequired,
   }).isRequired,
   fetchAllData: PropTypes.func.isRequired,
   handleShowImageModal: PropTypes.func.isRequired,
   setModalImage: PropTypes.func.isRequired,
-  modalImage: PropTypes.string.isRequired,
-  showImageModal: PropTypes.bool.isRequired,
 };
 
 ImageModal.propTypes = {

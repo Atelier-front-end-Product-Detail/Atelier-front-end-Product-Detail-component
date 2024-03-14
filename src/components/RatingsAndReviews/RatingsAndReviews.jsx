@@ -6,10 +6,7 @@ import RatingsBreakdown from './RatingsBreakdown';
 import ReviewsView from './ReviewsView';
 
 function RatingsAndReviews({ bridge, productId, productName }) {
-  // console.log(props.product_id)
-
   const [reviewsMeta, setReviewsMeta] = useState({});
-  // const [reviews, setReviews] = useState({});
   const [starFilters, setStarFilters] = useState({
     5: false,
     4: false,
@@ -17,9 +14,6 @@ function RatingsAndReviews({ bridge, productId, productName }) {
     2: false,
     1: false,
   });
-
-  // console.log("FILTERS: ", starFilters);
-
   const removeAllFilters = () => {
     setStarFilters({
       5: false,
@@ -37,25 +31,11 @@ function RatingsAndReviews({ bridge, productId, productName }) {
   };
 
   useEffect(() => {
-    // console.log(`api key = ${process.env.GIT_API_KEY}`);
     bridge.reviewsMeta(productId)
       .then((results) => {
         setReviewsMeta(results.data);
       });
   }, [productId]);
-
-  // useEffect(() => {
-  //   // console.log(`api key = ${process.env.GIT_API_KEY}`);
-  //   props.bridge.listReviews(40345, 1, 10)
-  //   .then(results => {
-  //     setReviews(results.data);
-  //   });
-  // }, []);
-
-  // console.log('reviewsMeta: ', reviewsMeta);
-
-  // useEffect(() => console.log("reviewsMeta: ",reviewsMeta), [reviewsMeta]);
-  // useEffect(() => console.log((reviews)), [reviews]);
 
   return (
     <div className="rrContainer" id="ratings-reviews">
@@ -87,13 +67,6 @@ RatingsAndReviews.propTypes = {
   bridge: PropTypes.shape({
     reviewsMeta: PropTypes.func.isRequired,
   }).isRequired,
-  // starFilters: PropTypes.shape({
-  //   1: PropTypes.bool,
-  //   2: PropTypes.bool,
-  //   3: PropTypes.bool,
-  //   4: PropTypes.bool,
-  //   5: PropTypes.bool,
-  // }).isRequired,
 };
 
 export default RatingsAndReviews;
