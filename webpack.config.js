@@ -3,7 +3,7 @@ require('dotenv').config();
 const webpack = require('webpack');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: path.join(__dirname, 'src/index.js'),
   output: {
     path: path.join(__dirname, 'dist/'),
@@ -22,8 +22,8 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/, // Targets CSS files
-        use: ['style-loader', 'css-loader'], // Uses style-loader and css-loader to process CSS files
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

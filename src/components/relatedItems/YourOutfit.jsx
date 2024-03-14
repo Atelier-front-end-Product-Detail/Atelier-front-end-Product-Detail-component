@@ -20,10 +20,13 @@ function YourOutfit({
     const fetchData = async () => {
       const fecYourOutfit = localStorage.getItem('fecYourOutfit');
       const storedOutfit = fecYourOutfit ? JSON.parse(fecYourOutfit) : [];
-      const info = storedOutfit ? await helper.getItemsProductInfo(storedOutfit) : null;
+      const info = storedOutfit.length ? await helper.getItemsProductInfo(storedOutfit) : null;
       if (info && info.length) {
         setOutfitProductsInfo(info);
         setUserOutfit(...userOutfit, info.id);
+      } else {
+        setOutfitProductsInfo([]);
+        setUserOutfit([]);
       }
     };
     fetchData();
@@ -40,8 +43,8 @@ function YourOutfit({
       setUserOutfit([productId]);
       localStorage.setItem('fecYourOutfit', JSON.stringify([productId]));
     } else if (!userOutfit.some((product) => product === productId)) {
-      setUserOutfit([...userOutfit, productId]);
       localStorage.setItem('fecYourOutfit', JSON.stringify([...userOutfit, productId]));
+      setUserOutfit([...userOutfit, productId]);
     }
   };
 
@@ -52,10 +55,10 @@ function YourOutfit({
       return;
     }
     newOutfitProductsInfo.splice(index, 1);
-    setOutfitProductsInfo(newOutfitProductsInfo);
+    setOutfitProductsInfo([...newOutfitProductsInfo]);
 
-    const newUserOutfit = [...userOutfit];
-    index = newUserOutfit.indexOf(id.info.id);
+    const newUserOutfit = userOutfit ? [...userOutfit] : [];
+    index = id.info.id ? newUserOutfit.indexOf(id.info.id) : -1;
     if (index < 0) {
       return;
     }
