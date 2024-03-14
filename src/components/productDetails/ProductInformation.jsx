@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Holistic.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as fasFaStar } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +29,9 @@ function ProductInformation({ product, style, reviewsMeta }) {
   const { original_price: originalPrice, sale_price: salePrice } = style;
   const { ratings } = reviewsMeta;
 
+  // convert to array and get sum
   const totalReviews = Object.values(ratings).reduce((sum, num) => sum + parseInt(num, 10), 0);
+  // rating * times (kv pair)
   const averageRating = totalReviews > 0
     ? Object.entries(ratings).reduce((acc, [key, value]) => acc + (key * value), 0) / totalReviews
     : 0;
@@ -50,6 +53,10 @@ function ProductInformation({ product, style, reviewsMeta }) {
 
       <h3>{category}</h3>
       <h2>{name}</h2>
+
+      <div className="product-description">
+        {product.description}
+      </div>
 
       <div className="price">
         {salePrice ? (

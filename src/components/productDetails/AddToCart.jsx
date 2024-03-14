@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import bridge from '../bridge';
+import './Holistic.css';
 
 function AddToCart({ style }) {
   const [selectedSize, setSelectedSize] = useState('');
@@ -45,7 +46,7 @@ function AddToCart({ style }) {
     const skuId = Object.keys(style.skus).find((key) => style.skus[key].size === selectedSize);
 
     if (skuId) {
-      for (let i = 0; i < selectedQuantity; i + 1) {
+      for (let i = 0; i < selectedQuantity; i += 1) {
         bridge.addToCart(parseInt(skuId, 10)).then(() => {
           console.log(`Added size ${selectedSize} to cart`);
         }).catch((error) => {
@@ -66,6 +67,7 @@ function AddToCart({ style }) {
           onChange={handleSizeChange}
           disabled={availableSizes.length === 0}
           className="size-selector"
+          aria-label="Select Size"
         >
           <option value="">Select Size XS S M L XL</option>
           {availableSizes.map(({ size }) => (
@@ -78,6 +80,7 @@ function AddToCart({ style }) {
           onChange={handleQuantityChange}
           disabled={!selectedSize || maxQuantity === 0}
           className="quantity-selector"
+          aria-label="Quantity"
         >
           <option value="">Quantity</option>
           {[...Array(maxQuantity).keys()].map((num) => (

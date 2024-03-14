@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@400;700&display=swap');
+
 .overview {
   display: flex;
   max-width: 1200px;
@@ -242,10 +244,12 @@
 
 .size-selector {
   flex-grow: 1;
+  font-family: 'Roboto Serif', serif;
 }
 
 .quantity-selector {
   flex-grow: 1;
+  font-family: 'Roboto Serif', serif;
 }
 
 .add-to-cart-button-container {
@@ -255,6 +259,7 @@
 .add-to-cart-button {
   width: 100%;
   padding: 10px 20px;
+  font-family: 'Roboto Serif', serif;
 }
 
 .slogan-description-wrapper {
@@ -319,3 +324,7 @@ html {
 }
 
 /* font work */
+
+body {
+  font-family: 'Roboto Serif', serif;
+}

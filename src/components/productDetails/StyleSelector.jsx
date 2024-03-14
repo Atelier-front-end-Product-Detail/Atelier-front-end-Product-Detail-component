@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
   const handleStyleClick = (style) => {
-    if (style !== selectedStyle) {
-      onStyleSelect(style);
+    console.log(`Clicked style ID: ${style.style_id}, Selected style ID: ${selectedStyle ? selectedStyle.style_id : 'none'}`);
+    if (selectedStyle && style.style_id === selectedStyle.style_id) {
+      return;
     }
+    onStyleSelect(style);
   };
 
   return (
     <div className="style-selector">
+
       <div className="style-title">
         <strong>Style &gt; </strong>
-        {selectedStyle ? selectedStyle.name : ''}
+        {selectedStyle ? `${selectedStyle.name}` : ''}
       </div>
+
       <div className="styles-container">
         {styles.map((style) => (
           <div

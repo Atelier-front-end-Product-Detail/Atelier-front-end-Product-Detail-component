@@ -40,6 +40,12 @@
   max-height: 80px;
 }
 
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
 
 .review-image-modal {
   position:fixed;
