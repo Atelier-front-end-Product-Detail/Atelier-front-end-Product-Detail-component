@@ -1,6 +1,7 @@
 const path = require('path');
 require('dotenv').config();
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -28,6 +29,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new CompressionPlugin({
+      algorithm: "gzip"
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         GIT_API_KEY: JSON.stringify(process.env.GIT_API_KEY),
