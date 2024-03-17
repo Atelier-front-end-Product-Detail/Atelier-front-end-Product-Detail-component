@@ -1,19 +1,46 @@
-# Shopify Frontend Application
+# Atelier front end Product Detail component
 
 ## Description
 
-Shopify is a responsive, front-end application tailored for e-commerce platforms. It facilitates easy examination of product information through a user-friendly interface. Developed with contemporary UI/UX principles, Shopify ensures smooth interaction with product details.
+This component is a responsive, front-end application tailored for e-commerce platforms. It facilitates easy examination of product information through a user-friendly interface. Developed with contemporary UI/UX principles, Shopify ensures smooth interaction with product details.
 
-This project is a collaborative effort by four students from the Immersive Full Stack Engineering program at Hack Reactor, aimed at implementing a comprehensive "Product Detail" component within a larger e-commerce platform.
+This project is a collaborative effort by four engineers in collaboration to implement a comprehensive "Product Detail" component within a larger e-commerce platform.
 
 ## Features
 
-Shopify is structured around four primary components, each responsible for a distinct aspect of the e-commerce experience:
+Shopify is structured around four primary components, each responsible for a distinct aspect of the e-commerce experience.
 
-- Product Details: by Eric Yap
-- Related Items: by Michael O'Brien
-- Questions & Answers: by Nhu Le
-- Ratings & Reviews: by Vincent Lieu
+<br />
+
+CLICK ON THESE COMPONENTS to see them in action!
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Product Details: by Eric Yap</summary>
+
+  ![GIF demo of Product Details](./readMeGifs/ProductDetails.gif)
+
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Related Items: by Michael O'Brien</summary>
+
+  ![GIF demo of Related Items](./readMeGifs/RelatedItems.gif)
+
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Questions & Answers: by Nhu Le</summary>
+
+  ![GIF demo of Questions & Answers](./readMeGifs/QuestionsAnswers.gif)
+
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Ratings & Reviews: by Vincent Lieu</summary>
+
+  ![GIF demo of Ratings & Reviews](./readMeGifs/QuestionsAnswers.gif)
+
+</details>
 
 ## Technologies Used
 
