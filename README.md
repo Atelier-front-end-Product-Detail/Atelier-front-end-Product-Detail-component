@@ -15,7 +15,7 @@ Shopify is structured around four primary components, each responsible for a dis
 CLICK ON THESE COMPONENTS to see them in action!
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Product Details: by Eric Yap</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Product Details: by Eric Yap</u></summary>
 
   <br />
 
@@ -24,7 +24,7 @@ CLICK ON THESE COMPONENTS to see them in action!
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Related Items: by Michael O'Brien</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Related Items: by Michael O'Brien</u></summary>
 
   <br />
 
@@ -33,7 +33,7 @@ CLICK ON THESE COMPONENTS to see them in action!
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Questions & Answers: by Nhu Le</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Questions & Answers: by Nhu Le</u></summary>
 
   <br />
 
@@ -42,7 +42,7 @@ CLICK ON THESE COMPONENTS to see them in action!
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Ratings & Reviews: by Vincent Lieu</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Ratings & Reviews: by Vincent Lieu</u></summary>
 
   <br />
 
