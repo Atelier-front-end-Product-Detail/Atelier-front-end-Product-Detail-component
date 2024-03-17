@@ -15,28 +15,36 @@ Shopify is structured around four primary components, each responsible for a dis
 CLICK ON THESE COMPONENTS to see them in action!
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Product Details: by Eric Yap</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Product Details: by Eric Yap</summary>
+
+  <br />
 
   ![GIF demo of Product Details](./readMeGifs/ProductDetails.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Related Items: by Michael O'Brien</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Related Items: by Michael O'Brien</summary>
+
+  <br />
 
   ![GIF demo of Related Items](./readMeGifs/RelatedItems.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Questions & Answers: by Nhu Le</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Questions & Answers: by Nhu Le</summary>
+
+  <br />
 
   ![GIF demo of Questions & Answers](./readMeGifs/QuestionsAnswers.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightgreen">Ratings & Reviews: by Vincent Lieu</summary>
+  <summary style="font-size: 16px; font-weight: bold; color: lightblue">Ratings & Reviews: by Vincent Lieu</summary>
+
+  <br />
 
   ![GIF demo of Ratings & Reviews](./readMeGifs/QuestionsAnswers.gif)
 
@@ -82,3 +90,9 @@ npm run client-dev
 
 # To test components:
 npx jest
+```
+
+<br />
+<br />
+
+###### ReadMe authored by Michael O'Brien
