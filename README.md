@@ -6,45 +6,49 @@ This component is a responsive, front-end application tailored for e-commerce pl
 
 This project is a collaborative effort by four engineers in collaboration to implement a comprehensive "Product Detail" component within a larger e-commerce platform.
 
+<br/>
+
+  ![GIF demo of Product Details](./readMeGifs/Overview.gif)
+
 ## Features
 
 Shopify is structured around four primary components, each responsible for a distinct aspect of the e-commerce experience.
 
-<br />
+<br/>
 
 CLICK ON THESE COMPONENTS to see them in action!
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Product Details: by Eric Yap</u></summary>
+  <summary style="font-size: 16px; font-weight: bold;">Product Details: by Eric Yap</summary>
 
-  <br />
+  <br/>
 
   ![GIF demo of Product Details](./readMeGifs/ProductDetails.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Related Items: by Michael O'Brien</u></summary>
+  <summary style="font-size: 16px; font-weight: bold;">Related Items: by Michael O'Brien</summary>
 
-  <br />
+  <br/>
 
   ![GIF demo of Related Items](./readMeGifs/RelatedItems.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Questions & Answers: by Nhu Le</u></summary>
+  <summary style="font-size: 16px; font-weight: bold;">Questions & Answers: by Nhu Le</summary>
 
-  <br />
+  <br/>
 
   ![GIF demo of Questions & Answers](./readMeGifs/QuestionsAnswers.gif)
 
 </details>
 
 <details>
-  <summary style="font-size: 16px; font-weight: bold; color: lightblue"><u>Ratings & Reviews: by Vincent Lieu</u></summary>
+  <summary style="font-size: 16px; font-weight: bold;">Ratings & Reviews: by Vincent Lieu</summary>
 
-  <br />
+  <br/>
 
   ![GIF demo of Ratings & Reviews](./readMeGifs/QuestionsAnswers.gif)
 
@@ -92,7 +96,7 @@ npm run client-dev
 npx jest
 ```
 
-<br />
-<br />
+<br/>
+<br/>
 
 ###### ReadMe authored by Michael O'Brien
