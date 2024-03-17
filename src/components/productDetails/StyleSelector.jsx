@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 function StyleSelector({ styles, selectedStyle, onStyleSelect }) {
   const handleStyleClick = (style) => {
-    console.log(`Clicked style ID: ${style.style_id}, Selected style ID: ${selectedStyle ? selectedStyle.style_id : 'none'}`);
     if (selectedStyle && style.style_id === selectedStyle.style_id) {
       return;
     }
