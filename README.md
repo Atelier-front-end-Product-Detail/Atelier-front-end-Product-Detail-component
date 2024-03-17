@@ -95,8 +95,3 @@ npm run client-dev
 # To test components:
 npx jest
 ```
-
-<br/>
-<br/>
-
-###### ReadMe authored by Michael O'Brien
