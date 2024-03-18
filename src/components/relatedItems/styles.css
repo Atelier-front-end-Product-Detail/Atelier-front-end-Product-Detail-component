@@ -345,6 +345,28 @@
   pointer-events: none;
 }
 
+.full_stars,
+.empty_stars {
+  position: relative;
+}
+
+.full_stars::before,
+.empty_stars::before {
+  content: '★★★★★';
+}
+
+.full_stars {
+  z-index: 2;
+  overflow: hidden;
+  color: var(--color_4)
+}
+
+.empty_stars {
+  z-index: 1;
+  top: -20px;
+  color: var(--color_7);
+}
+
 @media screen and (max-width: 899px) {
   .related_items {
     padding: 0;
